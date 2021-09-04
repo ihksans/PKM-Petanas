@@ -9,9 +9,9 @@
 
 ## How to run project
 
-[1]. Open your command propt (cmd)
-[2]. Update your vendor using "composer update"
-[3]. run "php artisan serve"
-[4]. Open your browser and input the address your host project
+1. Open your command propt (cmd)
+2. Update your vendor using "composer update"
+3. run "php artisan serve"
+4. Open your browser and input the address your host project
 
 ##Happy works
