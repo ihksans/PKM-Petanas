@@ -29,5 +29,14 @@ return [
         'secret' => env('AWS_SECRET_ACCESS_KEY'),
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
-
+    //firebase
+    'firebase' => [
+        'apiKey'=> "AIzaSyAyBj2yUFd9rqnfTGzRVTFB_bQ0IJaglpI",
+        'authDomain'=> "petanas-1efe5.firebaseapp.com",
+        'projectId'=> "petanas-1efe5",
+        'storageBucket'=> "petanas-1efe5.appspot.com",
+        'messagingSenderId'=> "31527891930",
+        'appId'=> "1:31527891930:web:eed071c2b917dd3931c6e3",
+        'measurementId'=> "G-19TPTGHNCY"
+    ]
 ];
