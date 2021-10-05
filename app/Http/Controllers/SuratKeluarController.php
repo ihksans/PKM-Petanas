@@ -273,10 +273,9 @@ class SuratKeluarController extends Controller
                     return response()->json($respon);
             }
     }
-    public function searchSuratKeluar(Request $request){
-        $key = $request->key;
+    public function searchSuratKeluar($key){
         try{
-            $result = DB::table('surat_keluar')
+            $suratKeluar = DB::table('surat_keluar')
             ->join('pencatatan','pencatatan.ID_PENCATATAN','=','surat_keluar.ID_PENCATATAN')
             ->join('pengguna','pengguna.ID_PENGGUNA','=','surat_keluar.ID_PENGGUNA')
             ->join('pemohon','pemohon.ID_PEMOHON','=','surat_keluar.ID_PEMOHON')
@@ -297,6 +296,7 @@ class SuratKeluarController extends Controller
             ->orWhere('TAHUN','like','%'.$key.'%')
             ->orWhere('DERAJAT_SURAT','like','%'.$key.'%')
             ->orWhere('JENIS_SURAT','like','%'.$key.'%')
+            ->orWhere('KETERANGAN','like','%'.$key.'%')
             ->select('pencatatan.PERIHAL','pencatatan.KODE_ARSIP_KOM',
             'pencatatan.KODE_ARSIP_HLM','pencatatan.KODE_ARSIP_MANUAL',
             'pencatatan.NAMA_FILE_SURAT','pencatatan.NAMA_FILE_LAMPIRAN',
@@ -312,87 +312,19 @@ class SuratKeluarController extends Controller
             $respon = [
                 'Msg' => 'success',
                 'key' => $key,
-                'content' => $result,
+                'content' => $suratKeluar,
             ];
-            if(count($result)==0||count($result)==null){
-
-        
-        
-                $str = explode(" ", $key);
-                $found = false;
-                $i = 0;
-                while($found!= true){
-                try{
-                    $result = DB::table('surat_keluar')
-                    ->join('pencatatan','pencatatan.ID_PENCATATAN','=','surat_keluar.ID_PENCATATAN')
-                    ->join('pengguna','pengguna.ID_PENGGUNA','=','surat_keluar.ID_PENGGUNA')
-                    ->join('pemohon','pemohon.ID_PEMOHON','=','surat_keluar.ID_PEMOHON')
-                    ->join('nomor_surat','nomor_surat.ID_NOMOR_SURAT','=','surat_keluar.ID_NOMOR_SURAT')
-                    ->join('derajat_surat','derajat_surat.ID_DERAJAT_SURAT','=','pencatatan.ID_DERAJAT_SURAT')
-                    ->join('jenis_surat','jenis_surat.ID_JENIS_SURAT','=','pencatatan.ID_JENIS_SURAT')
-                    ->where('PERIHAL', 'like','%'.$str[$i].'%')
-                    ->orWhere('KODE_ARSIP_KOM','like','%'.$str[$i].'%')
-                    ->orWhere('KODE_ARSIP_HLM','like','%'.$str[$i].'%')
-                    ->orWhere('KODE_ARSIP_MANUAL','like','%'.$str[$i].'%')
-                    ->orWhere('TGL_SURAT','like','%'.$str[$i].'%')
-                    ->orWhere('PENANDATANGAN','like','%'.$str[$i].'%')
-                    ->orWhere('TGL_KIRIM','like','%'.$str[$i].'%')
-                    ->orWhere('NOMOR_SURAT','like','%'.$str[$i].'%')
-                    ->orWhere('NAMA','like','%'.$str[$i].'%')
-                    ->orWhere('NAMA_PEMOHON','like','%'.$str[$i].'%')
-                    ->orWhere('NOMOR_URUT','like','%'.$str[$i].'%')
-                    ->orWhere('TAHUN','like','%'.$str[$i].'%')
-                    ->orWhere('DERAJAT_SURAT','like','%'.$str[$i].'%')
-                    ->orWhere('JENIS_SURAT','like','%'.$str[$i].'%')
-                    //->orWhere('KETERANGAN','like','%'.$str[$i].'%')
-                    ->select('pencatatan.PERIHAL','pencatatan.KODE_ARSIP_KOM',
-                    'pencatatan.KODE_ARSIP_HLM','pencatatan.KODE_ARSIP_MANUAL',
-                    'pencatatan.NAMA_FILE_SURAT','pencatatan.NAMA_FILE_LAMPIRAN',
-                    'pencatatan.TGL_SURAT','pencatatan.PENANDATANGAN',
-                    'surat_keluar.*',
-                    'pengguna.NAMA',
-                    'pemohon.*',
-                    'nomor_surat.*',
-                    'derajat_surat.*',
-                    'jenis_surat.*')
-                    ->orderBy('ID_PENCATATAN','desc')
-                    ->get();
-                    if(count($result)!=0||count($result)!=null){
-                        $respon = [
-                            'Msg' => 'success',
-                            'key' => $str[$i],
-                            'content' => $result,
-                            ];  
-                            $found= true;
-                    }else{
-                        if($i > count($str)){
-                            $respon = [
-                                'Msg' => 'success',
-                                'key' => $str[$i],
-                                'content' => $result,
-                                ];  
-                                $found = true;
-                        }
-                        $i++;
-                    }
-                } catch(\Exception $ex){ 
-                    $respon = [
-                        'Msg' => 'error',
-                        'content' => [],
-                        ];
-                        $found = true;
-                }
-            }
-            }
-        } catch(\Exception $ex){ 
+            return response()->json($respon);
+            } catch(\Exception $ex){ 
                 $respon = [
                     'Msg' => 'error',
                     'content' => $key,
                     ];
                     return response()->json($respon);
-            }         
-            return response()->json($respon);
+            }
+            
     }
+    
     public function getCountSK(){
         try{
             $result = SuratKeluar::all();

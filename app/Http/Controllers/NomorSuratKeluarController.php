@@ -10,8 +10,8 @@ use App\Models\NomorSuratKeluar;
 class NomorSuratKeluarController extends Controller
 {
     public function index(){
-        $year = date("Y"); 
-        
+        $year = date("Y");
+
             $result = NomorSuratKeluar::where('TAHUN',  $year)->orderBy('NOMOR_URUT','desc')->first();
           if($result==null){
             $result = [
@@ -27,7 +27,7 @@ class NomorSuratKeluarController extends Controller
 
     }
     public function setNomorSurat(Request $request){
-        $year = date("Y"); 
+        $year = date("Y");
         $tahun = 0;
         $no_urut = 0;
         if($request->tahun!=null && $request->no_urut!=null) {
@@ -38,7 +38,7 @@ class NomorSuratKeluarController extends Controller
                 $last = NomorSuratKeluar::where('TAHUN',  $year)->orderBy('NOMOR_URUT','desc')->first();
                 $no_urut = $last->NOMOR_URUT + 1;
                 $tahun = $year;
-            } catch(\Exception $ex){ 
+            } catch(\Exception $ex){
                     $no_urut = 1;
                     $tahun = $year;
             }
@@ -46,11 +46,11 @@ class NomorSuratKeluarController extends Controller
         $data = [
             'ID_KODE_UNIT_KERJA'=>1,
             'ID_KODE_HAL'=>$request->id_kode_hal,
-            'ID_KODE_PERGURUAN_TINGGI'=>1, 
+            'ID_KODE_PERGURUAN_TINGGI'=>1,
             'ID_SIFAT_NASKAH'=>$request->id_sifat_naskah,
             'NOMOR_URUT' =>$no_urut,
             'TAHUN'=>$tahun,
-            
+
         ];
         try{
             $nomorSurat = NomorSuratKeluar::create($data);
@@ -59,14 +59,14 @@ class NomorSuratKeluarController extends Controller
                 'content' => $nomorSurat,
                 ];
                 return response()->json($respon,200);
-        } catch(\Exception $ex){ 
+        } catch(\Exception $ex){
             $respon = [
                 'Msg' => 'error',
                 'content' => $nomorSurat,
                 ];
                 return response()->json($respon);
         }
-       
+
 
     }
     public function getNomorSurat($id)
@@ -76,16 +76,16 @@ class NomorSuratKeluarController extends Controller
             $respon =[
                 'Msg' => 'success',
                 'content' =>   $nomorSurat,
-                ];       
+                ];
                  return response()->json($respon);
 
-        } catch(\Exception $ex){ 
+        } catch(\Exception $ex){
             $respon =[
             'Msg' => 'error',
             'content' =>  $id,
             ];
         return response()->json($respon);
-        } 
+        }
     }
     public function delNomorSurat($id){
         try{
@@ -96,7 +96,7 @@ class NomorSuratKeluarController extends Controller
                 'content' => $id,
                 ];
                 return response()->json($respon,200);
-        } catch(\Exception $ex){ 
+        } catch(\Exception $ex){
             $respon = [
                 'Msg' => 'error',
                 'content' => $id,
@@ -110,7 +110,7 @@ class NomorSuratKeluarController extends Controller
             ->update([
                 'ID_KODE_UNIT_KERJA'=>$request->id_kode_unit,
                 'ID_KODE_HAL'=>$request->id_kode_hal,
-                'ID_KODE_PERGURUAN_TINGGI'=>$request->id_kode_pt, 
+                'ID_KODE_PERGURUAN_TINGGI'=>$request->id_kode_pt,
                 'ID_SIFAT_NASKAH'=>$request->id_sifat_naskah,
                 'NOMOR_URUT' =>$request->no_urut,
                 'TAHUN'=>$request->tahun,
@@ -125,10 +125,10 @@ class NomorSuratKeluarController extends Controller
                     'Msg' => 'error',
                     'content' => null,
                 ];
-            }   
+            }
             return response()->json($respon);
 
-        } catch(\Exception $ex){ 
+        } catch(\Exception $ex){
             $respon = [
                 'Msg' => 'error',
                 'content' => null,
@@ -151,7 +151,7 @@ class NomorSuratKeluarController extends Controller
                 'content' => $nomorSurat,
                 ];
             return response()->json($respon);
-        } catch(\Exception $ex){ 
+        } catch(\Exception $ex){
             $respon = [
                 'Msg' => 'error',
                 'content' => $nomorSurat,
@@ -160,7 +160,7 @@ class NomorSuratKeluarController extends Controller
         }
     }
     public function getLastNomorUrut(){
-        $year = date("Y"); 
+        $year = date("Y");
 
         try{
             $last = NomorSuratKeluar::where('TAHUN',  $year)->orderBy('NOMOR_URUT','desc')->first();
@@ -169,7 +169,7 @@ class NomorSuratKeluarController extends Controller
                 'content' => $last,
                 ];
         }
-     catch(\Exception $ex){ 
+     catch(\Exception $ex){
         $respon = [
             'Msg' => 'error',
             'content' => $last,

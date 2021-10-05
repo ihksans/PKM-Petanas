@@ -163,9 +163,6 @@ class PencatatanController extends Controller
                 'content' => null,
                 ];
                 return response()->json($respon);
-
         }
-     
-
     }
 }
