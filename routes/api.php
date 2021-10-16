@@ -128,6 +128,12 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     //Tujuan Disposisi
     Route::post('createTujuanDisposisi','TujuanController@createTujuanDisposisi');
     Route::get('getTujuanDisposisi/{id}','TujuanController@getDetailTujuanDisposisi');
+    Route::get('getDetailTujuanDisposisi/{id}','TujuanController@getDetailTujuanDisposisi');
+    Route::delete('delAllTujuanDisposisi/{id}','TujuanController@delAllTujuanDisposisi');
+    Route::get('delTujuanDisposisi/{id}/{to}','TujuanController@delTujuanDisposisi');
+    Route::post('upTujuanDisposisi','TujuanController@upTujuanDisposisi');
+
+    
     //SuratKeluar
     Route::post('setSuratKeluar', 'SuratKeluarController@setSuratKeluar');
     Route::get('getSuratKeluar/{id}', 'SuratKeluarController@getSuratKeluar');

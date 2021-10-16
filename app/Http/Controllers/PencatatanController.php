@@ -32,7 +32,7 @@ class PencatatanController extends Controller
             'TGL_SURAT'=>$request->tgl_surat,
             'PENANDATANGAN'=>$request->penandatangan,
         ];
-       $pencatatan = Pencatatan::create($data);
+        $pencatatan = Pencatatan::create($data);
 
         if($pencatatan==null){
             $respon = [

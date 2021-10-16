@@ -23,14 +23,29 @@ class DisposisiController extends Controller
     }
     public function allInfoDisposisiSuratMasuk(){
         // public function allInfoDisposisi($id){
-        $disposisi = DB::table('disposisi')
-        ->join('surat_masuk','disposisi.ID_PENCATATAN','=','surat_masuk.ID_PENCATATAN')
-        ->join('pencatatan','disposisi.ID_PENCATATAN','=','pencatatan.ID_PENCATATAN')
-        ->where('JENIS_DISPOSISI',1)
-        ->select('disposisi.*','surat_masuk.*','pencatatan.*')
-        ->get();
-        
-        return response()->json($disposisi);
+        try{
+            $disposisi = DB::table('disposisi')
+            ->join('surat_masuk','disposisi.ID_PENCATATAN','=','surat_masuk.ID_PENCATATAN')
+            ->join('pencatatan','disposisi.ID_PENCATATAN','=','pencatatan.ID_PENCATATAN')
+            // ->join('tujuan_pencatatan','surat_masuk.ID_PENCACATAN','=','tujuan_pencatatan.ID_PENCATATAN')
+            // ->join('kode_unit_kerja','tujuan_pencatatan.ID_KODE_UNIT_KERJA','=','kode_unit_kerja.ID_KODE_UNIT_KERJA')
+            // ->where('JENIS_DISPOSISI',1)
+            // ->select('disposisi.*','surat_masuk.*','pencatatan.*','tujuan_pencatatan.*','kode_unit_kerja.*')
+            ->select('disposisi.*','surat_masuk.*','pencatatan.*')
+            ->orderBy('ID_DISPOSISI','desc')
+            ->get();
+            $respon=[
+                'Msg' => 'success',
+                'content' => $disposisi,
+            ];
+            return response()->json($respon);
+        } catch(\Exception $ex){
+            $respon = [
+                'Msg' => 'error',
+                'content' => $disposisi,
+                ];
+                return response()->json($respon);
+        }
     }
     public function allInfoDisposisiSuratKeluar(){
         // public function allInfoDisposisi($id){
