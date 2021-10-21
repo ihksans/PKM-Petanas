@@ -177,5 +177,21 @@ class NomorSuratKeluarController extends Controller
             return response()->json($respon);
     }
     return response()->json($respon);
-}
+    }
+
+    public function delAllNomorSuratKeluar(){
+        $del = NomorSuratKeluar::truncate();
+        if($del){
+            $respon=[
+                'Msg' => 'succes',
+                'content'=> $del
+            ];
+            return response()->json($respon,200);            
+        }
+        $respon=[
+            'Msg'=> 'error',
+            'content'=> null
+        ];
+        return response()->json($respon);
+    }
 }
