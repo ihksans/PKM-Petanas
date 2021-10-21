@@ -65,10 +65,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         //importpencatatan
     Route::post('importDataSuratMasuk', 'SuratMasukController@importDataSuratMasuk');
     Route::post('importDataSuratKeluar', 'SuratKeluarController@importDataSuratKeluar');
-    // Route::post('importDataSuratMasuk', ['middleware' => 'cors' , 'uses'=> 'SuratMasukController@importDataSuratMasuk']);
-        //deletepencatatan
-    // Route::delete('deletePencatatanSuratMasuk', 'PencatatanController@del');
-
+    
     //ihksan
     //Pencatatan
     Route::post('setPencatatan', 'PencatatanController@setPencatatan');
