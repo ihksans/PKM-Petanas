@@ -15,6 +15,7 @@ import api from '../../../service/api'
 import TabelSuratKeluar from './TabelSuratKeluar'
 import moment from 'moment'
 import ImportModal from '../../ModalImportPencatatan/importSK'
+import ModalLoading from '../../ModalLoading'
 
 class KelolaSuratKeluar extends Component {
   //deklarasi variabel
@@ -28,10 +29,17 @@ class KelolaSuratKeluar extends Component {
       lastNoAgenda: null,
       sk:[],
       import: false,
+      modalLoading: false,
     }
     this.getSuratKeluar = this.getSuratKeluar.bind(this)
     this.handleImport = this.handleImport.bind(this)
     this.handleExport = this.handleExport.bind(this)
+    this.handleLoading = this.handleLoading.bind(this)
+  }
+  handleLoading() {
+    this.setState({
+      modalLoading: !this.state.modalLoading,
+    })
   }
   async getSuratKeluar() {
     await api()
@@ -113,8 +121,9 @@ class KelolaSuratKeluar extends Component {
           link.setAttribute("download", "Pencatatan Surat Keluar per "+ moment(date).format('DD-MM-YYYY') +".xlsx");
           document.body.appendChild(link);
           link.click();
+          this.handleLoading()
           // console.log(response.data)
-          // window.location.reload('/#/KelolaSurat')
+          window.location.reload('/#/KelolaSurat')
     })
     .catch((err) => {
       console.log(err)
@@ -199,6 +208,10 @@ class KelolaSuratKeluar extends Component {
           <ImportModal/>
           </>
         ): null}
+        <ModalLoading
+            loading={this.state.modalLoading}
+            title={'Sedang diproses sistem'}
+          />
       </>
     )
   }
