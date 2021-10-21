@@ -9,9 +9,7 @@ use Illuminate\Database\QueryException;
 use App\Models\NomorSuratKeluar;
 use App\Models\TujuanPencatatan;
 use App\Models\Pencatatan;
-use App\Exports\SuratKeluarExporter;
-use App\Imports\SuratKeluarImporter;
-use Maatwebsite\Excel\Facades\Excel;
+
 
 class SuratKeluarController extends Controller
 {
@@ -216,35 +214,22 @@ class SuratKeluarController extends Controller
         }
     }
     public function delAllSuratKeluar(){
-        $del = SuratKeluar::truncate();
-        if($del){
-            $respon=[
-                'Msg' => 'succes',
-                'content'=> $del
-            ];
-            return response()->json($respon,200);            
+        try{
+            $suratKeluar = SuratKeluar::truncate();
+            $nomorSurat = NomorSuratKeluar::truncate();
+            $respon = [
+                'Msg' => 'success',
+                'content' => $suratKeluar,
+                'content2' => $nomorSurat
+                ];
+                return response()->json($respon,200);
+        } catch(\Exception $ex){ 
+            $respon = [
+                'Msg' => 'error',
+                'content' => $suratKeluar,
+                ];
+                return response()->json($respon);
         }
-        $respon=[
-            'Msg'=> 'error',
-            'content'=> null
-        ];
-        return response()->json($respon);
-        // try{
-        //     $suratKeluar = SuratKeluar::truncate();
-        //     $nomorSurat = NomorSuratKeluar::truncate();
-        //     $respon = [
-        //         'Msg' => 'success',
-        //         'content' => $suratKeluar,
-        //         'content2' => $nomorSurat
-        //         ];
-        //         return response()->json($respon,200);
-        // } catch(\Exception $ex){ 
-        //     $respon = [
-        //         'Msg' => 'error',
-        //         'content' => $suratKeluar,
-        //         ];
-        //         return response()->json($respon);
-        // }
     }
     public function getSuratKeluarDetail(){
         try{
@@ -360,20 +345,6 @@ class SuratKeluarController extends Controller
         }
      
 
-    }
-
-    public function exportDataSuratKeluar(){
-        ob_end_clean();
-        ob_start();
-        return (new SuratKeluarExporter)->download('Pencatatan Surat Keluar per ' .date("d-m-Y").'.xlsx');
-    }
-
-    public function importDataSuratKeluar(Request $request){
-        Excel::import(new SuratKeluarImporter, $request->file);
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Data berhasil diimport',
-        ], 200);
     }
   
 }

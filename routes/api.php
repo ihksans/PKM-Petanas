@@ -50,8 +50,6 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('getDisposisiByID/{id}','DisposisiController@getDisposisiByID');
     Route::get('allInfoDisposisiKeluar','DisposisiController@allInfoDisposisiSuratKeluar');
     Route::get('showData','DisposisiController@showData');
-    Route::delete('delAllDisposisi','DisposisiController@delAllDisposisi');
-    
     //nadia
         //pengingat
     Route::post('createPengingat', 'PengingatController@createPengingat');
@@ -59,15 +57,8 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('getPengingat/{id}', 'PengingatController@getPengingat');
     Route::post('updatePengingat', 'PengingatController@updatePengingat');
     Route::delete('deletePengingat/{id}', 'PengingatController@deletePengingat');
-        //exportpencatatan
+        //exportsurat
     Route::get('exportDataSuratMasuk', 'SuratMasukController@exportDataSuratMasuk');
-    Route::get('exportDataSuratKeluar', 'SuratKeluarController@exportDataSuratKeluar');
-        //importpencatatan
-    Route::post('importDataSuratMasuk', 'SuratMasukController@importDataSuratMasuk');
-    Route::post('importDataSuratKeluar', 'SuratKeluarController@importDataSuratKeluar');
-    // Route::post('importDataSuratMasuk', ['middleware' => 'cors' , 'uses'=> 'SuratMasukController@importDataSuratMasuk']);
-        //deletepencatatan
-    // Route::delete('deletePencatatanSuratMasuk', 'PencatatanController@del');
 
     //ihksan
     //Pencatatan
@@ -133,12 +124,10 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('upTujuanPencatatan', 'TujuanController@upTujuanPencatatan');
     Route::get('getDetailTujuanPencatatan/{id}','TujuanController@getDetailTujuanPencatatan');
     Route::delete('delAllTujuanPencatatan/{id}', 'TujuanController@delAllTujuanPencatatan');
-    Route::delete('delAllTujuanSurat', 'TujuanController@delAllTujuanSurat');
 
     //Tujuan Disposisi
     Route::post('createTujuanDisposisi','TujuanController@createTujuanDisposisi');
     Route::get('getTujuanDisposisi/{id}','TujuanController@getDetailTujuanDisposisi');
-    Route::delete('delAllTujuanDisposisi', 'TujuanController@delAllTujuanDisposisi');
     //SuratKeluar
     Route::post('setSuratKeluar', 'SuratKeluarController@setSuratKeluar');
     Route::get('getSuratKeluar/{id}', 'SuratKeluarController@getSuratKeluar');
@@ -158,7 +147,6 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('getLastNomorSurat', 'NomorSuratKeluarController@index');
     Route::get('getDetailNomorSurat', 'NomorSuratKeluarController@getDetailNomorSurat');
     Route::get('getLastNomorUrut', 'NomorSuratKeluarController@getLastNomorUrut');
-    Route::delete('delAllNomorSuratKeluar', 'NomorSuratKeluarController@delAllNomorSuratKeluar');
 
     //Pemohon
     Route::post('setPemohon', 'PemohonController@setPemohon');
