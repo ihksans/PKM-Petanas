@@ -41,9 +41,6 @@ class BoxDataTabel extends Component {
           <div className=" flex  flex-row  items-center  mt-1 ">
             <p className="truncate text-sm"> {this.props.Surat.JENIS_SURAT}</p>
           </div>
-          <div className="flex flex-row items-center ml-2 mt-1">
-            {this.props.Surat.TUJUAN_SURAT}
-          </div>
           <div className="   items-center ml-2 mt-1">
             <div className="font-bold">{this.props.Surat.NAMA_PENGIRIM}</div>
             
