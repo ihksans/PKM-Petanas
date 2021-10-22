@@ -169,8 +169,10 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     //searching
     // Route::get('searchSuratMasuk/{id}','SuratMasukController@searchSuratMasuk');
     // Route::get('searchSuratKeluar/{id}','SuratKeluarController@searchSuratKeluar');
-     Route::post('searchSuratMasuk/','SuratMasukController@searchSuratMasuk');
+    Route::post('searchSuratMasuk/','SuratMasukController@searchSuratMasuk');
     Route::post('searchSuratKeluar/','SuratKeluarController@searchSuratKeluar');
+    Route::post('searchDisposisiSM/','DisposisiController@searchDisposisi');
+    Route::post('searchDisposisiSK/','DisposisiController@searchDisposisi');    
     //count data
     Route::get('getCountSK','SuratKeluarController@getCountSK');
     Route::get('getCountSM','SuratMasukController@getCountSM');
