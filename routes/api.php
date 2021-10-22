@@ -163,7 +163,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     //searching
     // Route::get('searchSuratMasuk/{id}','SuratMasukController@searchSuratMasuk');
     // Route::get('searchSuratKeluar/{id}','SuratKeluarController@searchSuratKeluar');
-     Route::post('searchSuratMasuk/','SuratMasukController@searchSuratMasuk');
+    Route::post('searchSuratMasuk/','SuratMasukController@searchSuratMasuk');
     Route::post('searchSuratKeluar/','SuratKeluarController@searchSuratKeluar');
     //count data
     Route::get('getCountSK','SuratKeluarController@getCountSK');
@@ -171,5 +171,8 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('getCountDis','DisposisiController@getCountDis');
     Route::get('getCountPenc','PencatatanController@getCountPenc');
     Route::get('getCountUser','PenggunaController@getCountUser');
+
+    //WD3
+    Route::post('addMsgDisposisi','DisposisiController@addMsgDisposisi');
 
 });

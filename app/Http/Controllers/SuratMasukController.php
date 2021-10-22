@@ -230,54 +230,106 @@ class SuratMasukController extends Controller
             ];
         return response()->json($respon);
     }
-    public function searchSuratMasuk($key){
+    public function searchSuratMasuk(Request $request){
+        $key = $request->key;
         try{
-           // $now = date("s");
-
-            $time_start = time();
-            $mytime=gettimeofday(true);
             $result= DB::table('surat_masuk')
-             ->where('PERIHAL', 'like','%'.$key.'%')
-             ->orWhere('NAMA_UNIT_KERJA','like','%'.$key.'%')
-             ->orWhere('KODE_ARSIP_KOM','like','%'.$key.'%')
-             ->orWhere('KODE_ARSIP_MANUAL','like','%'.$key.'%')
-             ->orWhere('KODE_ARSIP_HLM','like','%'.$key.'%')
-             ->orWhere('TGL_SURAT','like','%'.$key.'%')
-             ->orWhere('PENANDATANGAN','like','%'.$key.'%')
-             ->orWhere('JENIS_SURAT','like','%'.$key.'%')
-             ->orWhere('KETERANGAN','like','%'.$key.'%')
-             ->orWhere('DERAJAT_SURAT','like','%'.$key.'%')
-             ->orWhere('DESKRIPSI','like','%'.$key.'%')
-             ->orWhere('NOMOR_SURAT','like','%'.$key.'%')
-             ->orWhere('NAMA_PENGIRIM','like','%'.$key.'%')
-             ->orWhere('TGL_DITERIMA','like','%'.$key.'%')
-             ->orWhere('NOMOR_AGENDA','like','%'.$key.'%')
-             ->orWhere('KODE_UNIT_KERJA','like','%'.$key.'%')
-             ->orWhere('KODE_SIFAT_NASKAH','like','%'.$key.'%')
-             ->orWhere('SIFAT_NASKAH','like','%'.$key.'%')
-             ->orWhere('NAMA','%','like','%'.$key.'%')
-             ->join('pencatatan','pencatatan.ID_PENCATATAN','=','surat_masuk.ID_PENCATATAN')
-             ->join('jenis_surat','jenis_surat.ID_JENIS_SURAT','=','pencatatan.ID_JENIS_SURAT')
-             ->join('derajat_surat','derajat_surat.ID_DERAJAT_SURAT','=','pencatatan.ID_DERAJAT_SURAT')
-             ->join('kode_unit_kerja','surat_masuk.ID_KODE_UNIT_KERJA','=','kode_unit_kerja.ID_KODE_UNIT_KERJA')
-             ->join('kode_sifat_naskah','kode_sifat_naskah.ID_SIFAT_NASKAH', '=','surat_masuk.ID_SIFAT_NASKAH')
-             ->join('pengguna','pengguna.ID_PENGGUNA','=','surat_masuk.ID_PENGGUNA')
+            ->join('pencatatan','pencatatan.ID_PENCATATAN','=','surat_masuk.ID_PENCATATAN')
+            ->join('jenis_surat','jenis_surat.ID_JENIS_SURAT','=','pencatatan.ID_JENIS_SURAT')
+            ->join('derajat_surat','derajat_surat.ID_DERAJAT_SURAT','=','pencatatan.ID_DERAJAT_SURAT')
+            ->join('kode_unit_kerja','surat_masuk.ID_KODE_UNIT_KERJA','=','kode_unit_kerja.ID_KODE_UNIT_KERJA')
+            ->join('kode_sifat_naskah','kode_sifat_naskah.ID_SIFAT_NASKAH', '=','surat_masuk.ID_SIFAT_NASKAH')
+            ->join('pengguna','pengguna.ID_PENGGUNA','=','surat_masuk.ID_PENGGUNA')
+            ->where('PERIHAL', 'like','%'.$key.'%')
+            ->orWhere('NAMA_UNIT_KERJA','like','%'.$key.'%')
+            ->orWhere('KODE_ARSIP_KOM','like','%'.$key.'%')
+            ->orWhere('KODE_ARSIP_MANUAL','like','%'.$key.'%')
+            ->orWhere('KODE_ARSIP_HLM','like','%'.$key.'%')
+            ->orWhere('TGL_SURAT','like','%'.$key.'%')
+            ->orWhere('PENANDATANGAN','like','%'.$key.'%')
+            ->orWhere('JENIS_SURAT','like','%'.$key.'%')
+            ->orWhere('DERAJAT_SURAT','like','%'.$key.'%')
+            ->orWhere('NOMOR_SURAT','like','%'.$key.'%')
+            ->orWhere('NAMA_PENGIRIM','like','%'.$key.'%')
+            ->orWhere('TGL_DITERIMA','like','%'.$key.'%')
+            ->orWhere('NOMOR_AGENDA','like','%'.$key.'%')
+            ->orWhere('KODE_UNIT_KERJA','like','%'.$key.'%')
+            ->orWhere('KODE_SIFAT_NASKAH','like','%'.$key.'%')
+            ->orWhere('SIFAT_NASKAH','like','%'.$key.'%')
+            ->orWhere('NAMA','%','like','%'.$key.'%')
             ->select('pencatatan.PERIHAL','pencatatan.KODE_ARSIP_KOM','pencatatan.KODE_ARSIP_HLM','pencatatan.KODE_ARSIP_MANUAL','pencatatan.NAMA_FILE_SURAT','pencatatan.NAMA_FILE_LAMPIRAN','pencatatan.TGL_SURAT','pencatatan.PENANDATANGAN','jenis_surat.*','derajat_surat.*','surat_masuk.*','kode_unit_kerja.KODE_UNIT_KERJA','kode_unit_kerja.NAMA_UNIT_KERJA','kode_sifat_naskah.KODE_SIFAT_NASKAH','kode_sifat_naskah.SIFAT_NASKAH','pengguna.NAMA')
             ->orderBy('ID_PENCATATAN','desc')
             ->get();
-            $time_end = time();
-            $mytime2=gettimeofday(true);
-           $time = $mytime2 - $mytime;
-
-           // $end = date("s");
-           // $time = $time_end - $time_start;
             $respon = [
                 'Msg' => 'success',
-                'diff'=> $time,
                 'key' => $key,
                 'content' => $result,
                 ];
-                return response()->json($respon);
+
+            if(count($result)==0||count($result)==null){
+                $str = explode(" ", $key);
+                $found = false;
+                $i = 0;
+                while($found!= true){
+                try{
+                    $result= DB::table('surat_masuk')
+                    ->join('pencatatan','pencatatan.ID_PENCATATAN','=','surat_masuk.ID_PENCATATAN')
+                    ->join('jenis_surat','jenis_surat.ID_JENIS_SURAT','=','pencatatan.ID_JENIS_SURAT')
+                    ->join('derajat_surat','derajat_surat.ID_DERAJAT_SURAT','=','pencatatan.ID_DERAJAT_SURAT')
+                    ->join('kode_unit_kerja','surat_masuk.ID_KODE_UNIT_KERJA','=','kode_unit_kerja.ID_KODE_UNIT_KERJA')
+                    ->join('kode_sifat_naskah','kode_sifat_naskah.ID_SIFAT_NASKAH', '=','surat_masuk.ID_SIFAT_NASKAH')
+                    ->join('pengguna','pengguna.ID_PENGGUNA','=','surat_masuk.ID_PENGGUNA')
+                    ->where('PERIHAL', 'like','%'.$str[$i].'%')
+                    ->orWhere('NAMA_UNIT_KERJA','like','%'.$str[$i].'%')
+                    ->orWhere('KODE_ARSIP_KOM','like','%'.$str[$i].'%')
+                    ->orWhere('KODE_ARSIP_MANUAL','like','%'.$str[$i].'%')
+                    ->orWhere('KODE_ARSIP_HLM','like','%'.$str[$i].'%')
+                    ->orWhere('TGL_SURAT','like','%'.$str[$i].'%')
+                    ->orWhere('PENANDATANGAN','like','%'.$str[$i].'%')
+                    ->orWhere('JENIS_SURAT','like','%'.$str[$i].'%')
+                    //->orWhere('KETERANGAN','like','%'.$str[$i].'%')
+                    ->orWhere('DERAJAT_SURAT','like','%'.$str[$i].'%')
+                    //->orWhere('DESKRIPSI','like','%'.$str[$i].'%')
+                    ->orWhere('NOMOR_SURAT','like','%'.$str[$i].'%')
+                    ->orWhere('NAMA_PENGIRIM','like','%'.$str[$i].'%')
+                    ->orWhere('TGL_DITERIMA','like','%'.$str[$i].'%')
+                    ->orWhere('NOMOR_AGENDA','like','%'.$str[$i].'%')
+                    ->orWhere('KODE_UNIT_KERJA','like','%'.$str[$i].'%')
+                    ->orWhere('KODE_SIFAT_NASKAH','like','%'.$str[$i].'%')
+                    ->orWhere('SIFAT_NASKAH','like','%'.$str[$i].'%')
+                    ->orWhere('NAMA','%','like','%'.$str[$i].'%')
+                    ->select('pencatatan.PERIHAL','pencatatan.KODE_ARSIP_KOM','pencatatan.KODE_ARSIP_HLM','pencatatan.KODE_ARSIP_MANUAL','pencatatan.NAMA_FILE_SURAT',
+                    'pencatatan.NAMA_FILE_LAMPIRAN','pencatatan.TGL_SURAT','pencatatan.PENANDATANGAN','jenis_surat.*','derajat_surat.*','surat_masuk.*','kode_unit_kerja.KODE_UNIT_KERJA',
+                    'kode_unit_kerja.NAMA_UNIT_KERJA','kode_sifat_naskah.KODE_SIFAT_NASKAH','kode_sifat_naskah.SIFAT_NASKAH','pengguna.NAMA')
+                    ->orderBy('ID_PENCATATAN','desc')
+                    ->get();
+                    if(count($result)!=0||count($result)!=null){
+                        $respon = [
+                            'Msg' => 'success',
+                            'key' => $str[$i],
+                            'content' => $result,
+                            ];
+                            $found= true;
+                    }else{
+                        if($i > count($str)){
+                            $respon = [
+                                'Msg' => 'success',
+                                'key' => $str[$i],
+                                'content' => $result,
+                                ];
+                                $found = true;
+                        }
+                        $i++;
+                    }
+                } catch(\Exception $ex){
+                    $respon = [
+                        'Msg' => 'error',
+                        'content' => [],
+                        ];
+                        $found = true;
+                }
+            }
+            }
 
         } catch(\Exception $ex){
             $respon = [
@@ -286,6 +338,8 @@ class SuratMasukController extends Controller
                 ];
                 return response()->json($respon);
         }
+
+            return response()->json($respon);
     }
     public function exportDataSuratMasuk(){
         ob_end_clean();

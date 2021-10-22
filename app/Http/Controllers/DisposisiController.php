@@ -29,7 +29,7 @@ class DisposisiController extends Controller
         ->where('JENIS_DISPOSISI',1)
         ->select('disposisi.*','surat_masuk.*','pencatatan.*')
         ->get();
-        
+
         return response()->json($disposisi);
     }
     public function allInfoDisposisiSuratKeluar(){
@@ -39,7 +39,7 @@ class DisposisiController extends Controller
         ->where('JENIS_DISPOSISI',2)
         ->select('disposisi.*','surat_masuk.*')
         ->get();
-        
+
         return response()->json($disposisi);
     }
     /**
@@ -76,13 +76,13 @@ class DisposisiController extends Controller
             ];
         return response()->json($respon);
     }
-        
+
     public function getDisposisi($id){
         $disposisi = DB::table('disposisi')
         ->join('surat_masuk','disposisi.ID_PENCATATAN','=','surat_masuk.ID_PENCATATAN')
         ->where('ID_DISPOSISI',$id)
         ->select('disposisi.*','surat_masuk.*')
-        
+
         ->get();
         return response()->json($disposisi);
     }
@@ -93,7 +93,7 @@ class DisposisiController extends Controller
                 'content' => null
             ];
             return response()->json($respon);
-        }   
+        }
         $respon = [
             'content' => $disposisi
         ];
@@ -188,7 +188,7 @@ class DisposisiController extends Controller
         try{
             $disposisi = TujuanDisposisi::where('ID_DISPOSISI',$id);
             $disposisi->delete();
-        } catch(\Exception $ex){ 
+        } catch(\Exception $ex){
             $respon = [
                 'Msg' => 'error1',
                 'content' => $id,
@@ -201,10 +201,10 @@ class DisposisiController extends Controller
             $respon = [
                 'Msg' => 'succes',
                 'content' => $disposisi,
-                ];            
+                ];
                 return response()->json($respon);
             }
-            catch(\Exception $ex){ 
+            catch(\Exception $ex){
                 $respon = [
                     'Msg' => 'error3',
                     'content' => $id,
@@ -220,7 +220,7 @@ class DisposisiController extends Controller
         //     ];
         // return response()->json($respon);
         // }
-        
+
         // $respon =[
         //     'Msg' => 'Belum terhapus',
         //     'content' => $id,
@@ -237,7 +237,7 @@ class DisposisiController extends Controller
             ];
             return response()->json($respon);
 
-        }catch(\Exception $ex){ 
+        }catch(\Exception $ex){
             $respon = [
                 'Msg' => 'error',
                 'content' => null,
@@ -245,7 +245,29 @@ class DisposisiController extends Controller
                 return response()->json($respon);
 
         }
-     
 
+
+    }
+    public function addMsgDisposisi(Request $request)
+    {
+        try {
+            $disposisi = Disposisi::where('ID_DISPOSISI', $request->id)
+            ->update([
+                'KOMENTAR_DISPOSISI'=>$request->komentar_disposisi,
+            ]);
+            $respon =[
+                'Msg' => 'success',
+                'content' => $disposisi,
+                'request' => $request->id,
+                'msg_request'=> $request->komentar_disposisi
+                ];
+            return response()->json($respon);
+        } catch (\Throwable $th) {
+            $respon =[
+                'Msg' => 'failed',
+                'content' => $disposisi,
+                ];
+            return response()->json($respon);
+        }
     }
 }

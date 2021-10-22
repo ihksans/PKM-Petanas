@@ -14,7 +14,7 @@ use App\Models\Pencatatan;
 class SuratKeluarController extends Controller
 {
     public function index(){
-       
+
         try{
             $last = SuratKeluar::all()->last();
             $respon = [
@@ -22,8 +22,8 @@ class SuratKeluarController extends Controller
                 'content'=> $last,
             ];
             return response()->json($respon,200);
-    
-        } catch(\Exception $ex){ 
+
+        } catch(\Exception $ex){
             $respon = [
                 'Msg'=> 'error',
                 'content'=> null,
@@ -33,10 +33,10 @@ class SuratKeluarController extends Controller
     }
     public function getLastNoAgenda(Request $request){
         try{
-            $year = date("Y"); 
+            $year = date("Y");
 
             $suratKeluar = SuratKeluar::where('TAHUN_AGENDA',  $year)->orderBy('NOMOR_AGENDA','desc')->first();
-          
+
             $respon = [
                 'Msg'=> 'success',
                 'tahun'=> $suratKeluar->TAHUN_AGENDA,
@@ -71,7 +71,7 @@ class SuratKeluarController extends Controller
                     'content' => $suratKeluar,
                 ];
                 return response()->json($respon);
-        }catch(\Exception $ex){ 
+        }catch(\Exception $ex){
                 $respon = [
                     'Msg' => 'error',
                     'content' => $data,
@@ -87,7 +87,7 @@ class SuratKeluarController extends Controller
                     'Msg' => 'success',
                     'content' =>  $suratKeluar,
                     ];
-                 
+
             }else{
                 $respon =[
                     'Msg' => 'error',
@@ -95,7 +95,7 @@ class SuratKeluarController extends Controller
                     ];
             }
             return response()->json($respon);
-        } catch(\Exception $ex){ 
+        } catch(\Exception $ex){
             $respon =[
                 'Msg' => 'error',
                 'content' =>  $id,
@@ -103,11 +103,11 @@ class SuratKeluarController extends Controller
             return response()->json($respon);
         }
     }
-    public function delSuratKeluar($id , $no){ 
+    public function delSuratKeluar($id , $no){
         try{
             $delTujuanPencatatan = TujuanPencatatan::where('ID_PENCATATAN', $id);
             $delTujuanPencatatan->delete();
-        } catch(\Exception $ex){ 
+        } catch(\Exception $ex){
             $respon = [
                 'Msg' => 'error',
                 'content' => $id,
@@ -126,31 +126,31 @@ class SuratKeluarController extends Controller
                     $respon = [
                         'Msg' => 'succes',
                         'content' => $result,
-                        ];            
+                        ];
                         return response()->json($respon);
-                    } 
-                    catch(\Exception $ex){ 
+                    }
+                    catch(\Exception $ex){
                         $respon = [
                             'Msg' => 'error',
                             'content' => $id,
                             ];
                             return response()->json($respon,200);
                         }
-            }catch(\Exception $ex){ 
+            }catch(\Exception $ex){
                 $respon = [
                     'Msg' => 'error',
                     'content' => $id,
                     ];
                     return response()->json($respon);
             }
-        } catch(\Exception $ex){ 
+        } catch(\Exception $ex){
             $respon = [
                 'Msg' => 'error',
                 'content' => $id,
                 ];
             return response()->json($respon);
         }
-        
+
     }
     public function updateSuratKeluar(Request $request)
     {
@@ -172,30 +172,30 @@ class SuratKeluarController extends Controller
                 'TGL_KIRIM'=>$request->tgl_kirim,
                 'NOMOR_SURAT'=>$request->nomor_surat
             ]);
-         
+
             if($suratKeluar!=0 || $suratKeluar!= null){
                 $respon = [
                     'Msg' => 'success',
                     'content' => $suratKeluar,
                     ];
-                
+
             }else{
                 $respon = [
                     'Msg' => 'error',
                     'content' => $suratKeluar,
                     'data'=> $data
                     ];
-                
+
             }
                 return response()->json($respon,200);
-        } catch(\Exception $ex){ 
+        } catch(\Exception $ex){
             $respon = [
                 'Msg' => 'error',
                 'data'=> $data
                 ];
                 return response()->json($respon);
         }
-       
+
     }
     public function getAllSuratKeluar(){
         try{
@@ -205,7 +205,7 @@ class SuratKeluarController extends Controller
                 'content' => $suratKeluar,
                 ];
                 return response()->json($respon,200);
-        } catch(\Exception $ex){ 
+        } catch(\Exception $ex){
             $respon = [
                 'Msg' => 'error',
                 'content' => $suratKeluar,
@@ -223,7 +223,7 @@ class SuratKeluarController extends Controller
                 'content2' => $nomorSurat
                 ];
                 return response()->json($respon,200);
-        } catch(\Exception $ex){ 
+        } catch(\Exception $ex){
             $respon = [
                 'Msg' => 'error',
                 'content' => $suratKeluar,
@@ -265,7 +265,7 @@ class SuratKeluarController extends Controller
                 'content' => $suratKeluar,
             ];
             return response()->json($respon);
-            } catch(\Exception $ex){ 
+            } catch(\Exception $ex){
                 $respon = [
                     'Msg' => 'error',
                     'content' => $suratKeluar,
@@ -273,9 +273,10 @@ class SuratKeluarController extends Controller
                     return response()->json($respon);
             }
     }
-    public function searchSuratKeluar($key){
+    public function searchSuratKeluar(Request $request){
+        $key = $request->key;
         try{
-            $suratKeluar = DB::table('surat_keluar')
+            $result = DB::table('surat_keluar')
             ->join('pencatatan','pencatatan.ID_PENCATATAN','=','surat_keluar.ID_PENCATATAN')
             ->join('pengguna','pengguna.ID_PENGGUNA','=','surat_keluar.ID_PENGGUNA')
             ->join('pemohon','pemohon.ID_PEMOHON','=','surat_keluar.ID_PEMOHON')
@@ -296,7 +297,6 @@ class SuratKeluarController extends Controller
             ->orWhere('TAHUN','like','%'.$key.'%')
             ->orWhere('DERAJAT_SURAT','like','%'.$key.'%')
             ->orWhere('JENIS_SURAT','like','%'.$key.'%')
-            ->orWhere('KETERANGAN','like','%'.$key.'%')
             ->select('pencatatan.PERIHAL','pencatatan.KODE_ARSIP_KOM',
             'pencatatan.KODE_ARSIP_HLM','pencatatan.KODE_ARSIP_MANUAL',
             'pencatatan.NAMA_FILE_SURAT','pencatatan.NAMA_FILE_LAMPIRAN',
@@ -312,19 +312,88 @@ class SuratKeluarController extends Controller
             $respon = [
                 'Msg' => 'success',
                 'key' => $key,
-                'content' => $suratKeluar,
+                'content' => $result,
             ];
-            return response()->json($respon);
-            } catch(\Exception $ex){ 
+            if(count($result)==0||count($result)==null){
+
+
+
+                $str = explode(" ", $key);
+                $found = false;
+                $i = 0;
+                while($found!= true){
+                try{
+                    $result = DB::table('surat_keluar')
+                    ->join('pencatatan','pencatatan.ID_PENCATATAN','=','surat_keluar.ID_PENCATATAN')
+                    ->join('pengguna','pengguna.ID_PENGGUNA','=','surat_keluar.ID_PENGGUNA')
+                    ->join('pemohon','pemohon.ID_PEMOHON','=','surat_keluar.ID_PEMOHON')
+                    ->join('nomor_surat','nomor_surat.ID_NOMOR_SURAT','=','surat_keluar.ID_NOMOR_SURAT')
+                    ->join('derajat_surat','derajat_surat.ID_DERAJAT_SURAT','=','pencatatan.ID_DERAJAT_SURAT')
+                    ->join('jenis_surat','jenis_surat.ID_JENIS_SURAT','=','pencatatan.ID_JENIS_SURAT')
+                    ->where('PERIHAL', 'like','%'.$str[$i].'%')
+                    ->orWhere('KODE_ARSIP_KOM','like','%'.$str[$i].'%')
+                    ->orWhere('KODE_ARSIP_HLM','like','%'.$str[$i].'%')
+                    ->orWhere('KODE_ARSIP_MANUAL','like','%'.$str[$i].'%')
+                    ->orWhere('TGL_SURAT','like','%'.$str[$i].'%')
+                    ->orWhere('PENANDATANGAN','like','%'.$str[$i].'%')
+                    ->orWhere('TGL_KIRIM','like','%'.$str[$i].'%')
+                    ->orWhere('NOMOR_SURAT','like','%'.$str[$i].'%')
+                    ->orWhere('NAMA','like','%'.$str[$i].'%')
+                    ->orWhere('NAMA_PEMOHON','like','%'.$str[$i].'%')
+                    ->orWhere('NOMOR_URUT','like','%'.$str[$i].'%')
+                    ->orWhere('TAHUN','like','%'.$str[$i].'%')
+                    ->orWhere('DERAJAT_SURAT','like','%'.$str[$i].'%')
+                    ->orWhere('JENIS_SURAT','like','%'.$str[$i].'%')
+                    //->orWhere('KETERANGAN','like','%'.$str[$i].'%')
+                    ->select('pencatatan.PERIHAL','pencatatan.KODE_ARSIP_KOM',
+                    'pencatatan.KODE_ARSIP_HLM','pencatatan.KODE_ARSIP_MANUAL',
+                    'pencatatan.NAMA_FILE_SURAT','pencatatan.NAMA_FILE_LAMPIRAN',
+                    'pencatatan.TGL_SURAT','pencatatan.PENANDATANGAN',
+                    'surat_keluar.*',
+                    'pengguna.NAMA',
+                    'pemohon.*',
+                    'nomor_surat.*',
+                    'derajat_surat.*',
+                    'jenis_surat.*')
+                    ->orderBy('ID_PENCATATAN','desc')
+                    ->get();
+                    if(count($result)!=0||count($result)!=null){
+                        $respon = [
+                            'Msg' => 'success',
+                            'key' => $str[$i],
+                            'content' => $result,
+                            ];
+                            $found= true;
+                    }else{
+                        if($i > count($str)){
+                            $respon = [
+                                'Msg' => 'success',
+                                'key' => $str[$i],
+                                'content' => $result,
+                                ];
+                                $found = true;
+                        }
+                        $i++;
+                    }
+                } catch(\Exception $ex){
+                    $respon = [
+                        'Msg' => 'error',
+                        'content' => [],
+                        ];
+                        $found = true;
+                }
+            }
+            }
+        } catch(\Exception $ex){
                 $respon = [
                     'Msg' => 'error',
                     'content' => $key,
                     ];
                     return response()->json($respon);
             }
-            
+            return response()->json($respon);
     }
-    
+
     public function getCountSK(){
         try{
             $result = SuratKeluar::all();
@@ -335,7 +404,7 @@ class SuratKeluarController extends Controller
             ];
             return response()->json($respon);
 
-        }catch(\Exception $ex){ 
+        }catch(\Exception $ex){
             $respon = [
                 'Msg' => 'error',
                 'content' => null,
@@ -343,8 +412,8 @@ class SuratKeluarController extends Controller
                 return response()->json($respon);
 
         }
-     
+
 
     }
-  
+
 }
