@@ -126,6 +126,21 @@ class TujuanController extends Controller
         ];
         return response()->json($respon);
     }
+    public function delAllTujuanSurat(){
+        $delTujuanPencatatan = TujuanPencatatan::truncate();
+        if($delTujuanPencatatan){
+            $respon=[
+                'Msg' => 'succes',
+                'content'=> $delTujuanPencatatan
+            ];
+            return response()->json($respon,200);            
+        }
+        $respon=[
+            'Msg'=> 'error',
+            'content'=> null
+        ];
+        return response()->json($respon);
+    }
     
     public function createTujuanDisposisi(Request $request)
     {
@@ -172,6 +187,22 @@ class TujuanController extends Controller
     public function delTujuanDisposisi($id,$to){
         $delTujuanDisposisi = TujuanDisposisi::where('ID_DISPOSISI',$id)->where('ID_KODE_UNIT_KERJA',$to);
         $delTujuanDisposisi->delete();
+        if($delTujuanDisposisi){
+            $respon=[
+                'Msg' => 'succes',
+                'content'=> $delTujuanDisposisi
+            ];
+            return response()->json($respon,200);            
+        }
+        $respon=[
+            'Msg'=> 'error',
+            'content'=> null
+        ];
+        return response()->json($respon);
+    }
+
+    public function delAllTujuanDisposisi(){
+        $delTujuanDisposisi = TujuanDisposisi::truncate();
         if($delTujuanDisposisi){
             $respon=[
                 'Msg' => 'succes',

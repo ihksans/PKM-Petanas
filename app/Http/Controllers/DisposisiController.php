@@ -270,4 +270,20 @@ class DisposisiController extends Controller
             return response()->json($respon);
         }
     }
+
+    public function delAllDisposisi(){
+        $del = Disposisi::truncate();
+        if($del){
+            $respon=[
+                'Msg' => 'succes',
+                'content'=> $del
+            ];
+            return response()->json($respon,200);            
+        }
+        $respon=[
+            'Msg'=> 'error',
+            'content'=> null
+        ];
+        return response()->json($respon);
+    }
 }

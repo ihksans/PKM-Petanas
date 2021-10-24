@@ -7,11 +7,13 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\SuratMasuk;
 use App\Models\JenisSurat;
-use App\Exports\Exporter;
+use App\Exports\SuratMasukExporter;
+use App\Imports\SuratMasukImporter;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Models\Pencatatan;
 use App\Models\TujuanPencatatan;
 use App\Models\Pengingat;
+
 class SuratMasukController extends Controller
 {
     //
@@ -344,7 +346,8 @@ class SuratMasukController extends Controller
     public function exportDataSuratMasuk(){
         ob_end_clean();
         ob_start();
-        return Excel::download(new Exporter, 'Pencatatan Surat Masuk.xlsx');
+        // return Excel::download(new SuratMasukExporter, 'Pencatatan Surat Masuk.xlsx');
+        return (new SuratMasukExporter)->download('Pencatatan Surat Masuk per ' .date("d-m-Y").'.xlsx');
     }
     public function getCountSM(){
         try{
@@ -364,8 +367,31 @@ class SuratMasukController extends Controller
                 return response()->json($respon);
 
         }
-
-
     }
-
+    public function importDataSuratMasuk(Request $request){
+        // $surat = $request->file;
+        // $nama_file = $surat->getClientOriginalName();
+        // $localfolder = public_path('import-temp') .'/';        
+        // if ($surat->move($localfolder, $nama_file)) {
+            // $import = Excel::import(new SuratMasukImporter, $request->file);
+            // $import = Excel::import(new SuratMasukImporter, public_path('import-temp/'.$nama_file));
+                // if(Excel::import(new SuratMasukImporter, $request->file)){
+                //     return response()->json([
+                //         'status' => 'success',
+                //         'message' => 'Data berhasil diimport',
+                //     ], 200);
+                // }
+                // else{
+                //     return response()->json([
+                //         'status' => 'error',
+                //         'message' => 'Data gagal diimport',
+                //     ], 500);
+                // }
+        // }
+        Excel::import(new SuratMasukImporter, $request->file);
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Data berhasil diimport',
+        ], 200);
+    }
 }
