@@ -21,26 +21,106 @@ class DisposisiController extends Controller
     {
         //
     }
+
     public function allInfoDisposisiSuratMasuk(){
-        // public function allInfoDisposisi($id){
         $disposisi = DB::table('disposisi')
         ->join('surat_masuk','disposisi.ID_PENCATATAN','=','surat_masuk.ID_PENCATATAN')
         ->join('pencatatan','disposisi.ID_PENCATATAN','=','pencatatan.ID_PENCATATAN')
-        ->where('JENIS_DISPOSISI',1)
+        // ->join('tujuan_pencatatan','surat_masuk.ID_PENCACATAN','=','tujuan_pencatatan.ID_PENCATATAN')
+        // ->join('kode_unit_kerja','tujuan_pencatatan.ID_KODE_UNIT_KERJA','=','kode_unit_kerja.ID_KODE_UNIT_KERJA')
+        // ->where('disposisi.JENIS_DISPOSISI',1)
+        // ->select('disposisi.*','surat_masuk.*','pencatatan.*','tujuan_pencatatan.*','kode_unit_kerja.*')
         ->select('disposisi.*','surat_masuk.*','pencatatan.*')
+        ->orderBy('ID_DISPOSISI','desc')
         ->get();
+        if(!$disposisi){
+            $respon=[
+                'Msg' => 'success',
+                'content' => $disposisi,
+            ];
+            return response()->json($respon);
+        }
 
-        return response()->json($disposisi);
+        $respon = [
+            'Msg' => 'error',
+            'content' => $disposisi,
+            ];
+        return response()->json($respon);
+
+
+        // try{
+        //     $disposisi = DB::table('disposisi')
+        //     ->join('surat_masuk','disposisi.ID_PENCATATAN','=','surat_masuk.ID_PENCATATAN')
+        //     ->join('pencatatan','disposisi.ID_PENCATATAN','=','pencatatan.ID_PENCATATAN')
+        //     // ->join('tujuan_pencatatan','surat_masuk.ID_PENCACATAN','=','tujuan_pencatatan.ID_PENCATATAN')
+        //     // ->join('kode_unit_kerja','tujuan_pencatatan.ID_KODE_UNIT_KERJA','=','kode_unit_kerja.ID_KODE_UNIT_KERJA')
+        //     // ->where('JENIS_DISPOSISI',1)
+        //     // ->select('disposisi.*','surat_masuk.*','pencatatan.*','tujuan_pencatatan.*','kode_unit_kerja.*')
+        //     ->select('disposisi.*','surat_masuk.*','pencatatan.*')
+        //     ->orderBy('ID_DISPOSISI','desc')
+        //     ->get();
+        //     $respon=[
+        //         'Msg' => 'success',
+        //         'content' => $disposisi,
+        //     ];
+        //     return response()->json($respon);
+        // } catch(\Exception $ex){
+        //     $respon = [
+        //         'Msg' => 'error',
+        //         'content' => $disposisi,
+        //         ];
+        //         return response()->json($respon);
+        // }
     }
     public function allInfoDisposisiSuratKeluar(){
-        // public function allInfoDisposisi($id){
         $disposisi = DB::table('disposisi')
         ->join('surat_masuk','disposisi.ID_PENCATATAN','=','surat_masuk.ID_PENCATATAN')
-        ->where('JENIS_DISPOSISI',2)
-        ->select('disposisi.*','surat_masuk.*')
+        ->join('pencatatan','disposisi.ID_PENCATATAN','=','pencatatan.ID_PENCATATAN')
+        // ->join('tujuan_pencatatan','surat_masuk.ID_PENCACATAN','=','tujuan_pencatatan.ID_PENCATATAN')
+        // ->join('kode_unit_kerja','tujuan_pencatatan.ID_KODE_UNIT_KERJA','=','kode_unit_kerja.ID_KODE_UNIT_KERJA')
+        // ->where('JENIS_DISPOSISI',2)
+        // ->select('disposisi.*','surat_masuk.*','pencatatan.*','tujuan_pencatatan.*','kode_unit_kerja.*')
+        ->select('disposisi.*','surat_masuk.*','pencatatan.*')
+        ->orderBy('ID_DISPOSISI','desc')
         ->get();
+        if(!$disposisi){
+            $respon=[
+                'Msg' => 'success',
+                'content' => $disposisi,
+            ];
+            return response()->json($respon);
+        }
 
-        return response()->json($disposisi);
+        $respon = [
+            'Msg' => 'error',
+            'content' => $disposisi,
+            ];
+        return response()->json($respon);
+
+
+        // try{
+        //     $disposisi = DB::table('disposisi')
+        //     ->join('surat_masuk','disposisi.ID_PENCATATAN','=','surat_masuk.ID_PENCATATAN')
+        //     ->join('pencatatan','disposisi.ID_PENCATATAN','=','pencatatan.ID_PENCATATAN')
+        //     // ->join('tujuan_pencatatan','surat_masuk.ID_PENCACATAN','=','tujuan_pencatatan.ID_PENCATATAN')
+        //     // ->join('kode_unit_kerja','tujuan_pencatatan.ID_KODE_UNIT_KERJA','=','kode_unit_kerja.ID_KODE_UNIT_KERJA')
+        //     // ->where('JENIS_DISPOSISI',1)
+        //     // ->select('disposisi.*','surat_masuk.*','pencatatan.*','tujuan_pencatatan.*','kode_unit_kerja.*')
+        //     ->select('disposisi.*','surat_masuk.*','pencatatan.*')
+        //     ->orderBy('ID_DISPOSISI','desc')
+        //     ->get();
+        //     $respon=[
+        //         'Msg' => 'success',
+        //         'content' => $disposisi,
+        //     ];
+        //     return response()->json($respon);
+        // } catch(\Exception $ex){
+        //     $respon = [
+        //         'Msg' => 'error',
+        //         'content' => $disposisi,
+        //         ];
+        //         return response()->json($respon);
+        // }
     }
     /**
      * Show the form for creating a new resource.
@@ -132,7 +212,7 @@ class DisposisiController extends Controller
         $disposisi = Disposisi::where('ID_DISPOSISI', $request->id)
         ->update([
             // 'ID_PENGGUNA'=>$request->id_pengguna,
-            // 'ID_PENCATATAN'=>$request->id_pencatatan,
+            'ID_PENCATATAN'=>$request->id_pencatatan,
             // 'ID_DISPOSISI'=>$request->id,
             'TANGGAL_DISPOSISI'=>$request->tanggal_disposisi,
             // 'NOMOR_DISPOSISI'=>$request->nomor_disposisi,
@@ -146,7 +226,7 @@ class DisposisiController extends Controller
         if(!$disposisi){
             $respon =[
                 'Msg' => 'failed',
-                'content' => $disposisi,
+                'content' => $request->id_pencatatan,
                 ];
             return response()->json($respon);
         }
@@ -154,7 +234,7 @@ class DisposisiController extends Controller
             'Msg' => 'success',
             'content' => $disposisi,
             ];
-        return response()->json($respon);
+        return response()->json($respon,200);
     }
     public function showData()
     {
@@ -243,47 +323,24 @@ class DisposisiController extends Controller
                 'content' => null,
                 ];
                 return response()->json($respon);
-
-        }
-
-
-    }
-    public function addMsgDisposisi(Request $request)
-    {
-        try {
-            $disposisi = Disposisi::where('ID_DISPOSISI', $request->id)
-            ->update([
-                'KOMENTAR_DISPOSISI'=>$request->komentar_disposisi,
-            ]);
-            $respon =[
-                'Msg' => 'success',
-                'content' => $disposisi,
-                'request' => $request->id,
-                'msg_request'=> $request->komentar_disposisi
-                ];
-            return response()->json($respon);
-        } catch (\Throwable $th) {
-            $respon =[
-                'Msg' => 'failed',
-                'content' => $disposisi,
-                ];
-            return response()->json($respon);
         }
     }
+    // public function searchDisposisi(Request $request){
+    //     $key = $request->key;
+    //     try{
+    //         $resul = DB::table('disposisi')
+    //         ->join('surat_masuk','disposisi.ID_PENCATATAN','=','surat_masuk.ID_PENCATATAN')
+    //         ->join('surat_keluar','disposisi.ID_PENCATATAN', '=','surat_keluar.ID_PENCATATAN')
+    //         ->join('pencatatan','disposisi.ID_PENCATATAN','=','pencatatan.ID_PENCATATAN')
+    //         ->join('pengguna','disposisi.ID_PENGGUNA','=','pengguna.ID_PENGGUNA')
+    //         ->join('kode_unit_kerja','kode_unit_kerja.ID_KODE_UNIT_KERJA','=','pencatatan.ID_KODE_UNIT_KERJA')
 
-    public function delAllDisposisi(){
-        $del = Disposisi::truncate();
-        if($del){
-            $respon=[
-                'Msg' => 'succes',
-                'content'=> $del
-            ];
-            return response()->json($respon,200);            
-        }
-        $respon=[
-            'Msg'=> 'error',
-            'content'=> null
-        ];
-        return response()->json($respon);
-    }
+    //         ->where('TANGGAL_DISPOSISI','like','%'.$key.'%')
+    //         ->orWhere('PROSES_SELANJUTNYA','like','%'.$key.'%')
+    //         ->orWhere('INFORMASI','like','%'.$key.'%')
+    //         ->orWhere('NOMOR_AGENDA','like','%'.$key.'%')
+    //         ->select('disposisi.*','pencatatan.PERIHAL','pencatatan.KODE_ARSIP_KOM','pencatatan.KODE_ARSIP_HLM','pencatatan.KODE_ARSIP_MANUAL','pencatatan.TGL_SURAT','pencatatan.PENANDATANGAN','jenis_surat.*','derajat_surat.*','surat_masuk.*','kode_unit_kerja.KODE_UNIT_KERJA','kode_unit_kerja.NAMA_UNIT_KERJA','kode_sifat_naskah.KODE_SIFAT_NASKAH','kode_sifat_naskah.SIFAT_NASKAH','pengguna.NAMA')
+    //         ->get();
+    //     }
+    // }
 }

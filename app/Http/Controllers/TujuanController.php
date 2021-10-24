@@ -13,7 +13,7 @@ class TujuanController extends Controller
     public function index(){
 
     }
-    
+
     public function setTujuanPencatatan(Request $request)
     {
         $data=[
@@ -36,7 +36,7 @@ class TujuanController extends Controller
             ];
             return response()->json($respon);
         }
-        
+
     }
     public function getTujuanPencatatan($id){
         $tujuanPencatatan = TujuanPencatatan::where('ID_PENCATATAN',$id)->get();
@@ -45,7 +45,7 @@ class TujuanController extends Controller
                 'Msg' => 'succes',
                 'content'=> $tujuanPencatatan
             ];
-            return response()->json($respon,200);            
+            return response()->json($respon,200);
         }
         $respon=[
             'Msg'=> 'error',
@@ -62,7 +62,7 @@ class TujuanController extends Controller
                 'Msg' => 'succes',
                 'content'=> $delTujuanPencatatan
             ];
-            return response()->json($respon,200);            
+            return response()->json($respon,200);
         }
         $respon=[
             'Msg'=> 'error',
@@ -82,7 +82,7 @@ class TujuanController extends Controller
                 'Msg' => 'succes',
                 'content'=> $upTujuanPencatatan
             ];
-            return response()->json($respon,200);            
+            return response()->json($respon,200);
         }
         $respon=[
             'Msg'=> 'error',
@@ -100,13 +100,13 @@ class TujuanController extends Controller
                 'Msg' => 'succes',
                 'content'=> $detail
             ];
-            return response()->json($respon,200); 
+            return response()->json($respon,200);
         }else{
             $respon=[
                 'Msg' => 'error',
                 'content'=> null
             ];
-            return response()->json($respon); 
+            return response()->json($respon);
         }
 
     }
@@ -118,7 +118,7 @@ class TujuanController extends Controller
                 'Msg' => 'succes',
                 'content'=> $delTujuanPencatatan
             ];
-            return response()->json($respon,200);            
+            return response()->json($respon,200);
         }
         $respon=[
             'Msg'=> 'error',
@@ -133,7 +133,7 @@ class TujuanController extends Controller
                 'Msg' => 'succes',
                 'content'=> $delTujuanPencatatan
             ];
-            return response()->json($respon,200);            
+            return response()->json($respon,200);
         }
         $respon=[
             'Msg'=> 'error',
@@ -141,7 +141,7 @@ class TujuanController extends Controller
         ];
         return response()->json($respon);
     }
-    
+
     public function createTujuanDisposisi(Request $request)
     {
         $data=[
@@ -183,7 +183,7 @@ class TujuanController extends Controller
             return response()->json($response,200);
         }
     }
-    
+
     public function delTujuanDisposisi($id,$to){
         $delTujuanDisposisi = TujuanDisposisi::where('ID_DISPOSISI',$id)->where('ID_KODE_UNIT_KERJA',$to);
         $delTujuanDisposisi->delete();
@@ -192,7 +192,7 @@ class TujuanController extends Controller
                 'Msg' => 'succes',
                 'content'=> $delTujuanDisposisi
             ];
-            return response()->json($respon,200);            
+            return response()->json($respon,200);
         }
         $respon=[
             'Msg'=> 'error',
@@ -200,15 +200,35 @@ class TujuanController extends Controller
         ];
         return response()->json($respon);
     }
-
-    public function delAllTujuanDisposisi(){
-        $delTujuanDisposisi = TujuanDisposisi::truncate();
+    public function delAllTujuanDisposisi($id){
+        $delTujuanDisposisi = TujuanDisposisi::where('ID_DISPOSISI', $id);
+        $delTujuanDisposisi->delete();
         if($delTujuanDisposisi){
             $respon=[
                 'Msg' => 'succes',
                 'content'=> $delTujuanDisposisi
             ];
-            return response()->json($respon,200);            
+            return response()->json($respon,200);
+        }
+        $respon=[
+            'Msg'=> 'error',
+            'content'=> null
+        ];
+        return response()->json($respon);
+    }
+    public function upTujuanDisposisi(Request $request)
+    {
+        $upTujuanDisposisi =  TujuanDisposisi::where('ID_DISPOSISI', $request->idDisposisi)->where('ID_KODE_UNIT_KERJA',$request->idUnit)
+        ->update([
+            'ID_PENCATATAN'=>$request->idDisposisi,
+            'ID_KODE_UNIT_KERJA'=>$request->idUnitNew
+        ]);
+        if($upTujuanDisposisi){
+            $respon=[
+                'Msg' => 'succes',
+                'content'=> $upTujuanDisposisi
+            ];
+            return response()->json($respon,200);
         }
         $respon=[
             'Msg'=> 'error',
