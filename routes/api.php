@@ -39,7 +39,8 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::delete('deleteUser/{id}', 'PenggunaController@deleteUser');
         //disposisi
     // Route::get('allInfoDisposisi/{id}','DisposisiController@allInfoDisposisi');
-    Route::get('allInfoDisposisi','DisposisiController@allInfoDisposisiSuratMasuk');
+    Route::get('allInfoDisposisiSM','DisposisiController@allInfoDisposisiSuratMasuk');
+    Route::get('allInfoDIsposisiSK','DisposisiController@allInfoDisposisiSuratKeluar');
     Route::get('createDisposisi','DisposisiController@createDisposisis');
     Route::get('getDisposisi/{id}','DisposisiController@getDisposisi');
     Route::post('createDisposisi','DisposisiController@createDisposisis');
@@ -48,7 +49,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::delete('deleteDisposisi/{id}','DisposisiController@deleteDisposisi');
     // Route::delete('deleteUser', 'PenggunaController@deleteUser');
     Route::get('getDisposisiByID/{id}','DisposisiController@getDisposisiByID');
-    Route::get('allInfoDisposisiKeluar','DisposisiController@allInfoDisposisiSuratKeluar');
+    // Route::get('allInfoDisposisiKeluar','DisposisiController@allInfoDisposisiSuratKeluar');
     Route::get('showData','DisposisiController@showData');
     //nadia
         //pengingat
