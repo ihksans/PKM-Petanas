@@ -12,7 +12,7 @@ class DetailDisposisiD extends Component {
     super(props)
     this.state = {
       dir: [],
-      tujuanDisposisi: [],
+      tujuanDisposisi:[],
       url: null,
       loading: false,
       disposisi: null,
@@ -26,7 +26,7 @@ class DetailDisposisiD extends Component {
     this.onSubmit = this.onSubmit.bind(this)
     this.handleLoading = this.handleLoading.bind(this)
 
-    // this.handleTujuanDisposisi = this.handleTujuanDisposisi.bind(this)
+    this.handleTujuanDisposisi = this.handleTujuanDisposisi.bind(this)
     this.getFileDisposisi = this.getFileDisposisi.bind(this)
   }
   handleLoading() {
@@ -34,37 +34,23 @@ class DetailDisposisiD extends Component {
       loading: !this.state.loading,
     })
   }
-  // async handleTujuanDisposisi(){
-  //   await api()
-  //   .get('api/getTujuanDisposisi/' + this.props.DisposisiDetail.ID_DISPOSISI)
-  //   .then((response)=>{
-  //     this.setState({
-  //       tujuanDisposisi:response.data.content,
-  //     })
-  //     console.log('tujuan disposisi:' + this.state.tujuanDisposisi)
-  //     console.log('tujuan disposisi2:' + response.data.content)
-  //   })
-  // }
-  // async handleTujuanDisposisi() {
-  //   await api()
-  //     .get(
-  //       'api/getDetailTujuanPencatatan/' + this.props.DisposisiDetail.ID_DISPOSISI,
-  //     )
-  //     .then((response) => {
-  //       this.setState({
-  //         tujuanDisposisi: response.data.content,
-  //       })
-  //       console.log('tujuan pencatatan:' + this.state.tujuanDisposisi)
-  //       console.log('tujuan pencatatan2:' + response.data.content)
-  //     })
-  // }
+  async handleTujuanDisposisi(){
+    await api()
+    .get('api/getDetailTujuanDisposisi/' + this.props.DisposisiDetail.ID_DISPOSISI)
+    .then((response)=>{
+      this.setState({
+        tujuanDisposisi:response.data.content,
+      })
+      console.log('tujuan disposisi:' + this.state.tujuanDisposisi)
+      console.log('tujuan disposisi2:' + response.data.content)
+    })
+  }
   async getFileDisposisi() {
     this.handleLoading()
     let formData = new FormData()
     formData.append(
       'namafile',
-      this.props.DisposisiDetail.NOMOR_SURAT.split('/').join('_') +
-        '_disposisi',
+      this.props.DisposisiDetail.NOMOR_SURAT.split('/').join('_') + '_disposisi',
     )
     await api()
       .post('/api/getSurat', formData)
@@ -76,9 +62,11 @@ class DetailDisposisiD extends Component {
     this.handleLoading()
   }
   async handleModal() {
-    // handleTujuanDisposisi()
+    this.handleTujuanDisposisi()
     if (this.state.url == null) {
+      this.handleLoading()
       await this.getFileDisposisi()
+      this.handleLoading()
     }
     await this.setState({
       showModal: !this.state.showModal,
@@ -128,6 +116,7 @@ class DetailDisposisiD extends Component {
                           IdJenisSurat={this.props.IdJenisSurat}
                           IdUnitKerja={this.props.IdUnitKerja}
                           SuratMasuk={this.props.SuratMasuk}
+                          tujuanDisposisi={this.props.tujuanDisposisi}
                         />
                         {this.props.User.currentUser.ROLE == 3 ? null : (
                           <>
@@ -224,7 +213,10 @@ class DetailDisposisiD extends Component {
                     </div>
                     <div>
                       <div className=" flex justify-end   ">
-                        <button onClick={this.handleModal}>
+                        <button 
+                        className="hover:shadow-md focus:outline-none"
+                        onClick={this.handleModal}
+                        >
                           <img src="assets/img/icon/x.png" />
                         </button>
                       </div>
@@ -237,9 +229,8 @@ class DetailDisposisiD extends Component {
                               <PdfReader
                                 urlFile={this.state.url}
                                 namaFile={
-                                  this.props.DisposisiDetail.NOMOR_SURAT.split(
-                                    '/',
-                                  ).join('_') + '_disposisi'
+                                  this.props.DisposisiDetail.NOMOR_SURAT.split('/').join('_') +
+                                  '_disposisi'
                                 }
                               />
                             </>

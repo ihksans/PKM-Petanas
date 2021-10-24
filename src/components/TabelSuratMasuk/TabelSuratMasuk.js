@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { Component } from "react";
 //ini buat ngekoneksi redux
 // import { connect } from "react-redux";
@@ -44,11 +45,51 @@ class TabelSuratMasuk extends Component {
       this.setState({
         SuratMasuk: this.props.SuratMasuk,
       });
+=======
+import React, { Component } from 'react'
+//ini buat ngekoneksi redux
+import { connect } from 'react-redux'
+import {} from '../../actions'
+import HeaderTabel from './HeaderTabel'
+import BoxData from './BoxDataTabel'
+import api from '../../service/api'
+// const TabelSuratMasuk = ({ SuratMasuk, IdJenisSurat, IdUnitKerja }) => {
+class TabelSuratMasuk extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      SuratMasuk: this.props.SuratMasuk,
+      search: '',
+    }
+    this.getSuratMasuk = this.getSuratMasuk.bind(this)
+    this.handleSearch = this.handleSearch.bind(this)
+  }
+  async getSuratMasuk(e) {
+    let key = this.state.search
+    let str = ''
+    str = key.replace(/\s\s+/g, '')
+
+    if (str != '' && str != null && str != ' ') {
+      let formData = new FormData()
+      formData.append('key', str)
+      await api()
+        .post('/api/searchSuratMasuk/', formData)
+        .then((response) => {
+          this.setState({
+            SuratMasuk: response.data.content,
+          })
+        })
+    } else {
+      this.setState({
+        SuratMasuk: this.props.SuratMasuk,
+      })
+>>>>>>> c3ee79e7c5401ef1249e6b7117e77c39c648f090
     }
   }
   handleSearch(e) {
     this.setState({
       search: e.target.value,
+<<<<<<< HEAD
     });
     if (
       e.target.value === "" &&
@@ -83,6 +124,20 @@ class TabelSuratMasuk extends Component {
       );
     });
 
+=======
+    })
+    if (
+      e.target.value == '' &&
+      e.target.value == null &&
+      e.target.value == ' '
+    ) {
+      this.setState({
+        SuratMasuk: this.props.SuratMasuk,
+      })
+    }
+  }
+  render() {
+>>>>>>> c3ee79e7c5401ef1249e6b7117e77c39c648f090
     return (
       <>
         <div className="flex absolute right-10 top-32 justify-end mt-5 w-1/2">
@@ -112,6 +167,7 @@ class TabelSuratMasuk extends Component {
         </div>
         <ul>
           <HeaderTabel />
+<<<<<<< HEAD
           {dataSuratMasuk == null ? null : dataSuratMasuk}
         </ul>
         <nav className="mt-4">
@@ -135,3 +191,25 @@ class TabelSuratMasuk extends Component {
   }
 }
 export default TabelSuratMasuk;
+=======
+          {this.state.SuratMasuk == null
+            ? null
+            : this.state.SuratMasuk.map((item, index) => {
+                return (
+                  <li key={index}>
+                    <BoxData
+                      No={index + 1}
+                      IdJenisSurat={this.props.IdJenisSurat}
+                      Surat={item}
+                      IdUnitKerja={this.props.IdUnitKerja}
+                    />
+                  </li>
+                )
+              })}
+        </ul>
+      </>
+    )
+  }
+}
+export default TabelSuratMasuk
+>>>>>>> c3ee79e7c5401ef1249e6b7117e77c39c648f090

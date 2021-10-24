@@ -992,7 +992,11 @@ class EditFormSurat extends Component {
                 if (this.state.surat == null && this.state.lampiran == null) {
                   this.handleLoading()
                   this.handleModal()
+<<<<<<< HEAD
                   //     window.location.reload('/#/SuratMasuk')
+=======
+                  window.location.reload('/#/SuratMasuk')
+>>>>>>> c3ee79e7c5401ef1249e6b7117e77c39c648f090
                 }
               })
           }

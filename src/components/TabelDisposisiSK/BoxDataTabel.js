@@ -22,15 +22,12 @@ class BoxDataTabel extends Component{
     <>
     <div className="grid grid-cols-8 border-b-2 border-gray-400 p-2">
         <div className="flex flex-row ml-2 ">
-                    <div className="">{this.props.No}.
-                    </div>
-                    
-                </div>
-                <div className="flex flex-row">
-                    <div className="">{this.props.Disposisi.NOMOR_AGENDA}</div>
-                </div>
-
-
+            <div className="">{this.props.No}.
+            </div>
+        </div>
+        <div className="flex flex-row">
+            <div className="">{this.props.Disposisi.NOMOR_AGENDA}</div>
+        </div>
         <div className="flex flex-row mt-1">
             <div className="">{this.props.Disposisi.TANGGAL_DISPOSISI}</div>
         </div>

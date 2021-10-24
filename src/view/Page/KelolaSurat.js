@@ -2,8 +2,12 @@ import React, { useState } from "react";
 import Tab from "../../components/Tab";
 // import SuratMasuk from '../../view/Page/SuratMasuk'
 import SuratMasuk from '../../components/TabelKelolaSurat/SM'
+<<<<<<< HEAD
 import SuratKeluar from '../../components/TabelKelolaSurat/SK'
 import DeleteAllP from '../../components/ModalDeletePencatatan'
+=======
+import Disposisi from '../../view/Page/Disposisi'
+>>>>>>> c3ee79e7c5401ef1249e6b7117e77c39c648f090
 
 const tabContent = [
   {
@@ -12,7 +16,11 @@ const tabContent = [
   },
   {
     title: "Surat Keluar",
+<<<<<<< HEAD
     content: <SuratKeluar/>,
+=======
+    content: <Disposisi/>, //surat keluar
+>>>>>>> c3ee79e7c5401ef1249e6b7117e77c39c648f090
   },
 ];
 
@@ -30,7 +38,10 @@ const KelolaSurat = () => {
                 </Tab.TabPane>
               ))}
             </Tab>
+<<<<<<< HEAD
             <DeleteAllP/>
+=======
+>>>>>>> c3ee79e7c5401ef1249e6b7117e77c39c648f090
           </div>
         </div>
       </div>

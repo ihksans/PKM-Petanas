@@ -1,8 +1,8 @@
-<<<<<<< HEAD
-import React, { Component } from "react";
+import React, { Component } from 'react'
 //Ini buat dependecies/library nya
 //import + "nama variabel" + from + "nama librarynya";
 import TabelDisposisi from '../../components/TabelDisposisi/TabelDisposisi'
+import PdfReader from '../../components/PdfReader'
 import { connect } from 'react-redux'
 import {
   setAllDisposisi,
@@ -12,92 +12,83 @@ import {
   setDerajatSurat,
   setSifatSurat,
   setAllPencatatan,
-
 } from '../../actions/index'
-import ModalLoading from '../../components/ModalLoading'
+// import Index from '../../components/Disposisi/index'
 import api from '../../service/api'
+import AddFormDisposisi from '../../components/AddFormDisposisi/index'
 class Disposisi extends Component {
   //deklarasi variabel
   constructor(props) {
-    super();
+    super()
     this.state = {
       Disposisi: [],
       suratMasuk: [],
       jenisSurat: [],
       unitKerja: [],
       pencatatan: [],
-
-      modalLoading: false,
     }
     this.getDisposisi = this.getDisposisi.bind(this)
-    this.handleLoading = this.handleLoading.bind(this)
   }
-  handleLoading() {
-    this.setState({
-      modalLoading: !this.state.modalLoading,
-    })
-  }
+
   async getDisposisi() {
-    this.handleLoading()
+    // async getDisposisi(id) {
     await api()
       .get('api/allInfoDisposisi')
+      // .get('api/allInfoDisposisi' +1)
       .then((response) => {
         this.setState({
           Disposisi: response.data.content,
         })
-        console.log('DIsposisi: ' + response.data)
-        // if (response.data) {
-        //   this.props.setAllDisposisi(response.data)
-        // }
+        this.props.setAllDisposisi(response.data)
       })
-
+    // await api()
+    //   .get('api/')
     await api()
-      .get('api/detailSuratMasuk')
+      .get('api/getAllSuratMasuk')
       .then((response) => {
         this.setState({
           suratMasuk: response.data.content,
         })
-        if (this.state.suratMasuk.length > 0) {
-          this.props.setAllSuratMasuk(response.data.content)
-        }
+        this.props.setAllSuratMasuk(response.data.content)
       })
     await api()
-      .get("api/getAllJenisSurat")
+      .get('api/getAllJenisSurat')
       .then((response) => {
         this.setState({
           jenisSurat: response.data,
         })
-        if (this.state.jenisSurat.length > 0) {
-          this.props.setJenisSurat(this.state.jenisSurat)
-        }
+        this.props.setJenisSurat(response.data)
       })
     await api()
-      .get("api/getAllKodeUnit")
+      .get('api/getAllKodeUnit')
       .then((response) => {
         this.setState({
           unitKerja: response.data,
-        });
-        this.props.setUnitKerja(response.data);
-      });
+        })
+        this.props.setUnitKerja(response.data)
+      })
     await api()
-      .get("api/getAllDerajatSurat")
+      .get('api/getAllDerajatSurat')
       .then((response) => {
-        this.props.setDerajatSurat(response.data);
-      });
+        this.props.setDerajatSurat(response.data)
+      })
     await api()
-      .get("api/getAllSifatNaskah")
+      .get('api/getAllSifatNaskah')
       .then((response) => {
-        this.props.setSifatSurat(response.data);
-      });
+        this.props.setSifatSurat(response.data)
+      })
     await api()
-      .get("api/getAllPencatatanInfo")
+      .get('api/getAllPencatatanInfo')
       .then((response) => {
+        this.state({
+          pencatatan: response.data,
+        })
         this.props.setAllPencatatan(response.data.content)
       })
-    this.handleLoading()
   }
+
   componentDidMount() {
-    this.getDisposisi();
+    this.getDisposisi()
   }
   render() {
     return (
@@ -138,16 +129,12 @@ class Disposisi extends Component {
             </div>
           </div>
         </div>
-        <ModalLoading
-          loading={this.state.modalLoading}
-          title={'Menggambil data sistem'}
-        />
       </>
-    );
+    )
   }
 }
 function mapStateToProps(state) {
-  return state;
+  return state
 }
 export default connect(mapStateToProps, {
   setAllDisposisi,
@@ -157,47 +144,4 @@ export default connect(mapStateToProps, {
   setDerajatSurat,
   setSifatSurat,
   setAllPencatatan,
-})(Disposisi);
-=======
-import React, { useState } from "react";
-import Tab from "../../components/Tab";
-// import SuratMasuk from '../../view/Page/SuratMasuk'
-import DisposisiSM from '../../components/TabelDisposisiSM'
-import DisposisiSK from '../../components/TabelDisposisiSK'
-// import SuratMasuk from '../../components/TabelKelolaSurat/SM'
-// import Disposisi from '../../view/Page/Disposisi'
-
-const tabContent = [
-    {
-        title: "Disposisi Surat Masuk",
-        content: <DisposisiSM/>,
-    },
-    {
-        title: "Disposisi Surat Keluar",
-        content: <DisposisiSK/>, //surat keluar
-    },
-];
-
-const Disposisi = () => {
-    return (
-    <>
-
-    <div className="w-full h-95% bg-gray-200 p-4">
-        <div className="col text-center">
-            <div className="row text-left">
-            <Tab>
-                {tabContent.map((tab, idx) => (
-                <Tab.TabPane key={`Tab-${idx}`} tab={tab.title}>
-                    {tab.content}
-                </Tab.TabPane>
-                ))}
-            </Tab>
-            </div>
-        </div>
-        </div>
-    </>
-    );
-};
-
-export default Disposisi;
->>>>>>> c3ee79e7c5401ef1249e6b7117e77c39c648f090
+})(Disposisi)

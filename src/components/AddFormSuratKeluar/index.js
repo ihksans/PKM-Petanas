@@ -5,8 +5,10 @@ import { connect } from 'react-redux'
 import Kalender from './Kalender'
 import ModalLoading from '../ModalLoading'
 import AddReminder from '../FormAddReminder'
-import CustomInput from './CostumInput'
 import { setAllSuratKeluar } from '../../actions'
+import axios from 'axios'
+import api from '../../service/api'
+
 // import createuser from "./index";
 class AddFormSurat extends Component {
   constructor(props) {
@@ -71,6 +73,7 @@ class AddFormSurat extends Component {
       showPengingatModal: false,
     }
     this.onSubmit = this.onSubmit.bind(this)
+    this.onSubmit2 = this.onSubmit2.bind(this)
     this.handleModal = this.handleModal.bind(this)
     this.handleLoading = this.handleLoading.bind(this)
     this.onFileChange = this.onFileChange.bind(this)
@@ -783,7 +786,7 @@ class AddFormSurat extends Component {
       errCustomPemohonNamaUnit: false,
       errCustomPemohonKodeUnit: false,
     })
-    //  window.location.reload('/#/SuratKeluar')
+    window.location.reload('/#/SuratKeluar')
   }
 
   onFileChange(event) {
@@ -935,7 +938,7 @@ class AddFormSurat extends Component {
               if (this.state.surat == null && this.state.lampiran == null) {
                 this.handleLoading()
                 this.handleModal()
-                //    window.location.reload('/#/SuratKeluar')
+                window.location.reload('/#/SuratKeluar')
               }
             })
         }
@@ -950,7 +953,7 @@ class AddFormSurat extends Component {
             if (this.state.lampiran == null) {
               this.handleLoading()
               this.handleModal()
-              //   window.location.reload('/#/SuratKeluar')
+              window.location.reload('/#/SuratKeluar')
             }
           })
       }
@@ -963,13 +966,39 @@ class AddFormSurat extends Component {
           .then((response) => {
             this.handleLoading()
             this.handleModal()
-            // window.location.reload('/#/SuratKeluar')
+            window.location.reload('/#/SuratKeluar')
           })
       }
     }
-    window.location.reload('/#/SuratKeluar')
   }
+  async onSubmit2() {
+    this.handleLoading()
 
+    let fd = new FormData()
+
+    let formData = new FormData()
+    formData.append('id_pengguna', this.props.User.currentUser.ID_PENGGUNA)
+    formData.append('id_jenis_surat', this.props.idJenisSurat)
+    fd.append('id_pengguna', this.props.User.currentUser.ID_PENGGUNA)
+    fd.append('id_no_surat', this.props.idNomorSurat)
+    fd.append('nomor_surat', this.props.nomorSurat)
+
+    await api()
+      .post('api/setPencatatan', formData)
+      .then((response) => {
+        this.setState({
+          idPencatatan: response.data.content.id,
+        })
+        fd.append('id_pencatatan', response.data.content.id)
+        api()
+          .post('api/setSuratKeluar', fd)
+          .then((response) => {
+            this.handleLoading()
+            this.handleModal()
+            // window.location.reload('/#/SuratMasuk')
+          })
+      })
+  }
   /*UNTUK HANDLE MODAL ADD REMINDER SAMA PARAMETERNYA*/
   // async handleSetReminder(){
   //   this.setState({

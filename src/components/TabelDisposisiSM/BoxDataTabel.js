@@ -14,7 +14,6 @@ class BoxDataTabel extends Component{
             // suratMasuk:'',
             jenisSurat:'',
             pencatatan:''
-
         }
     }
     render(){
@@ -22,15 +21,12 @@ class BoxDataTabel extends Component{
     <>
     <div className="grid grid-cols-8 border-b-2 border-gray-400 p-2">
         <div className="flex flex-row ml-2 ">
-                    <div className="">{this.props.No}.
-                    </div>
-                    
-                </div>
-                <div className="flex flex-row">
-                    <div className="">{this.props.Disposisi.NOMOR_AGENDA}</div>
-                </div>
-
-
+            <div className="">{this.props.No}.
+            </div>
+        </div>
+        <div className="flex flex-row">
+            <div className="">{this.props.Disposisi.NOMOR_AGENDA}</div>
+        </div>
         <div className="flex flex-row mt-1">
             <div className="">{this.props.Disposisi.TANGGAL_DISPOSISI}</div>
         </div>
@@ -43,7 +39,27 @@ class BoxDataTabel extends Component{
         </div>
         <div className="flex flex-row ml-4 mt-1">
             {/* <div className="">{this.props.Tujuan}</div> */}
-            <div className="">{this.props.TujuanSurat}</div>
+            {/* <div className="">{this.props.TujuanSurat}</div>
+            {this.props.tujuanDisposisi.map((item, i) => {
+                return (
+                    <div
+                        key={i}
+                        className={i == 0 ? ' col-span-2' : ' col-span-3'}
+                    >
+                    <div
+                        className={
+                            i == 0 ? '' : 'flex flex-row grid grid-cols-2'
+                        }
+                    >
+                    <div></div>
+                    <div className={i == 0 ? '' : ' col-span-2'}>
+                        - {item.KODE_UNIT_KERJA} :{' '}
+                        {item.NAMA_UNIT_KERJA}
+                    </div>
+                    </div>
+                </div>
+                )
+              })} */}
         </div>
         <div className="flex flex-row mt-1">
             {/* <div className="">{this.props.Keterangan}</div> */}

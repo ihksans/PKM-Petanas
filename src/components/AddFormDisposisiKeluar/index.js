@@ -4,7 +4,12 @@ import React, { Component, component, useState } from 'react'
 import { connect } from 'react-redux'
 import Kalender from '../AddFormSurat/Kalender'
 import ModalLoading from '../ModalLoading'
+<<<<<<< HEAD
 import EditFormDisposisi from '../EditFormDisposisi'
+=======
+import EditFormDisposisiKeluar from '../EditFormDisposisiKeluar'
+// import EditFormDisposisi from '../EditFormDisposisi'
+>>>>>>> c3ee79e7c5401ef1249e6b7117e77c39c648f090
 import ModalKonfirmDeleteDispo from '../ModalKonfirmDeleteDispo'
 import PdfReader from '../PdfReader'
 class AddFormDisposisiKeluar extends Component {
@@ -34,7 +39,11 @@ class AddFormDisposisiKeluar extends Component {
       errTujuanDisposisi: false,
       errInformasiDisposisi: false,
       errKeteranganDisposisi: false,
+<<<<<<< HEAD
       errNamaFileDisposisi: false,
+=======
+      errLampiranDisposisi: '',
+>>>>>>> c3ee79e7c5401ef1249e6b7117e77c39c648f090
       loading: false,
       jenisDisposisi: '2',
     }
@@ -48,6 +57,7 @@ class AddFormDisposisiKeluar extends Component {
     this.handleIdPencatatan = this.handleIdPencatatan.bind(this)
     this.handleIdDisposisi = this.handleIdDisposisi.bind(this)
     this.handleInputChangeCustom = this.handleInputChangeCustom.bind(this)
+<<<<<<< HEAD
     this.onSubmit = this.onSubmit.bind(this)
 
     this.handleErrTglDisposisi = this.handleErrTglDisposisi.bind(this)
@@ -69,6 +79,30 @@ class AddFormDisposisiKeluar extends Component {
     this.handleRemoveClickSelect = this.handleRemoveClickSelect.bind(this)
     this.handleShowForm = this.handleShowForm.bind(this)
     this.onFileChange = this.onFileChange.bind(this)
+=======
+    this.handleAddClickSelect = this.handleAddClickSelect.bind(this)
+    this.handleRemoveClickSelect = this.handleRemoveClickSelect.bind(this)
+    this.handleShowForm = this.handleShowForm.bind(this)
+    
+    this.handleNamaFileDisposisi = this.handleNamaFileDisposisi.bind(this)
+
+    this.handleErrTglDisposisi = this.handleErrTglDisposisi.bind(this)
+    this.handleErrTujuanDisposisi = this.handleErrTujuanDisposisi.bind(this)
+    this.handleErrInformasiDisposisi = this.handleErrInformasiDisposisi.bind(this)
+    this.handleErrKeteranganDisposisi = this.handleErrKeteranganDisposisi.bind(this)
+    this.handleErrLampiranDisposisi = this.handleErrLampiranDisposisi.bind(this)
+
+    this.handleErrTujuanSelect = this.handleErrTujuanSelect.bind(this)
+
+    this.ValidateInformasiDisposisi = this.ValidateInformasiDisposisi.bind(this)
+    this.ValidateKeteranganDisposisi = this.ValidateKeteranganDisposisi.bind(this)
+    this.ValidateLampiranDisposisi = this.ValidateLampiranDisposisi.bind(this)
+    this.ValidateTujuanDisposisi = this.ValidateTujuanDisposisi.bind(this)
+    this.ValidateTglDisposisi = this.ValidateTglDisposisi.bind(this)
+    
+    this.onFileChange = this.onFileChange.bind(this)
+    this.onSubmit = this.onSubmit.bind(this)
+>>>>>>> c3ee79e7c5401ef1249e6b7117e77c39c648f090
   }
   handleLoading() {
     this.setState({
@@ -165,6 +199,7 @@ class AddFormDisposisiKeluar extends Component {
       errKeteranganDisposisi: props,
     })
   }
+<<<<<<< HEAD
 
   validateSurat(input) {
     const extension = '.pdf'
@@ -186,6 +221,26 @@ class AddFormDisposisiKeluar extends Component {
   }
   ValidateTglDisposisi(input) {
     if (input == null || input == '') {
+=======
+  handleErrTujuanDisposisi(props){
+    this.setState({
+      errTujuanDisposisi:props,
+    })
+  }
+  handleErrLampiranDisposisi(props){
+    this.setState({
+      errLampiranDisposisi:props,
+    })
+  }
+  handleErrTujuanSelect(e,index){
+    const list = [...this.state.inputListSelect]
+    list[index]['id'] = e
+    this.handleInputListSelect(list)
+  }
+
+  ValidateTglDisposisi(input) {
+    if (input == null) {
+>>>>>>> c3ee79e7c5401ef1249e6b7117e77c39c648f090
       this.handleErrTglDisposisi(true)
     } else {
       this.handleErrTglDisposisi(false)
@@ -206,7 +261,11 @@ class AddFormDisposisiKeluar extends Component {
     }
   }
 
+<<<<<<< HEAD
   validateTujuanSurat(input) {
+=======
+  ValidateTujuanDisposisi(input) {
+>>>>>>> c3ee79e7c5401ef1249e6b7117e77c39c648f090
     const re = /^[a-zA-Z0-9 ]*$/
     input.map((x, i) => {
       if (x.idUnit != undefined) {
@@ -234,7 +293,34 @@ class AddFormDisposisiKeluar extends Component {
       }
     })
   }
+<<<<<<< HEAD
 
+=======
+  ValidateLampiranDisposisi(input) {
+    const extension = '.pdf'
+    let result2 = this.state.fileDisposisi.name.match(extension)
+    if (result2) {
+      if (this.state.fileDisposisi.size > '10485760') {
+        this.handleErrLampiranDisposisi('Ukuran file surat melebihi 10 Mb')
+      } else {
+        this.handleErrLampiranDisposisi('')
+        let namasurat = this.props.SuratDetail.NOMOR_SURAT.split('/').join('_')
+        console.log('nama surat:' + namasurat)
+        this.setState({
+          namaFileDisposisi: namasurat,
+        })
+      }
+    } else {
+      this.handleErrLampiranDisposisi('Surat file harus pdf')
+    }
+  }
+  handleNamaFileDisposisi(e){
+    let value = e.target.value
+    this.setState({
+      namaFileDisposisi: value,
+    })
+  }
+>>>>>>> c3ee79e7c5401ef1249e6b7117e77c39c648f090
   onFileChange(event) {
     // Update the state
     this.setState({ fileDisposisi: event.target.files[0] })
@@ -256,11 +342,16 @@ class AddFormDisposisiKeluar extends Component {
       errTujuanDisposisi: false,
       errInformasiDisposisi: false,
       errKeteranganDisposisi: false,
+<<<<<<< HEAD
       errNamaFileDisposisi: false,
+=======
+      errLampiranDisposisi: '',
+>>>>>>> c3ee79e7c5401ef1249e6b7117e77c39c648f090
     })
   }
   async onSubmit(e) {
     e.preventDefault()
+<<<<<<< HEAD
     this.handleLoading()
     await this.validateSurat()
     // await this.validateTujuanSurat(this.state.inputListSelect)
@@ -351,6 +442,108 @@ class AddFormDisposisiKeluar extends Component {
           window.location.reload('/#/SuratMasuk')
         })
     }
+=======
+    await this.ValidateTglDisposisi(this.state.tglDisposisi)
+    await this.ValidateTujuanDisposisi(this.state.inputListSelect)
+    await this.ValidateInformasiDisposisi(this.state.informasiDisposisi)
+    await this.ValidateKeteranganDisposisi(this.state.keteranganDisposisi)
+    if (this.state.namaFileDisposisi != null){
+      await this.ValidateLampiranDisposisi(this.state.namaFileDisposisi)
+    }
+    if(
+      this.state.errTglDisposisi == false &&
+      this.state.errTujuanDisposisi == false &&
+      this.state.errInformasiDisposisi == false &&
+      this.state.errKeteranganDisposisi == false &&
+      this.state.errLampiranDisposisi == false   
+    ){
+      // await this.ValidateTujuanDisposisi(this.state.inputListSelect)
+      this.handleLoading()
+      let formData = new FormData()
+      formData.append('id_pengguna', this.props.User.currentUser.ID_PENGGUNA)
+      formData.append('id_pencatatan', this.props.SuratDetail.ID_PENCATATAN)
+      formData.append('nomor_agenda', this.props.SuratDetail.NOMOR_URUT)
+      formData.append('tanggal_disposisi', this.state.tglDisposisi)
+      formData.append('informasi', this.state.informasiDisposisi)
+      formData.append('proses_selanjutnya', this.state.keteranganDisposisi)
+      formData.append('jenis_disposisi', this.state.jenisDisposisi)
+      if (this.state.fileDisposisi != null) {
+        formData.append(
+          'nama_file_disposisi',
+          this.state.namaFileDisposisi + '_disposisi',
+        )
+      }
+      await api()
+        .post('api/createDisposisi', formData)
+        .then((response) => {
+          this.setState({
+            idDisposisi: response.data.content.id,
+          })
+          if (this.state.fileDisposisi == null) {
+            this.handleLoading()
+            this.handleModal()
+            window.location.reload('/#/SuratMasuk')
+          }
+        })
+        .catch((err) => console.log(err))
+
+      await this.state.inputListSelect.map((x, i) => {
+        if (x.idUnit == null) {
+          let form = new FormData()
+          form.append('kodeUnit', x.kodeUnit)
+          form.append('namaUnit', x.namaUnit)
+          api()
+            .post('api/setKodeUnit', form)
+            .then((response) => {
+              this.handleIdTujuanSelect(response.data.content.id, i)
+              let form2 = new FormData()
+              // form2.append('iddisposisi', this.state.idPencatatan)
+              form2.append('iddisposisi', this.state.idDisposisi)
+              form2.append('idUnit', response.data.content.id)
+              api()
+                .post('api/createTujuanDisposisi', form2)
+                .then((response) => {
+                  console.log('tujuan:' + x.id + '|' + this.state.idPencatatan)
+                })
+            })
+        } else {
+          let form3 = new FormData()
+          // form3.append('iddisposisi', this.state.idPencatatan)
+          form3.append('idDisposisi', this.state.idDisposisi)
+          form3.append('idUnit', x.idUnit)
+          api()
+            .post('api/createTujuanDisposisi', form3)
+            .then((response) => {
+              console.log('tujuan2:' + x.idUnit + '|' + this.state.idPencatatan)
+
+              if (this.state.surat == null && this.state.lampiran == null) {
+                console.log('id disposisi: ' + this.state.idPencatatan)
+                console.log('id disposisi: ' + this.state.idDisposisi)
+                console.log('id Unit: ' + x.idUnit)
+
+                this.handleLoading()
+                this.handleModal()
+                window.location.reload('/#/SuratMasuk')
+              }
+            })
+        }
+      })
+      if (this.state.fileDisposisi != null && this.state.errLampiranDisposisi == '') {
+        let fd2 = new FormData()
+        console.log('nomorsurat dengan file:' + this.state.namaFileDisposisi)
+        fd2.append('myFile', this.state.fileDisposisi)
+        fd2.append('namefile', this.state.namaFileDisposisi + '_disposisi')
+        await api()
+          .post('api/addSurat', fd2)
+          .then((response) => {
+            this.handleLoading()
+            this.handleModal()
+            window.location.reload('/#/SuratMasuk')
+          })
+      }
+    }
+    
+>>>>>>> c3ee79e7c5401ef1249e6b7117e77c39c648f090
   }
   render() {
     return (
@@ -382,11 +575,15 @@ class AddFormDisposisiKeluar extends Component {
                           <button
                             className="justify-self-center flex flex-row bg-primary p-2 mt-4 hover:bg-orenHover focus:outline-none"
                             type="button"
+<<<<<<< HEAD
                             onClick={
                               this.props.User.currentUser.ROLE != 3
                                 ? this.handleShowForm
                                 : null
                             }
+=======
+                            onClick={this.handleShowForm}
+>>>>>>> c3ee79e7c5401ef1249e6b7117e77c39c648f090
                           >
                             <div className="ml-1">
                               <img
@@ -625,10 +822,13 @@ class AddFormDisposisiKeluar extends Component {
                                       <div className="mt-2">
                                         Nomor Disposisi{' '}
                                       </div>
+<<<<<<< HEAD
                                       <div className="text-danger ml-2 mt-2">
                                         {/* {' '}
                                          *  */}
                                       </div>
+=======
+>>>>>>> c3ee79e7c5401ef1249e6b7117e77c39c648f090
                                     </div>
                                     <div className="justify-end ">
                                       <div className="">
@@ -642,8 +842,16 @@ class AddFormDisposisiKeluar extends Component {
                                       htmlFor="nama"
                                       className="text-sm mb-2 font-bold flex flex-row "
                                     >
+<<<<<<< HEAD
                                       <div>Tanggal Disposisi </div>
                                       <div className="text-danger ml-2"> </div>
+=======
+                                      <div className="mt-2">Tanggal Disposisi </div>
+                                      <div className="text-danger mr-1 mt-2">
+                                        {' '}
+                                        *
+                                      </div>
+>>>>>>> c3ee79e7c5401ef1249e6b7117e77c39c648f090
                                     </div>
                                     <div className="justify-end ">
                                       <div
@@ -667,7 +875,11 @@ class AddFormDisposisiKeluar extends Component {
                                       </div>
                                       {this.state.errTglDisposisi ? (
                                         <div className="text-danger text-xs mb-3">
+<<<<<<< HEAD
                                           Tanggal diterima harus diisi
+=======
+                                          Tanggal disposisi harus diisi
+>>>>>>> c3ee79e7c5401ef1249e6b7117e77c39c648f090
                                         </div>
                                       ) : (
                                         <></>
@@ -680,7 +892,15 @@ class AddFormDisposisiKeluar extends Component {
                                       htmlFor="nama"
                                       className="text-sm mb-2 font-bold flex flex-row "
                                     >
+<<<<<<< HEAD
                                       <div className="font-bold">Tujuan </div>
+=======
+                                      <div className="mt-2">Tujuan </div>
+                                      <div className="text-danger ml-2 mt-2">
+                                        {' '}
+                                        *
+                                      </div>
+>>>>>>> c3ee79e7c5401ef1249e6b7117e77c39c648f090
                                     </div>
                                     <div className="justify-end ">
                                       <div className="">
@@ -736,7 +956,11 @@ class AddFormDisposisiKeluar extends Component {
                                                     </select>
                                                     {x.err == true ? (
                                                       <div className="text-danger text-xs mb-3">
+<<<<<<< HEAD
                                                         Tujuan surat harus diisi
+=======
+                                                        Tujuan disposisi harus diisi
+>>>>>>> c3ee79e7c5401ef1249e6b7117e77c39c648f090
                                                       </div>
                                                     ) : null}
                                                   </>
@@ -857,8 +1081,16 @@ class AddFormDisposisiKeluar extends Component {
                                       htmlFor="nama"
                                       className="text-sm mb-2 font-bold flex flex-row "
                                     >
+<<<<<<< HEAD
                                       <div>Informasi / Isi Disposisi </div>
                                       <div className="text-danger ml-2"> </div>
+=======
+                                      <div className="">Informasi / Isi Disposisi </div>
+                                      <div className="text-danger mt-1 mr-2">
+                                        {' '}
+                                        *
+                                      </div>
+>>>>>>> c3ee79e7c5401ef1249e6b7117e77c39c648f090
                                     </div>
                                     <div className="justify-end ">
                                       <textarea
@@ -873,8 +1105,12 @@ class AddFormDisposisiKeluar extends Component {
                                       />
                                       {this.state.errInformasiDisposisi ? (
                                         <div className="text-danger text-xs mb-3">
+<<<<<<< HEAD
                                           Informasi terkait disposisi harus
                                           diisi
+=======
+                                          Informasi terkait disposisi harus diisi
+>>>>>>> c3ee79e7c5401ef1249e6b7117e77c39c648f090
                                         </div>
                                       ) : (
                                         <></>
@@ -886,10 +1122,20 @@ class AddFormDisposisiKeluar extends Component {
                                       htmlFor="nama"
                                       className="text-sm mb-2 font-bold flex flex-row "
                                     >
+<<<<<<< HEAD
                                       <div>
                                         Keterangan / Proses Selanjutnya{' '}
                                       </div>
                                       <div className="text-danger ml-2"> </div>
+=======
+                                      <div className="">
+                                        Keterangan / Proses Selanjutnya{' '}
+                                      </div>
+                                      <div className="text-danger mt-2 mr-2">
+                                        {' '}
+                                        *
+                                      </div>
+>>>>>>> c3ee79e7c5401ef1249e6b7117e77c39c648f090
                                     </div>
                                     <div className="justify-end ">
                                       <textarea
@@ -906,8 +1152,12 @@ class AddFormDisposisiKeluar extends Component {
                                       />
                                       {this.state.errKeteranganDisposisi ? (
                                         <div className="text-danger text-xs mb-3">
+<<<<<<< HEAD
                                           Keterangan terkait disposisi harus
                                           diisi
+=======
+                                          Keterangan terkait disposisi harus diisi
+>>>>>>> c3ee79e7c5401ef1249e6b7117e77c39c648f090
                                         </div>
                                       ) : (
                                         <></>
@@ -920,7 +1170,14 @@ class AddFormDisposisiKeluar extends Component {
                                       className="text-sm mb-2 font-bold flex flex-row "
                                     >
                                       <div>File Disposisi </div>
+<<<<<<< HEAD
                                       <div className="text-danger ml-2"> </div>
+=======
+                                      <div className="text-danger ml-2 mt-2"> 
+                                        {' '}
+                                        *
+                                      </div>
+>>>>>>> c3ee79e7c5401ef1249e6b7117e77c39c648f090
                                     </div>
                                     <div className="justify-end ">
                                       <input
@@ -932,9 +1189,20 @@ class AddFormDisposisiKeluar extends Component {
                                           'focus:form-control   focus:border-yellow-500 focus:ring-1 focus:ring-yellow-500 focus:outline-none w-56	  text-sm text-black placeholder-gray-500 border border-gray-200 rounded-md py-2 pl-2 mb-3'
                                         }
                                         onChange={this.onFileChange}
+<<<<<<< HEAD
                                       >
                                         {/* {this.state.lastAgenda} */}
                                       </input>
+=======
+                                      />
+                                        {this.state.errLampiranDisposisi != ''?(
+                                          <div className="text-danger text-xs mb-3">
+                                            {this.state.errLampiranDisposisi}
+                                          </div>
+                                        ):(
+                                          <></>
+                                        )}
+>>>>>>> c3ee79e7c5401ef1249e6b7117e77c39c648f090
                                     </div>
                                   </div>
                                   <div className="flex flex-row grid grid-cols-2 mb-4 mt-4  p-2">
@@ -979,12 +1247,20 @@ class AddFormDisposisiKeluar extends Component {
                                   </div>
                                   <div className="flex">
                                     <h3 className="text-xl font-semibold">
+<<<<<<< HEAD
                                       Detail Disposisi
+=======
+                                      Detail Disposisi Surat Keluar
+>>>>>>> c3ee79e7c5401ef1249e6b7117e77c39c648f090
                                     </h3>
                                   </div>
                                 </div>
                                 <div className="flex flex-row  col-span-3 mb-4 mb-10">
+<<<<<<< HEAD
                                   <EditFormDisposisi
+=======
+                                  <EditFormDisposisiKeluar
+>>>>>>> c3ee79e7c5401ef1249e6b7117e77c39c648f090
                                     namaFile={this.props.NamaFileSurat}
                                     namaLampiran={this.props.NamaFileLampiran}
                                     jenisSurat={this.props.jenisSurat}
@@ -997,6 +1273,7 @@ class AddFormDisposisiKeluar extends Component {
                                     SuratDetail={this.props.SuratDetail}
                                     tujuanDisposisi={this.props.tujuanDisposisi}
                                     tglSurat={this.state.tglSurat}
+<<<<<<< HEAD
                                     tglDiterima={this.state.tglDiterima}
                                     inputListSelect={this.state.inputListSelect}
                                     RUnitKerja={this.props.RUnitKerja}
@@ -1014,6 +1291,17 @@ class AddFormDisposisiKeluar extends Component {
                                       />
                                     </>
                                   )}
+=======
+                                    tglKirim={this.state.tglKirim}
+                                    inputListSelect={this.state.inputListSelect}
+                                    RUnitKerja={this.props.RUnitKerja}
+                                  />
+
+                                  <ModalKonfirmDeleteDispo
+                                    IdDispo={this.props.disposisi.ID_DISPOSISI}
+                                    handleDisposisi={() => this.handleModal()}
+                                  />
+>>>>>>> c3ee79e7c5401ef1249e6b7117e77c39c648f090
                                 </div>
 
                                 <div className="font-bold">

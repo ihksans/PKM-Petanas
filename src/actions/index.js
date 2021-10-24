@@ -186,6 +186,10 @@ export function setAllDisposisi(payload) {
   }
   return action
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> c3ee79e7c5401ef1249e6b7117e77c39c648f090
 export function unsetAllPengingat() {
   const action = {
     type: UNSET_ALL_PENGINGAT,
@@ -204,7 +208,10 @@ export function setAllPencatatan(payload) {
     type: SET_ALL_PENCATATAN,
     payload,
   }
+<<<<<<< HEAD
   return action
+=======
+>>>>>>> c3ee79e7c5401ef1249e6b7117e77c39c648f090
 }
 export function unsetAllPencatatan(payload) {
   const action = {
@@ -234,7 +241,11 @@ export function setAllKodeHal(payload) {
   }
   return action
 }
+<<<<<<< HEAD
 export function unsetAllKodeHal() {
+=======
+export function unsetAllKodeHal(payload) {
+>>>>>>> c3ee79e7c5401ef1249e6b7117e77c39c648f090
   const action = {
     type: UNSET_KODE_HAL,
   }
@@ -247,7 +258,11 @@ export function setAllPemohon(payload) {
   }
   return action
 }
+<<<<<<< HEAD
 export function unsetAllPemohon() {
+=======
+export function unsetAllPemohon(payload) {
+>>>>>>> c3ee79e7c5401ef1249e6b7117e77c39c648f090
   const action = {
     type: UNSET_PEMOHON,
   }

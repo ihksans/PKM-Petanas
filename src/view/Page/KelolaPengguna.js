@@ -7,14 +7,18 @@ import { connect } from 'react-redux'
 import { setAllUser } from '../../actions'
 import api from '../../service/api'
 import ModalAddPengguna from '../../components/ModalAddPengguna'
+<<<<<<< HEAD
 import ModalLoading from '../../components/ModalLoading'
 
+=======
+>>>>>>> c3ee79e7c5401ef1249e6b7117e77c39c648f090
 class KelolaPengguna extends Component {
   //deklarasi variabel
   constructor(props) {
     super()
     this.state = {
       Pengguna: [],
+<<<<<<< HEAD
       modalLoading: false,
     }
     this.getPengguna = this.getPengguna.bind(this)
@@ -27,13 +31,23 @@ class KelolaPengguna extends Component {
   }
   async getPengguna() {
     this.handleLoading()
+=======
+    }
+    this.getPengguna = this.getPengguna.bind(this)
+
+  }
+  async getPengguna() {
+>>>>>>> c3ee79e7c5401ef1249e6b7117e77c39c648f090
     await api()
       .get('api/allPenggunaInfo')
       .then((response) => {
         this.props.setAllUser(response.data)
         console.log('pengguna:' + this.props.AllUser.allUserInfo)
       })
+<<<<<<< HEAD
     this.handleLoading()
+=======
+>>>>>>> c3ee79e7c5401ef1249e6b7117e77c39c648f090
   }
 
   componentDidMount() {
@@ -65,10 +79,13 @@ class KelolaPengguna extends Component {
             </div>
           </div>
         </div>
+<<<<<<< HEAD
         <ModalLoading
           loading={this.state.modalLoading}
           title={'Menggambil data sistem'}
         />
+=======
+>>>>>>> c3ee79e7c5401ef1249e6b7117e77c39c648f090
       </>
     )
   }
