@@ -26,6 +26,7 @@ class DisposisiSM extends Component {
             jenisSurat: [],
             unitKerja: [],
             pencatatan: [],
+            tujuanDisposisi:[],
         }
         this.getDisposisi = this.getDisposisi.bind(this)
     }
@@ -111,6 +112,7 @@ class DisposisiSM extends Component {
                         IdJenisSurat={this.state.jenisSurat}
                         IdUnitKerja={this.state.unitKerja}
                         Pencatatan={this.state.pencatatan}
+                        tujuanDisposisi={this.state.tujuanDisposisi}
                     />
                 ) : (
                     <TabelDisposisiSM
@@ -119,6 +121,7 @@ class DisposisiSM extends Component {
                         IdJenisSurat={this.state.jenisSurat}
                         IdUnitKerja={this.state.unitKerja}
                         Pencatatan={this.state.pencatatan}
+                        tujuanDisposisi={this.state.tujuanDisposisi}
                         // Pencatatan={this.state.Pencatatan.allPencatatanInfo}
                     />
                 )}

@@ -58,8 +58,6 @@ class DetailSuratMasuk extends Component {
         this.setState({
           tujuanPencatatan: response.data.content,
         })
-        // console.log('tujuan pencatatan:' + this.state.tujuanPencatatan)
-        // console.log('tujuan pencatatan2:' + response.data.content)
       })
   }
   async handleTujuanDisposisi() {
@@ -71,24 +69,8 @@ class DetailSuratMasuk extends Component {
         this.setState({
           tujuanPencatatan: response.data.content,
         })
-        console.log('tujuan pencatatan:' + this.state.tujuanPencatatan)
-        console.log('tujuan pencatatan2:' + response.data.content)
-        console.log(
-          'id tujuan pencatatan: ' + this.props.SuratDetail.ID_DISPOSISI,
-        )
       })
   }
-  // async handleTujuanDisposisi(){
-  //   await api()
-  //   .get('api/getTujuanDisposisi/'+this.props.Disposisi.ID_DISPOSISI,)
-  //   .them((response)=>{
-  //     this.setState({
-  //       tujuanDisposisi: response.data.content,
-  //     })
-  //     console.log('tujuan disposisi:' + this.state.tujuanDisposisi)
-  //     console.log('tujuan disposisi 2:' + response.data.content)
-  //   })
-  // }
   handleLoading() {
     this.setState({
       loading: !this.state.loading,

@@ -67,6 +67,7 @@ class TabelDisposisiSM extends Component{
                                     IdUnitKerja={this.props.IdUnitKerja}
                                     Disposisi={item}
                                     SuratMasuk={this.props.SuratMasuk}
+                                    tujuanDisposisi={this.props.tujuanDisposisi}
                                 />
                                 </li>
                             )
