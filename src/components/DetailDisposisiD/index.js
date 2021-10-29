@@ -12,7 +12,7 @@ class DetailDisposisiD extends Component {
     super(props)
     this.state = {
       dir: [],
-      tujuanDisposisi:[],
+      tujuanDisposisi: [],
       url: null,
       loading: false,
       disposisi: null,
@@ -34,23 +34,27 @@ class DetailDisposisiD extends Component {
       loading: !this.state.loading,
     })
   }
-  async handleTujuanDisposisi(){
+  async handleTujuanDisposisi() {
     await api()
-    .get('api/getDetailTujuanDisposisi/' + this.props.DisposisiDetail.ID_DISPOSISI)
-    .then((response)=>{
-      this.setState({
-        tujuanDisposisi:response.data.content,
+      .get(
+        'api/getDetailTujuanDisposisi/' +
+          this.props.DisposisiDetail.ID_DISPOSISI,
+      )
+      .then((response) => {
+        this.setState({
+          tujuanDisposisi: response.data.content,
+        })
+        console.log('tujuan disposisi:' + this.state.tujuanDisposisi)
+        console.log('tujuan disposisi2:' + response.data.content)
       })
-      console.log('tujuan disposisi:' + this.state.tujuanDisposisi)
-      console.log('tujuan disposisi2:' + response.data.content)
-    })
   }
   async getFileDisposisi() {
     this.handleLoading()
     let formData = new FormData()
     formData.append(
       'namafile',
-      this.props.DisposisiDetail.NOMOR_SURAT.split('/').join('_') + '_disposisi',
+      this.props.DisposisiDetail.NOMOR_SURAT.split('/').join('_') +
+        '_disposisi',
     )
     await api()
       .post('/api/getSurat', formData)
@@ -64,9 +68,7 @@ class DetailDisposisiD extends Component {
   async handleModal() {
     this.handleTujuanDisposisi()
     if (this.state.url == null) {
-      this.handleLoading()
       await this.getFileDisposisi()
-      this.handleLoading()
     }
     await this.setState({
       showModal: !this.state.showModal,
@@ -213,9 +215,9 @@ class DetailDisposisiD extends Component {
                     </div>
                     <div>
                       <div className=" flex justify-end   ">
-                        <button 
-                        className="hover:shadow-md focus:outline-none"
-                        onClick={this.handleModal}
+                        <button
+                          className="hover:shadow-md focus:outline-none"
+                          onClick={this.handleModal}
                         >
                           <img src="assets/img/icon/x.png" />
                         </button>
@@ -229,8 +231,9 @@ class DetailDisposisiD extends Component {
                               <PdfReader
                                 urlFile={this.state.url}
                                 namaFile={
-                                  this.props.DisposisiDetail.NOMOR_SURAT.split('/').join('_') +
-                                  '_disposisi'
+                                  this.props.DisposisiDetail.NOMOR_SURAT.split(
+                                    '/',
+                                  ).join('_') + '_disposisi'
                                 }
                               />
                             </>
@@ -252,9 +255,7 @@ class DetailDisposisiD extends Component {
   }
 }
 
-// function mapStateToProps(state){
-//     return state
-// }
-
-// export default connect(mapStateToProps.apply,{})(DetailDisposisi)
-export default DetailDisposisiD
+function mapStateToProps(state) {
+  return state
+}
+export default connect(mapStateToProps, {})(DetailDisposisiD)

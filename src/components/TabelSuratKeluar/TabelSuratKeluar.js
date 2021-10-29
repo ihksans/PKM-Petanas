@@ -1,53 +1,11 @@
-<<<<<<< HEAD
-import React, { Component } from "react";
-//ini buat ngekoneksi redux
-// import { connect } from 'react-redux'
-import {} from "../../actions";
-import HeaderTabel from "./HeaderTabel";
-import BoxData from "./BoxDataTabel";
-import api from "../../service/api";
-import ReactPaginate from "react-paginate";
-
-class TabelSuratKeluar extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      SuratKeluar: this.props.SuratKeluar,
-      search: "",
-      perPage: 10,
-      maxPage: 0,
-      currentPage: 1,
-    };
-    this.getSuratKeluar = this.getSuratKeluar.bind(this);
-    this.handleSearch = this.handleSearch.bind(this);
-  }
-  async getSuratKeluar() {
-    let key = this.state.search;
-    let str = "";
-    str = key.replace(/\s\s+/g, "");
-
-    if (str != "" && str != null && str != " ") {
-      let formData = new FormData();
-      formData.append("key", str);
-      await api()
-        .post("/api/searchSuratKeluar/", formData)
-        .then((response) => {
-          this.setState({
-            SuratKeluar: response.data.content,
-          });
-        });
-    } else {
-      this.setState({
-        SuratKeluar: this.props.SuratKeluar,
-      });
-=======
 import React, { Component } from 'react'
 //ini buat ngekoneksi redux
-import { connect } from 'react-redux'
+// import { connect } from 'react-redux'
 import {} from '../../actions'
 import HeaderTabel from './HeaderTabel'
 import BoxData from './BoxDataTabel'
 import api from '../../service/api'
+import ReactPaginate from 'react-paginate'
 
 class TabelSuratKeluar extends Component {
   constructor(props) {
@@ -55,9 +13,22 @@ class TabelSuratKeluar extends Component {
     this.state = {
       SuratKeluar: this.props.SuratKeluar,
       search: '',
+      perPage: 10,
+      maxPage: 0,
+      currentPage: 1,
     }
     this.getSuratKeluar = this.getSuratKeluar.bind(this)
     this.handleSearch = this.handleSearch.bind(this)
+    this.handlePageClick = this.handlePageClick.bind(this)
+  }
+  componentDidMount() {
+    this.setState({
+      maxPage: Math.round(
+        this.state.SuratKeluar.length / this.state.perPage + 1,
+      ),
+    })
+    console.log('maxPage' + this.state.maxPage)
+    console.log('currentPage' + this.state.currentPage)
   }
   async getSuratKeluar() {
     let key = this.state.search
@@ -78,25 +49,24 @@ class TabelSuratKeluar extends Component {
       this.setState({
         SuratKeluar: this.props.SuratKeluar,
       })
->>>>>>> c3ee79e7c5401ef1249e6b7117e77c39c648f090
     }
   }
   handleSearch(e) {
     this.setState({
       search: e.target.value,
-<<<<<<< HEAD
-    });
+    })
   }
   handlePageClick(event) {
-    const currentPage = event.selected + 1;
-    this.setState({ currentPage });
+    const cP = event.selected + 1
+    this.setState({ currentPage: cP })
+    console.log('currentPage' + cP)
   }
   render() {
-    const { currentPage, maxPage, perPage, SuratKeluar } = this.state;
+    const { currentPage, maxPage, perPage, SuratKeluar } = this.state
     let items = SuratKeluar.slice(
+      (currentPage - 1) * perPage,
       currentPage * perPage,
-      (currentPage + 1) * perPage
-    );
+    )
     const dataSuratKeluar = items.map((item, index) => {
       return (
         <li key={index}>
@@ -107,13 +77,8 @@ class TabelSuratKeluar extends Component {
             IdUnitKerja={this.props.IdUnitKerja}
           />
         </li>
-      );
-    });
-=======
+      )
     })
-  }
-  render() {
->>>>>>> c3ee79e7c5401ef1249e6b7117e77c39c648f090
     return (
       <>
         <div className="flex absolute right-10 top-32 justify-end mt-5 w-1/2">
@@ -143,50 +108,38 @@ class TabelSuratKeluar extends Component {
         </div>
         <ul>
           <HeaderTabel />
-<<<<<<< HEAD
           {dataSuratKeluar == null ? null : dataSuratKeluar}
         </ul>
         <nav className="mt-4">
           <ReactPaginate
-            previousLabel={"Prev"}
-            previousLinkClassName={"relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"}
-            nextLabel={"Next"}
-            nextLinkClassName={"-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"}
+            previousLabel={'Prev'}
+            previousLinkClassName={
+              'relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium text-gray-700 bg-white hover:bg-gray-50'
+            }
+            nextLabel={'Next'}
+            nextLinkClassName={
+              '-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium text-gray-700 bg-white hover:bg-gray-50'
+            }
             pageCount={maxPage}
-            containerClassName={"relative z-0 inline-flex shadow-sm -space-x-px"}
-            pageClassName={"bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium"}
-            breakClassName={"relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700"}
-            pageLinkClassName={"page-link"}
-            breakLinkClassName={"page-link"}
-            activeClassName={"-10 bg-indigo-50 border-indigo-500 text-indigo-600 relative inline-flex items-center px-4 py-2 border text-sm font-medium"}
-            onPageChange={(event) => this.handlePageClick(event)}
+            containerClassName={
+              'relative z-0 inline-flex shadow-sm -space-x-px'
+            }
+            pageClassName={
+              'bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium'
+            }
+            breakClassName={
+              'relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700'
+            }
+            pageLinkClassName={'page-link'}
+            breakLinkClassName={'page-link'}
+            activeClassName={
+              '-10 bg-indigo-50 border-indigo-500 text-indigo-600 relative inline-flex items-center px-4 py-2 border text-sm font-medium'
+            }
+            onPageChange={this.handlePageClick}
           />
         </nav>
-      </>
-    );
-  }
-}
-export default TabelSuratKeluar;
-=======
-          {this.state.SuratKeluar == null
-            ? null
-            : this.state.SuratKeluar.map((item, index) => {
-                return (
-                  <li key={index}>
-                    <BoxData
-                      No={index + 1}
-                      IdJenisSurat={this.props.IdJenisSurat}
-                      Surat={item}
-                      IdUnitKerja={this.props.IdUnitKerja}
-                      Disposisi={this.props.Disposisi}
-                    />
-                  </li>
-                )
-              })}
-        </ul>
       </>
     )
   }
 }
 export default TabelSuratKeluar
->>>>>>> c3ee79e7c5401ef1249e6b7117e77c39c648f090

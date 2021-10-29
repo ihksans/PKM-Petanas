@@ -6,38 +6,37 @@ import AddFormDisposisi from '../AddFormDisposisi'
 import React, { Component } from 'react'
 import api from '../../service/api'
 
-class BoxDataTabel extends Component{
-    // const [formEdit, setFormEdit] = useState(false)
-    constructor(props){
-        super()
-        this.state={
-            // suratMasuk:'',
-            jenisSurat:'',
-            pencatatan:''
-        }
+class BoxDataTabel extends Component {
+  // const [formEdit, setFormEdit] = useState(false)
+  constructor(props) {
+    super()
+    this.state = {
+      // suratMasuk:'',
+      jenisSurat: '',
+      pencatatan: '',
     }
-    render(){
+  }
+  render() {
     return (
-    <>
-    <div className="grid grid-cols-8 border-b-2 border-gray-400 p-2">
-        <div className="flex flex-row ml-2 ">
-            <div className="">{this.props.No}.
-            </div>
-        </div>
-        <div className="flex flex-row">
+      <>
+        <div className="grid grid-cols-8 border-b-2 border-gray-400 p-2">
+          <div className="flex flex-row ml-2 ">
+            <div className="">{this.props.No}.</div>
+          </div>
+          <div className="flex flex-row">
             <div className="">{this.props.Disposisi.NOMOR_AGENDA}</div>
-        </div>
-        <div className="flex flex-row mt-1">
+          </div>
+          <div className="flex flex-row mt-1">
             <div className="">{this.props.Disposisi.TANGGAL_DISPOSISI}</div>
-        </div>
-        <div className="flex flex-row mt-1">
+          </div>
+          <div className="flex flex-row mt-1">
             <div className="truncate">{this.props.Disposisi.NOMOR_SURAT}</div>
             {/* <div className="">12893712</div> */}
-        </div>
-        <div className="flex flex-row mt-1">
+          </div>
+          <div className="flex flex-row mt-1">
             <div className="truncate">{this.props.Disposisi.INFORMASI}</div>
-        </div>
-        <div className="flex flex-row ml-4 mt-1">
+          </div>
+          <div className="flex flex-row ml-4 mt-1">
             {/* <div className="">{this.props.Tujuan}</div> */}
             {/* <div className="">{this.props.TujuanSurat}</div>
             {this.props.tujuanDisposisi.map((item, i) => {
@@ -60,26 +59,26 @@ class BoxDataTabel extends Component{
                 </div>
                 )
               })} */}
-        </div>
-        <div className="flex flex-row mt-1">
+          </div>
+          <div className="flex flex-row mt-1">
             {/* <div className="">{this.props.Keterangan}</div> */}
-            <div className="truncate">{this.props.Disposisi.PROSES_SELANJUTNYA}</div>
+            <div className="truncate">
+              {this.props.Disposisi.PROSES_SELANJUTNYA}
+            </div>
+          </div>
+          <div className="">
+            <DetailDisposisiD
+              DisposisiDetail={this.props.Disposisi}
+              IdUnitKerja={this.props.IdUnitKerja}
+              UnitKerja={this.props.UnitKerja}
+              SuratMasuk={this.props.SuratMasuk}
+              NomorAgenda={this.props.NOMOR_AGENDA}
+            />
+          </div>
         </div>
-        <div className="">
-            {/* <DetailDisposisiD
-            DisposisiDetail={this.props.Disposisi}
-            IdUnitKerja={this.props.IdUnitKerja}
-            UnitKerja={this.props.UnitKerja}
-            SuratMasuk={this.props.SuratMasuk}
-            NomorAgenda={this.props.NOMOR_AGENDA}
-            /> */}
-            
-            
-        </div>
-    </div>
-    </>
+      </>
     )
-    }
+  }
 }
 // const BoxDataTabel=({
 //     No,
@@ -105,7 +104,7 @@ class BoxDataTabel extends Component{
 //         <>
 //         <div className="grid grid-cols-8 border-b-2 border-gray-400 p-2">
 //             <div className="flex flex-row ml-2 ">
-//                     <div className="">{No}. 
+//                     <div className="">{No}.
 //                     {console.log('pencatatan: '+SuratMasuk)}</div>
 //                 </div>
 //                 <div className="flex flex-row">
@@ -128,9 +127,9 @@ class BoxDataTabel extends Component{
 //             <div className="flex flex-row mt-1">
 //                 {/* <div className="">{this.props.Keterangan}</div> */}
 //                 <div className="truncate">{ProsesSelanjutnya}</div>
-//             </div>        
+//             </div>
 //             <div className="">
-//                 <DetailDisposisi 
+//                 <DetailDisposisi
 //                 DisposisiDetail={Disposisi}
 //                 TujuanSurat={TujuanSurat}
 //                 // IdPencatatan={IdPencatatan}
@@ -142,7 +141,7 @@ class BoxDataTabel extends Component{
 //                 Pencatatan={Pencatatan}
 //                 // console.log('pengguna:' + this.state.pengguna)
 //                 />
-    
+
 //                 {/* NomorAgenda={this.props.NOMOR_AGENDA}
 //                 /> */}
 //             </div>

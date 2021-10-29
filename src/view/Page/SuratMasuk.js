@@ -9,17 +9,9 @@ import {
   setDerajatSurat,
   setSifatSurat,
   setAllPengingat,
-<<<<<<< HEAD
   setAllDisposisi,
 } from '../../actions'
 import ModalLoading from '../../components/ModalLoading'
-=======
-  setAllDisposisi
-} from '../../actions'
-
-//Ini buat dependecies/library nya
-//import + "nama variabel" + from + "nama librarynya";
->>>>>>> c3ee79e7c5401ef1249e6b7117e77c39c648f090
 import api from '../../service/api'
 import TabelSuratMasuk from '../../components/TabelSuratMasuk/TabelSuratMasuk'
 
@@ -32,7 +24,6 @@ class SuratMasuk extends Component {
       jenisSurat: [],
       unitKerja: [],
       disposisi: [],
-<<<<<<< HEAD
       modalLoading: false,
     }
     this.handleLoading = this.handleLoading.bind(this)
@@ -45,12 +36,6 @@ class SuratMasuk extends Component {
   }
   async getSuratMasuk() {
     this.handleLoading()
-=======
-    }
-    this.getSuratMasuk = this.getSuratMasuk.bind(this)
-  }
-  async getSuratMasuk() {
->>>>>>> c3ee79e7c5401ef1249e6b7117e77c39c648f090
     await api()
       .get('api/detailSuratMasuk')
       .then((response) => {
@@ -91,21 +76,14 @@ class SuratMasuk extends Component {
         this.props.setAllPengingat(response.data)
       })
     await api()
-      .get('api/allInfoDisposisi')
-<<<<<<< HEAD
+      .get('api/allInfoDisposisiSM')
       .then((response) => {
-=======
-      .then((response)=>{
->>>>>>> c3ee79e7c5401ef1249e6b7117e77c39c648f090
         this.setState({
           disposisi: response.data,
         })
         this.props.setAllDisposisi(response.data)
       })
-<<<<<<< HEAD
     this.handleLoading()
-=======
->>>>>>> c3ee79e7c5401ef1249e6b7117e77c39c648f090
   }
   componentDidMount() {
     this.getSuratMasuk()
@@ -152,13 +130,10 @@ class SuratMasuk extends Component {
             </div>
           </div>
         </div>
-<<<<<<< HEAD
         <ModalLoading
           loading={this.state.modalLoading}
           title={'Menggambil data sistem'}
         />
-=======
->>>>>>> c3ee79e7c5401ef1249e6b7117e77c39c648f090
       </>
     )
   }
@@ -173,9 +148,5 @@ export default connect(mapStateToProps, {
   setDerajatSurat,
   setSifatSurat,
   setAllPengingat,
-<<<<<<< HEAD
   setAllDisposisi,
-=======
-  setAllDisposisi
->>>>>>> c3ee79e7c5401ef1249e6b7117e77c39c648f090
 })(SuratMasuk)

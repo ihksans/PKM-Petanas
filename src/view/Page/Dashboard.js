@@ -6,10 +6,7 @@ import { connect } from 'react-redux'
 import api from '../../service/api'
 import BoxDataBeranda from '../../components/BoxDataBeranda'
 import BoxUserIntro from '../../components/BoxUserIntro'
-<<<<<<< HEAD
 import ModalLoading from '../../components/ModalLoading'
-=======
->>>>>>> c3ee79e7c5401ef1249e6b7117e77c39c648f090
 class Dashboard extends Component {
   //deklarasi variabel
   constructor(props) {
@@ -18,7 +15,6 @@ class Dashboard extends Component {
       countSM: 0,
       countSK: 0,
       countDis: 0,
-<<<<<<< HEAD
       modalLoading: false,
     }
     this.getCount = this.getCount.bind(this)
@@ -32,12 +28,6 @@ class Dashboard extends Component {
   async getCount() {
     this.handleLoading()
 
-=======
-    }
-    this.getCount = this.getCount.bind(this)
-  }
-  async getCount() {
->>>>>>> c3ee79e7c5401ef1249e6b7117e77c39c648f090
     await api()
       .get('api/getCountSK')
       .then((response) => {
@@ -73,10 +63,7 @@ class Dashboard extends Component {
           countUser: response.data.content,
         })
       })
-<<<<<<< HEAD
     this.handleLoading()
-=======
->>>>>>> c3ee79e7c5401ef1249e6b7117e77c39c648f090
   }
 
   componentDidMount() {
@@ -114,13 +101,10 @@ class Dashboard extends Component {
             </div>
           </div>
         </div>
-<<<<<<< HEAD
         <ModalLoading
           loading={this.state.modalLoading}
           title={'Menggambil data sistem'}
         />
-=======
->>>>>>> c3ee79e7c5401ef1249e6b7117e77c39c648f090
       </>
     )
   }

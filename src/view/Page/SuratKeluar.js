@@ -15,14 +15,9 @@ import {
 } from '../../actions'
 import api from '../../service/api'
 import TabelSuratKeluar from '../../components/TabelSuratKeluar/TabelSuratKeluar'
-<<<<<<< HEAD
 import GenerateNoSurat from '../../components/GenerateNoSurat'
 import ModalLoading from '../../components/ModalLoading'
 
-=======
-import AddFormSuratKeluar from '../../components/AddFormSuratKeluar'
-import GenerateNoSurat from '../../components/GenerateNoSurat'
->>>>>>> c3ee79e7c5401ef1249e6b7117e77c39c648f090
 class SuratKeluar extends Component {
   //deklarasi variabel
   constructor(props) {
@@ -31,7 +26,6 @@ class SuratKeluar extends Component {
       suratKeluar: [],
       jenisSurat: [],
       unitKerja: [],
-<<<<<<< HEAD
       disposisi: [],
       lastNoAgenda: null,
       modalLoading: false,
@@ -47,14 +41,6 @@ class SuratKeluar extends Component {
   async getSuratKeluar() {
     this.handleLoading()
 
-=======
-      disposisi:[],
-      lastNoAgenda: null,
-    }
-    this.getSuratKeluar = this.getSuratKeluar.bind(this)
-  }
-  async getSuratKeluar() {
->>>>>>> c3ee79e7c5401ef1249e6b7117e77c39c648f090
     await api()
       .get('api/getSuratKeluarDetail')
       .then((response) => {
@@ -105,22 +91,15 @@ class SuratKeluar extends Component {
         this.props.setAllPemohon(response.data.content)
       })
     await api()
-      .get('api/allInfoDisposisi')
-<<<<<<< HEAD
+      .get('api/allInfoDIsposisiSK')
       .then((response) => {
-=======
-      .then((response)=>{
->>>>>>> c3ee79e7c5401ef1249e6b7117e77c39c648f090
         this.setState({
           disposisi: response.data,
         })
         this.props.setAllDisposisi(response.data)
       })
-<<<<<<< HEAD
     this.handleLoading()
 
-=======
->>>>>>> c3ee79e7c5401ef1249e6b7117e77c39c648f090
     return (
       <TabelSuratKeluar
         SuratKeluar={this.props.SuratKeluar.allSuratKeluarInfo}
@@ -178,13 +157,10 @@ class SuratKeluar extends Component {
             </div>
           </div>
         </div>
-<<<<<<< HEAD
         <ModalLoading
           loading={this.state.modalLoading}
           title={'Menggambil data sistem'}
         />
-=======
->>>>>>> c3ee79e7c5401ef1249e6b7117e77c39c648f090
       </>
     )
   }
@@ -201,9 +177,5 @@ export default connect(mapStateToProps, {
   setAllPengingat,
   setAllKodeHal,
   setAllPemohon,
-<<<<<<< HEAD
   setAllDisposisi,
-=======
-  setAllDisposisi
->>>>>>> c3ee79e7c5401ef1249e6b7117e77c39c648f090
 })(SuratKeluar)

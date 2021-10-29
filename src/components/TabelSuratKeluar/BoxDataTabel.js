@@ -34,7 +34,6 @@ class BoxDataTabel extends Component {
           </div>
 
           <div className="flex flex-row  items-center mt-1">
-<<<<<<< HEAD
             {/* {this.props.Surat.TIPE_SURAT == 1 ? (
               <p className="truncate text-sm">
                 Nomor {this.props.Surat.NOMOR_URUT} Tahun{' '}
@@ -67,8 +66,6 @@ class BoxDataTabel extends Component {
                 {this.props.Surat.TAHUN}
               </p>
             ) : null} */}
-=======
->>>>>>> c3ee79e7c5401ef1249e6b7117e77c39c648f090
             <p className="truncate text-sm">{this.props.Surat.NOMOR_SURAT}</p>
           </div>
           <div className="flex flex-row  col-span-2  items-center mt-1">

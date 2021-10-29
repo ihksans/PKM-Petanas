@@ -6,8 +6,6 @@ import Kalender from './Kalender'
 import ModalLoading from '../ModalLoading'
 import AddReminder from '../FormAddReminder'
 import { setAllSuratKeluar } from '../../actions'
-import axios from 'axios'
-import api from '../../service/api'
 
 // import createuser from "./index";
 class AddFormSurat extends Component {

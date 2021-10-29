@@ -475,43 +475,47 @@ class DetailSuratKeluar extends Component {
             <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
           </>
         ) : null}
-        {this.state.showPengingatModal ? (
+        {this.props.User.currentUser.ROLE != 3 ? (
           <>
-            {this.state.pengingat == null ? (
+            {this.state.showPengingatModal ? (
               <>
-                <AddReminder
-                  SuratDetail={this.props.SuratDetail}
-                  idPencatatan={this.props.SuratDetail.ID_PENCATATAN}
-                  noAgenda={this.props.SuratDetail.NOMOR_AGENDA}
-                  idDerajatSurat={this.props.SuratDetail.ID_DERAJAT_SURAT}
-                />
+                {this.state.pengingat == null ? (
+                  <>
+                    <AddReminder
+                      SuratDetail={this.props.SuratDetail}
+                      idPencatatan={this.props.SuratDetail.ID_PENCATATAN}
+                      noAgenda={this.props.SuratDetail.NOMOR_AGENDA}
+                      idDerajatSurat={this.props.SuratDetail.ID_DERAJAT_SURAT}
+                    />
+                  </>
+                ) : (
+                  <>
+                    <UpdateReminder
+                      idPengingat={this.state.pengingat.ID_PENGINGAT}
+                      idPengguna={this.state.pengingat.ID_PENGGUNA}
+                      idPencatatan={this.state.pengingat.ID_PENCATATAN}
+                      waktuPengingat={this.state.pengingat.WAKTU_PENGINGAT}
+                      deskripsiPengingat={this.state.pengingat.DESKRIPSI}
+                      status={this.state.pengingat.STATUS}
+                      noAgenda={this.props.SuratDetail.NOMOR_AGENDA}
+                      idDerajatSurat={this.props.SuratDetail.ID_DERAJAT_SURAT}
+                    />
+                  </>
+                )}
               </>
-            ) : (
+            ) : null}
+            {this.state.hiddenTLModal ? (
               <>
-                <UpdateReminder
+                <UpdateTindakLanjut
                   idPengingat={this.state.pengingat.ID_PENGINGAT}
                   idPengguna={this.state.pengingat.ID_PENGGUNA}
                   idPencatatan={this.state.pengingat.ID_PENCATATAN}
                   waktuPengingat={this.state.pengingat.WAKTU_PENGINGAT}
                   deskripsiPengingat={this.state.pengingat.DESKRIPSI}
                   status={this.state.pengingat.STATUS}
-                  noAgenda={this.props.SuratDetail.NOMOR_AGENDA}
-                  idDerajatSurat={this.props.SuratDetail.ID_DERAJAT_SURAT}
                 />
               </>
-            )}
-          </>
-        ) : null}
-        {this.state.hiddenTLModal ? (
-          <>
-            <UpdateTindakLanjut
-              idPengingat={this.state.pengingat.ID_PENGINGAT}
-              idPengguna={this.state.pengingat.ID_PENGGUNA}
-              idPencatatan={this.state.pengingat.ID_PENCATATAN}
-              waktuPengingat={this.state.pengingat.WAKTU_PENGINGAT}
-              deskripsiPengingat={this.state.pengingat.DESKRIPSI}
-              status={this.state.pengingat.STATUS}
-            />
+            ) : null}
           </>
         ) : null}
         {this.state.loading ? (

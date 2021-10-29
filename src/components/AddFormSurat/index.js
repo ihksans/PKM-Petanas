@@ -1010,13 +1010,9 @@ class AddFormSurat extends Component {
         <button
           className="flex flex-row bg-primary p-2 mt-4 hover:bg-orenHover focus:outline-none"
           type="button"
-<<<<<<< HEAD
           onClick={
             this.props.User.currentUser.ROLE == 3 ? null : this.handleModal
           }
-=======
-          onClick={this.handleModal}
->>>>>>> c3ee79e7c5401ef1249e6b7117e77c39c648f090
         >
           <div className="ml-1">
             <img

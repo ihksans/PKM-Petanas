@@ -1,30 +1,3 @@
-// import React from 'react'
-
-// import { PDFReader } from 'reactjs-pdf-reader'
-// const PdfReader = () => {
-//   return (
-//     <div style={{ overflow: 'scroll', height: 600 }}>
-//       <PDFReader
-//         url={{
-//           url:
-//             'https://firebasestorage.googleapis.com/v0/b/petanas-1efe5.appspot.com/o/Document%2F2.pdf?alt=media&token=c49ce22f-09c1-473d-b465-00a2e9269a60',
-//           httpHeaders: {
-//             'Access-Control-Allow-Origin': '*',
-//             'Access-Control-Allow-Headers':
-//               'Origin, X-Requested-With, Content-Type, Accept, Authorization',
-//             'Access-Control-Allow-Methods': 'GET,HEAD,OPTIONS,POST,PUT',
-//           },
-//         }}
-//         showAllPage={true}
-//         isShowFooter={false}
-//         isShowHeader={true}
-//       />
-//     </div>
-//   )
-// }
-
-//export default PdfReader
-
 import React, { useState } from 'react'
 import { Document, Page, pdfjs } from 'react-pdf/dist/esm/entry.webpack'
 import api from '../../service/api'
@@ -57,15 +30,7 @@ const PdfReader = ({ urlFile, namaFile, namaLampiran }) => {
   function nextPage() {
     changePage(1)
   }
-  // const getData = () => {
-  //   let formData = new FormData()
-  //   formData.append('namafile', '17893-1-33923-1-10-20160115')
 
-  //   api()
-  //     .post('/api/getSurat', formData)
-  //     .then((response) => setUrl(response))
-  //   console.log('url file:' + url)
-  // }
   const downloadFile = async () => {
     let formData = new FormData()
     formData.append('namafile', namaFile)
@@ -127,15 +92,7 @@ const PdfReader = ({ urlFile, namaFile, namaLampiran }) => {
             </div>
           </div>
           <div className="flex flex-row justify-center transform -translate-y-5">
-            <UnduhFile link={namaFile} namaFile={namaFile} title={'Surat'} />
-            {namaLampiran != null ? (
-              <UnduhFile
-                link={namaLampiran}
-                namaFile={namaLampiran}
-                title={'Lampiran'}
-              />
-            ) : null}
-
+            {/* <UnduhFile link={namaFile} namaFile={namaFile} title={'Surat'} /> */}
             <a
               href={urlFile}
               target="_blank"
@@ -143,7 +100,10 @@ const PdfReader = ({ urlFile, namaFile, namaLampiran }) => {
               className="bg-primary flex flex-row text-sm font-bold text-putih self-center ml-2 mt-1 rounded p-1 shadow-sm w-auto"
             >
               {/* <img className="w-4 ml-1 mr-1" src="assets/img/icon/search.png" /> */}
-              <img src="https://img.icons8.com/material-outlined/24/ffffff/file-preview.png" className="w-4"/>
+              <img
+                src="https://img.icons8.com/material-outlined/24/ffffff/file-preview.png"
+                className="w-4"
+              />
               <p className="px-0.5">Lihat Lebih Detail</p>
             </a>
           </div>

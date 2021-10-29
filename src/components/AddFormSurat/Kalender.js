@@ -1,19 +1,9 @@
 import React, { useState } from 'react'
 import DatePicker, { registerLocale } from 'react-datepicker'
-<<<<<<< HEAD
-import id from 'date-fns/locale/id'
-import 'react-datepicker/dist/react-datepicker.css'
-registerLocale('id', id)
-
-// CSS Modules, react-datepicker-cssmodules.css
-// import 'react-datepicker/dist/react-datepicker-cssmodules.css';
-
-=======
 import 'react-datepicker/dist/react-datepicker.css'
 import id from 'date-fns/locale/id'
 registerLocale('id', id)
 
->>>>>>> c3ee79e7c5401ef1249e6b7117e77c39c648f090
 const Kalender = ({ onChange, minDate }) => {
   const [startDate, setStartDate] = useState(null)
 
