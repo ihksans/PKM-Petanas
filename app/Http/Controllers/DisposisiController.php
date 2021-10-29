@@ -343,4 +343,26 @@ class DisposisiController extends Controller
     //         ->get();
     //     }
     // }
+    public function addMsgDisposisi(Request $request)
+    {
+        try {
+            $disposisi = Disposisi::where('ID_DISPOSISI', $request->id)
+            ->update([
+                'KOMENTAR_DISPOSISI'=>$request->komentar_disposisi,
+            ]);
+            $respon =[
+                'Msg' => 'success',
+                'content' => $disposisi,
+                'request' => $request->id,
+                'msg_request'=> $request->komentar_disposisi
+                ];
+            return response()->json($respon);
+        } catch (\Throwable $th) {
+            $respon =[
+                'Msg' => 'failed',
+                'content' => $disposisi,
+                ];
+            return response()->json($respon);
+        }
+    }
 }
