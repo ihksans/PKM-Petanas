@@ -73,6 +73,9 @@ class BoxDataTabel extends Component {
               UnitKerja={this.props.UnitKerja}
               SuratMasuk={this.props.SuratMasuk}
               NomorAgenda={this.props.NOMOR_AGENDA}
+              IdJenisSurat={this.state.jenisSurat}
+              Pencatatan={this.state.pencatatan}
+              tujuanDisposisi={this.state.tujuanDisposisi}
             />
           </div>
         </div>

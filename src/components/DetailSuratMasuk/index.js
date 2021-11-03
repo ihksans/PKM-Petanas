@@ -225,6 +225,7 @@ class DetailSuratMasuk extends Component {
                         />
                         <Modal
                           namaFile={this.props.NamaFileSurat}
+                          nomorSurat={this.props.nomorSurat}
                           SuratDetail={this.props.SuratDetail}
                           namaLampiran={this.props.NamaFileLampiran}
                           jenisSurat={this.props.jenisSurat}

@@ -33,7 +33,6 @@ class DisposisiSK extends Component {
     async getDisposisi() {
         await api()
             .get('api/allInfoDIsposisiSK')
-            // .get('api/allInfoDisposisi' +1)
             .then((response) => {
                 this.setState({
                     disposisi: response.data.content,

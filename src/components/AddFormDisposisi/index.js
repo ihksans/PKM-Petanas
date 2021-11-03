@@ -26,7 +26,7 @@ class AddFormDisposisi extends Component {
       tujuanDisposisi: '',
       informasiDisposisi: null,
       keteranganDisposisi: null,
-      namaFileDisposisi: null,
+      namaFileDisposisi: '',
       firstDate: new Date(),
       showForm: false,
       showModal: this.props.showModal,
@@ -1029,12 +1029,12 @@ class AddFormDisposisi extends Component {
                   ) : (
                     <>
                       <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
-                        <div className="relative w-auto h-95% my-6 mx-auto max-w-6xl">
+                        <div className="relative w-auto h-90% my-6 mx-auto max-w-6xl">
                           {/* content */}
                           <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-abu outline-none focus:outline-none">
                             {/* Header */}
-                            <div className="flex flex-row grid grid-cols-2 mr-8">
-                              <div className="flex flex-row grid grid-cols-3 bg-white pb-10 pt-4 pl-4 pr-4">
+                            <div className="flex flex-row grid grid-cols-2">
+                              <div className="flex flex-row grid grid-cols-3 bg-white p-4 rounded-l-lg">
                                 <div className="flex flex-row items-start p-2  rounded-t col-span-3">
                                   <div>
                                     <img
@@ -1247,12 +1247,15 @@ class AddFormDisposisi extends Component {
                                 </div>
                               </div>
                               <div>
-                                <div className=" flex justify-end   ">
-                                  <button 
-                                  onClick={this.handleModal}
-                                  className="hover:shadow-md focus:outline-none"
+                                <div className="flex items-start justify-center">
+                                  <button
+                                    className="p-1 ml-auto hover:shadow-md focus:outline-none"
+                                    onClick={this.handleModal}
                                   >
-                                    <img src="assets/img/icon/x.png" />
+                                    <img
+                                      className="justify-center items-center"
+                                      src="assets/img/icon/x.png"
+                                    />
                                   </button>
                                 </div>
                                 <div className="flex justify-center p-2 ">

@@ -126,7 +126,7 @@ class EditFormDisposisiKeluar extends Component {
         this.handleErrLampiranDisposisi('Ukuran file disposisi melebihi 10 Mb')
       } else {
         this.handleErrLampiranDisposisi('')
-        let namasurat = this.state.nomorSurat.split('/').join('_')
+        let namasurat = this.state.namaFileDisposisi.split('/').join('_')
         console.log('nama file disposisi: ' + namasurat)
         this.setState({
           namaFileDisposisi: namasurat,
@@ -405,6 +405,17 @@ class EditFormDisposisiKeluar extends Component {
               {/* content */}
               <div className="border-2 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                 {/* header */}
+                <div className="flex items-start justify-center">
+                    <button
+                      className="p-1 ml-auto float-right  leading-none  outline-none focus:outline-none"
+                      onClick={this.handleModal}
+                    >
+                      <img
+                        className="justify-center items-center"
+                        src="assets/img/icon/x.png"
+                      />
+                    </button>
+                  </div>
                 <div className="flex flex-row items-start p-2 border-b ml-6 border-solid border-blueGray-200 rounded-t col-span-3">
                   <div>
                     <img className="w-8" src="assets/img/icon/Surat.png" />
@@ -545,11 +556,6 @@ class EditFormDisposisiKeluar extends Component {
                     </div>
                   </div>
                   <div>
-                    <div className="flex justify-end">
-                      <button onClick={this.handleModal}>
-                        <img src="assets/img/icon/x.png" />
-                      </button>
-                    </div>
                     <div className="flex flex-row items-start p-2 ml-6 border-solid border-blueGray-200 rounded-t col-span-3">
                       <div>
                         <img className="w-8"></img>

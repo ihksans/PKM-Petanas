@@ -28,7 +28,7 @@ class AddFormDisposisiKeluar extends Component {
       tujuanDisposisi: '',
       informasiDisposisi: null,
       keteranganDisposisi: null,
-      namaFileDisposisi: null,
+      namaFileDisposisi: '',
       firstDate: new Date(),
       showForm: false,
       showModal: this.props.showModal,
@@ -1028,8 +1028,8 @@ class AddFormDisposisiKeluar extends Component {
                           {/* content */}
                           <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-abu outline-none focus:outline-none">
                             {/* Header */}
-                            <div className="flex flex-row grid grid-cols-2 mr-8">
-                              <div className="flex flex-row grid grid-cols-3 bg-white pb-10 pt-4 pl-4 pr-4">
+                            <div className="flex flex-row grid grid-cols-2">
+                              <div className="flex flex-row grid grid-cols-3 bg-white p-4 rounded-l-lg">
                                 <div className="flex flex-row items-start p-2  rounded-t col-span-3">
                                   <div>
                                     <img
@@ -1242,9 +1242,15 @@ class AddFormDisposisiKeluar extends Component {
                                 </div>
                               </div>
                               <div>
-                                <div className=" flex justify-end   ">
-                                  <button onClick={this.handleModal}>
-                                    <img src="assets/img/icon/x.png" />
+                                <div className="flex items-start justify-center">
+                                  <button
+                                    className="p-1 ml-auto hover:shadow-md focus:outline-none"
+                                    onClick={this.handleModal}
+                                  >
+                                    <img
+                                      className="justify-center items-center"
+                                      src="assets/img/icon/x.png"
+                                    />
                                   </button>
                                 </div>
                                 <div className="flex justify-center p-2 ">

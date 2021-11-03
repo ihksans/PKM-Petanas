@@ -3,16 +3,30 @@ import { connect } from 'react-redux'
 import {} from '../../actions'
 import HeaderTabel from './HeaderTabel'
 import BoxDataTabel from './BoxDataTabel'
+import ReactPaginate from 'react-paginate'
 
 class TabelDisposisiSK extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      Disposisi: Array.from(this.props.Disposisi),
+      Disposisi: this.props.Disposisi,
       search: '',
+      perPage: 10,
+      maxPage: 0,
+      currentPage: 1,
     }
     this.getDisposisiSM = this.getDisposisiSM.bind(this)
     this.handleSearch = this.handleSearch.bind(this)
+    this.handlePageClick = this.handlePageClick.bind(this)
+  }
+  componentDidMount() {
+    this.setState({
+      maxPage: Math.round(
+        this.state.Disposisi.length / this.state.perPage + 1,
+      ),
+    })
+    console.log('maxPage' + this.state.maxPage)
+    console.log('currentPage' + this.state.currentPage)
   }
   async getDisposisiSM(e) {
     //     let key = this.state.search
@@ -20,8 +34,31 @@ class TabelDisposisiSK extends Component {
     //     str = key.replace(/\s\s+/g,'')
   }
   handleSearch() {}
-
+  handlePageClick(event) {
+    const cP = event.selected + 1
+    this.setState({ currentPage: cP })
+    console.log('currentPage' + cP)
+  }
   render() {
+    const { currentPage, maxPage, perPage, Disposisi } = this.state
+    let items = Disposisi.slice(
+      (currentPage - 1) * perPage,
+      currentPage * perPage,
+    )
+    const dataDisposisi = items.map((item, index) => {
+      return (
+        <li key={index}>
+          <BoxDataTabel
+            No={index + 1 + (currentPage - 1) * perPage}
+            IdJenisSurat={this.props.IdJenisSurat}
+            Surat={item}
+            IdUnitKerja={this.props.IdUnitKerja}
+            Disposisi={item}
+            SuratMasuk={this.props.SuratMasuk}
+          />
+        </li>
+      )
+    })
     return (
       <>
         <div className="flex absolute right-10 top-32 justify-end mt-5 w-1/2">
@@ -51,23 +88,36 @@ class TabelDisposisiSK extends Component {
         </div>
         <ul>
           <HeaderTabel />
-          {this.state.Disposisi == null
-            ? null
-            : this.state.Disposisi.map((item, index) => {
-                return (
-                  <li key={index}>
-                    <BoxDataTabel
-                      No={index + 1}
-                      IdJenisSurat={this.props.IdJenisSurat}
-                      Surat={item}
-                      IdUnitKerja={this.props.IdUnitKerja}
-                      Disposisi={item}
-                      SuratMasuk={this.props.SuratMasuk}
-                    />
-                  </li>
-                )
-              })}
+          {dataDisposisi == null ? null : dataDisposisi}
         </ul>
+        <nav className="mt-4">
+          <ReactPaginate
+            previousLabel={'Prev'}
+            previousLinkClassName={
+              'relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium text-gray-700 bg-white hover:bg-gray-50'
+            }
+            nextLabel={'Next'}
+            nextLinkClassName={
+              '-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium text-gray-700 bg-white hover:bg-gray-50'
+            }
+            pageCount={maxPage}
+            containerClassName={
+              'relative z-0 inline-flex shadow-sm -space-x-px'
+            }
+            pageClassName={
+              'bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium'
+            }
+            breakClassName={
+              'relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700'
+            }
+            pageLinkClassName={'page-link'}
+            breakLinkClassName={'page-link'}
+            activeClassName={
+              '-10 bg-indigo-50 border-indigo-500 text-indigo-600 relative inline-flex items-center px-4 py-2 border text-sm font-medium'
+            }
+            onPageChange={this.handlePageClick}
+          />
+        </nav>
       </>
     )
   }

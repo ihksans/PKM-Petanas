@@ -106,6 +106,7 @@ class ClassReducers extends Component {
               showModal={true}
               namaFile={this.props.NamaFileSurat}
               SuratDetail={this.props.SuratDetail}
+              nomorSurat={this.props.nomorSurat}
               namaLampiran={this.props.NamaFileLampiran}
               jenisSurat={this.props.jenisSurat}
               IdUnitKerja={this.props.IdUnitKerja}

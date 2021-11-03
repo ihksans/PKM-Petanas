@@ -13,6 +13,7 @@ class DetailDisposisiD extends Component {
     this.state = {
       dir: [],
       tujuanDisposisi: [],
+      tujuanPencatatan:[],
       url: null,
       loading: false,
       disposisi: null,
@@ -27,12 +28,27 @@ class DetailDisposisiD extends Component {
     this.handleLoading = this.handleLoading.bind(this)
 
     this.handleTujuanDisposisi = this.handleTujuanDisposisi.bind(this)
+    this.handleTujuanPencatatan = this.handleTujuanPencatatan.bind(this)
     this.getFileDisposisi = this.getFileDisposisi.bind(this)
   }
   handleLoading() {
     this.setState({
       loading: !this.state.loading,
     })
+  }
+  async handleTujuanPencatatan(){
+    await api()
+      .get(
+        'api/getDetailTujuanPencatatan/' + this.props.Pencatatan.ID_PENCATATAN,
+      )
+      .then((response) => {
+        this.setState({
+          tujuanPencatatan: response.data.content,
+        })
+        console.log('tujuan pencatatan:' + this.state.tujuanPencatatan)
+        console.log('tujuan pencatatan2:' + response.data.content)
+        console.log('tujuan pencatatan2:' + this.props.Pencatatan.ID_PENCATATAN)
+      })
   }
   async handleTujuanDisposisi() {
     await api()
@@ -67,6 +83,7 @@ class DetailDisposisiD extends Component {
   }
   async handleModal() {
     this.handleTujuanDisposisi()
+    this.handleTujuanPencatatan()
     if (this.state.url == null) {
       await this.getFileDisposisi()
     }
@@ -118,7 +135,8 @@ class DetailDisposisiD extends Component {
                           IdJenisSurat={this.props.IdJenisSurat}
                           IdUnitKerja={this.props.IdUnitKerja}
                           SuratMasuk={this.props.SuratMasuk}
-                          tujuanDisposisi={this.props.tujuanDisposisi}
+                          tujuanDisposisi={this.state.tujuanDisposisi}
+                          tujuanPencatatan={this.state.tujuanPencatatan}
                         />
                         {this.props.User.currentUser.ROLE == 3 ? null : (
                           <>
@@ -141,7 +159,27 @@ class DetailDisposisiD extends Component {
                       </div>
                       <div className="font-bold">Tujuan </div>
                       <div className="col-span-2 ml-4">
-                        {this.props.DisposisiDetail.TUJUAN_SURAT}
+                        {/* {this.props.DisposisiDetail.TUJUAN_SURAT} */}
+                        {this.state.tujuanPencatatan.map((item, i) => {
+                        return (
+                          <div
+                            key={i}
+                            className={i == 0 ? ' col-span-2' : ' col-span-3'}
+                          >
+                            <div
+                              className={
+                                i == 0 ? '' : 'flex flex-row grid grid-cols-3'
+                              }
+                            >
+                              <div></div>
+                              <div className={i == 0 ? '' : ' col-span-2'}>
+                                - {item.KODE_UNIT_KERJA} :{' '}
+                                {item.NAMA_UNIT_KERJA}
+                              </div>
+                            </div>
+                          </div>
+                        )
+                      })}
                       </div>
 
                       <div className="font-bold">Informasi / Isi Disposisi</div>
