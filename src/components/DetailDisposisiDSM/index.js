@@ -7,7 +7,7 @@ import ModalKonfirmDeleteDispo from '../ModalKonfirmDeleteDispo'
 import EditFormDisposisiD from '../EditFormDisposisiD'
 import PdfReader from '../PdfReader'
 import ModalLoading from '../ModalLoading'
-class DetailDisposisiD extends Component {
+class DetailDisposisiDSM extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -317,4 +317,4 @@ class DetailDisposisiD extends Component {
 function mapStateToProps(state) {
   return state
 }
-export default connect(mapStateToProps, {})(DetailDisposisiD)
+export default connect(mapStateToProps, {})(DetailDisposisiDSM)

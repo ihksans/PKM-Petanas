@@ -1,7 +1,7 @@
 // import React, { useState, Component } from 'react'
 // import FormUserEdit from '../FormUserEdit'
 // import ModalKonfirmDelete from '../ModalKonfirmDelete'
-import DetailDisposisiD from '../DetailDisposisiD'
+import DetailDisposisiDSM from '../DetailDisposisiDSM'
 import AddFormDisposisi from '../AddFormDisposisi'
 import React, { Component } from 'react'
 import api from '../../service/api'
