@@ -6,8 +6,6 @@ import { connect } from 'react-redux'
 import Kalender from './Kalender'
 import ModalLoading from '../ModalLoading'
 
-// import DetailDisposisi from '../DetailDisposisi'
-
 class EditFormDisposisi extends Component {
   constructor(props) {
     super(props)
@@ -25,8 +23,6 @@ class EditFormDisposisi extends Component {
       pengguna: this.props.disposisi.ID_PENGGUNA,
       nomorAgenda: this.props.disposisi.NOMOR_AGENDA,
       tglDisposisi: this.props.disposisi.TANGGAL_DISPOSISI,
-      // tujuanDisposisi: this.props.tujuanDisposisis,
-      // tujuanSurat: this.props.TUJUAN_SURAT,
       informasi: this.props.disposisi.INFORMASI,
       prosesSelanjutnya: this.props.disposisi.PROSES_SELANJUTNYA,
       namaFileDisposisi: this.props.disposisi.NAMA_FILE_DISPOSISI,
@@ -40,7 +36,6 @@ class EditFormDisposisi extends Component {
     this.handleModal = this.handleModal.bind(this)
     this.onSubmit = this.onSubmit.bind(this)
     this.handleLoading = this.handleLoading.bind(this)
-
     this.onFileChange = this.onFileChange.bind(this)
 
     this.handleInformasiDisposisi = this.handleInformasiDisposisi.bind(this)
@@ -57,33 +52,26 @@ class EditFormDisposisi extends Component {
 
     this.handleErrTglDisposisi = this.handleErrTglDisposisi.bind(this)
     this.handleErrTujuanDisposisi = this.handleErrTujuanDisposisi.bind(this)
-    this.handleErrInformasiDisposisi = this.handleErrInformasiDisposisi.bind(
-      this,
-    )
-    this.handleErrKeteranganDisposisi = this.handleErrKeteranganDisposisi.bind(
-      this,
-    )
+    this.handleErrInformasiDisposisi = this.handleErrInformasiDisposisi.bind(this)
+    this.handleErrKeteranganDisposisi = this.handleErrKeteranganDisposisi.bind(this)
     this.handleErrLampiranDisposisi = this.handleErrLampiranDisposisi.bind(this)
-
     this.handleErrTujuanSelect = this.handleErrTujuanSelect.bind(this)
 
-    this.ValidateTglDisposisi = this.ValidateTglDisposisi.bind(this)
-    this.ValidateTujuanDisposisi = this.ValidateTujuanDisposisi.bind(this)
+    this.validateTglDisposisi = this.validateTglDisposisi.bind(this)
+    this.validateTujuanDisposisi = this.validateTujuanDisposisi.bind(this)
     this.validateInformasiDisposisi = this.validateInformasiDisposisi.bind(this)
-    this.validateKeteranganDIsposisi = this.validateKeteranganDIsposisi.bind(
-      this,
-    )
+    this.validateKeteranganDIsposisi = this.validateKeteranganDIsposisi.bind(this)
     this.validateLampiranDisposisi = this.validateLampiranDisposisi.bind(this)
   }
 
-  ValidateTglDisposisi(input) {
+  validateTglDisposisi(input) {
     if (input == null) {
       this.handleErrTglDisposisi(true)
     } else {
       this.handleErrTglDisposisi(false)
     }
   }
-  ValidateTujuanDisposisi(input) {
+  validateTujuanDisposisi(input) {
     const re = /^[a-zA-Z0-9 ]*$/
     input.map((x, i) => {
       if (x.idUnit != undefined) {
@@ -289,15 +277,13 @@ class EditFormDisposisi extends Component {
     if (
       this.state.nomorAgenda != this.props.disposisi.NOMOR_AGENDA ||
       this.state.informasiDisposisi != this.props.disposisi.INFORMASI ||
-      this.state.keteranganDisposisi !=
-        this.props.disposisi.PROSES_SELANJUTNYA ||
+      this.state.keteranganDisposisi !=this.props.disposisi.PROSES_SELANJUTNYA ||
       this.state.tglDisposisi != this.props.disposisi.TANGGAL_DISPOSISI ||
-      this.state.namaFileDisposisi !=
-        this.props.disposisi.NAMA_FILE_DISPOSISI ||
+      this.state.namaFileDisposisi !=this.props.disposisi.NAMA_FILE_DISPOSISI ||
       this.state.lampiranDisposisi != null
     ) {
-      await this.ValidateTglDisposisi(this.state.tglDisposisi)
-      await this.ValidateTujuanDisposisi(this.state.inputListSelect)
+      await this.validateTglDisposisi(this.state.tglDisposisi)
+      await this.validateTujuanDisposisi(this.state.inputListSelect)
       await this.validateInformasiDisposisi(this.state.informasiDisposisi)
       await this.validateKeteranganDIsposisi(this.state.keteranganDisposisi)
       if (this.state.lampiranDisposisi != null) {
@@ -446,25 +432,6 @@ class EditFormDisposisi extends Component {
                       <div className=" col-span-2">
                         {this.props.SuratDetail.NAMA}
                       </div>
-                      {/* <div className="font-bold">Nama</div>
-                    <div className="">: 
-                      {this.props.SuratDetail.NAMA_PENGIRIM}{' '}
-                    </div>
-                    <div></div>
-                    <div className="font-bold">Unit</div>
-                    <div className="">
-                      <div className="">
-                        <p>
-                          : {this.props.SuratDetail.UNIT_PENGIRIM} -{' '}
-                          {this.props.SuratDetail.UNIT_PENGIRIM}
-                        </p>
-                      </div>
-                    </div>
-                    <div></div>
-                    <div className="font-bold">Penandatangan</div>
-                    <div className="">: 
-                      {this.props.SuratDetail.PENANDATANGAN}
-                    </div> */}
                       <div className="font-bold">Tujuan</div>
                       <div className=" col-span-2">
                         {this.props.tujuanDisposisi.map((item, i) => {

@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import Tab from '../../components/Tab'
-// import SuratMasuk from '../../view/Page/SuratMasuk'
 import DisposisiSM from '../../components/TabelDisposisiSM'
 import DisposisiSK from '../../components/TabelDisposisiSK'
 // import SuratMasuk from '../../components/TabelKelolaSurat/SM'
@@ -20,7 +19,7 @@ const tabContent = [
 const Disposisi = () => {
   return (
     <>
-      <div className="w-full h-95% bg-gray-200 p-4">
+      <div className="w-full h-90% bg-gray-200 p-4">
         <div className="col text-center">
           <div className="row text-left">
             <Tab>

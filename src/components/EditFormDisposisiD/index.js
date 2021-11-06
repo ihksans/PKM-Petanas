@@ -1,10 +1,10 @@
 import axios from 'axios'
 import api from '../../service/api'
 import React, { Component, useState } from 'react'
+import { setAllDisposisi } from '../../actions'
 import { connect } from 'react-redux'
-import Kalender from '../AddFormSurat/Kalender'
+import Kalender from './Kalender'
 import ModalLoading from '../ModalLoading'
-// import DetailDisposisi from '../DetailDisposisi'
 
 class EditFormDisposisiD extends Component {
   constructor(props) {
@@ -14,40 +14,91 @@ class EditFormDisposisiD extends Component {
       showModal: this.props.showModal,
       modalLoading: false,
       firstDate: new Date(),
+      lampiranDisposisi: null,
+      inputListSelectAwal: [{ idUnit: '', err: false }],
+      inputListSelect: [{ idUnit: '', err: false }],
       idDiposisi: this.props.DisposisiDetail.ID_DISPOSISI,
       informasiDisposisi: this.props.DisposisiDetail.INFORMASI,
       keteranganDisposisi: this.props.DisposisiDetail.PROSES_SELANJUTNYA,
       pengguna: this.props.DisposisiDetail.ID_PENGGUNA,
       nomorAgenda: this.props.DisposisiDetail.NOMOR_AGENDA,
-      tanggalDisposisi: this.props.DisposisiDetail.TANGGAL_DISPOSISI,
-      tujuanSurat: this.props.DisposisiDetail.TUJUAN_SURAT,
+      tglDisposisi: this.props.DisposisiDetail.TANGGAL_DISPOSISI,
       informasi: this.props.DisposisiDetail.INFORMASI,
       prosesSelanjutnya: this.props.DisposisiDetail.PROSES_SELANJUTNYA,
-
+      namaFileDisposisi: this.props.DisposisiDetail.NAMA_FILE_DISPOSISI,
+      errTglDisposisi: false,
+      errTujuanDisposisi: false,
       errInformasiDisposisi: false,
       errKeteranganDisposisi: false,
+      errLampiranDisposisi: '',
+      loading: false,
     }
     this.handleModal = this.handleModal.bind(this)
     this.onSubmit = this.onSubmit.bind(this)
     this.handleLoading = this.handleLoading.bind(this)
+    this.onFileChange = this.onFileChange.bind(this)
 
     this.handleInformasiDisposisi = this.handleInformasiDisposisi.bind(this)
     this.handleKeteranganDisposisi = this.handleKeteranganDisposisi.bind(this)
+    this.handleInputChangeCustom = this.handleInputChangeCustom.bind(this)
     this.handleTglDisposisi = this.handleTglDisposisi.bind(this)
+    this.handleNamaFileDisposisi = this.handleNamaFileDisposisi.bind(this)
+    this.handleInputListSelect = this.handleInputListSelect.bind(this)
+    this.handleIdTujuanSelect = this.handleIdTujuanSelect.bind(this)
 
-    this.handleErrInformasiDisposisi = this.handleErrInformasiDisposisi.bind(
-      this,
-    )
-    this.handleErrKeteranganDisposisi = this.handleErrKeteranganDisposisi.bind(
-      this,
-    )
+    this.handleRemoveClickSelect = this.handleRemoveClickSelect.bind(this)
+    this.handleAddClickCustom = this.handleAddClickCustom.bind(this)
+    this.handleAddClickSelect = this.handleAddClickSelect.bind(this)
 
+    this.handleErrTglDisposisi = this.handleErrTglDisposisi.bind(this)
+    this.handleErrTujuanDisposisi = this.handleErrTujuanDisposisi.bind(this)
+    this.handleErrInformasiDisposisi = this.handleErrInformasiDisposisi.bind(this)
+    this.handleErrKeteranganDisposisi = this.handleErrKeteranganDisposisi.bind(this)
+    this.handleErrLampiranDisposisi = this.handleErrLampiranDisposisi.bind(this)
+    this.handleErrTujuanSelect = this.handleErrTujuanSelect.bind(this)
+
+    this.validateTglDisposisi = this.validateTglDisposisi.bind(this)
+    this.validateTujuanDisposisi = this.validateTujuanDisposisi.bind(this)
     this.validateInformasiDisposisi = this.validateInformasiDisposisi.bind(this)
-    this.validateKeteranganDIsposisi = this.validateKeteranganDIsposisi.bind(
-      this,
-    )
+    this.validateKeteranganDIsposisi = this.validateKeteranganDIsposisi.bind(this)
+    this.validateLampiranDisposisi = this.validateLampiranDisposisi.bind(this)
   }
 
+  validateTglDisposisi(input) {
+    if (input == null) {
+      this.handleErrTglDisposisi(true)
+    } else {
+      this.handleErrTglDisposisi(false)
+    }
+  }
+  validateTujuanDisposisi(input) {
+    const re = /^[a-zA-Z0-9 ]*$/
+    input.map((x, i) => {
+      if (x.idUnit != undefined) {
+        if (x.idUnit == null || x.idUnit == '' || x.idUnit == 0) {
+          this.handleErrTujuanSelect(true, i)
+        } else {
+          this.handleErrTujuanSelect(false, i)
+        }
+      } else {
+        if (
+          x.namaUnit == null ||
+          x.namaUnit == '' ||
+          x.kodeUnit == null ||
+          x.kodeUnit == ''
+        ) {
+          this.handleErrTujuanSelect(true, i)
+        } else {
+          let result = x.namaUnit.match(re)
+          if (result) {
+            this.handleErrTujuanSelect(false, i)
+          } else {
+            this.handleErrTujuanSelect(true, i)
+          }
+        }
+      }
+    })
+  }
   validateInformasiDisposisi(input) {
     if (input == null || input == '') {
       this.handleErrInformasiDisposisi(true)
@@ -62,7 +113,49 @@ class EditFormDisposisiD extends Component {
       this.handleErrKeteranganDisposisi(false)
     }
   }
+  validateLampiranDisposisi(input) {
+    const extension = '.pdf'
+    let result2 = this.state.lampiranDisposisi.name.match(extension)
+    if (result2) {
+      if (this.state.lampiranDisposisi.size > '10485760') {
+        this.handleErrLampiranDisposisi('Ukuran file disposisi melebihi 10 Mb')
+      } else {
+        this.handleErrLampiranDisposisi('')
+        let namasurat = this.state.namaFileDisposisi.split('/').join('_')
+        console.log('nama file disposisi: ' + namasurat)
+        this.setState({
+          namaFileDisposisi: namasurat,
+        })
+      }
+    } else {
+      this.handleErrLampiranDisposisi('file Disposisi file harus pdf')
+    }
+  }
 
+  handleTglDisposisi(exDate, value) {
+    this.setState({
+      tglDisposisi: exDate,
+    })
+    this.setState({
+      firstDate: value,
+    })
+  }
+
+  handleErrTglDisposisi(props) {
+    this.setState({
+      errTglDisposisi: props,
+    })
+  }
+  handleErrTujuanDisposisi(props) {
+    this.setState({
+      errTujuanDisposisi: props,
+    })
+  }
+  handleErrTujuanSelect(e, index) {
+    const list = [...this.state.inputListSelect]
+    list[index]['id'] = e
+    this.handleInputListSelect(list)
+  }
   handleErrInformasiDisposisi(props) {
     this.setState({
       errInformasiDisposisi: props,
@@ -73,15 +166,12 @@ class EditFormDisposisiD extends Component {
       errKeteranganDisposisi: props,
     })
   }
-
-  handleTglDisposisi(exDate, value) {
+  handleErrLampiranDisposisi(props) {
     this.setState({
-      tanggalDisposisi: exDate,
-    })
-    this.setState({
-      firstDate: value,
+      errLampiranDisposisi: props,
     })
   }
+  
   handleInformasiDisposisi(e) {
     let value = e.target.value
     let str = ''
@@ -90,7 +180,12 @@ class EditFormDisposisiD extends Component {
       informasiDisposisi: str,
     })
   }
-
+  handleNamaFileDisposisi(e) {
+    let value = e.target.value
+    this.setState({
+      namaFileDisposisi: value,
+    })
+  }
   handleKeteranganDisposisi(e) {
     let value = e.target.value
     let str = ''
@@ -104,19 +199,74 @@ class EditFormDisposisiD extends Component {
       modalLoading: !this.state.modalLoading,
     })
   }
+  handleIdTujuanSelect(e, index) {
+    const list = [...this.state.inputListSelect]
+    list[index]['id'] = e
+    this.handleInputListSelect(list)
+  }
+  handleInputListSelect(list) {
+    this.setState({
+      inputListSelect: list,
+    })
+  }
+
+  handleInputChangeCustom(e, index) {
+    const { name, value } = e.target
+    let str = ''
+    str = name.replace(/\s\s+/g, '')
+    const list = [...this.state.inputListSelect]
+    list[index][str] = value
+    this.handleInputListSelect(list)
+  }
+
+  handleRemoveClickSelect(index) {
+    const list = [...this.state.inputListSelect]
+    list.splice(index, 1)
+    this.handleInputListSelect(list)
+  }
+  handleAddClickCustom() {
+    this.handleInputListSelect([
+      ...this.state.inputListSelect,
+      { namaUnit: '', kodeUnit: '', err: false, id: '' },
+    ])
+  }
+  handleAddClickSelect() {
+    this.handleInputListSelect([
+      ...this.state.inputListSelect,
+      { idUnit: '', err: false },
+    ])
+  }
   async handleModal() {
     this.setState({
       showModal: !this.state.showModal,
       modalLoading: false,
 
       idDiposisi: this.props.DisposisiDetail.ID_DISPOSISI,
-      tanggalDisposisi: this.props.DisposisiDetail.TANGGAL_DISPOSISI,
+      tglDisposisi: this.props.DisposisiDetail.TANGGAL_DISPOSISI,
       informasiDisposisi: this.props.DisposisiDetail.INFORMASI,
       keteranganDisposisi: this.props.DisposisiDetail.PROSES_SELANJUTNYA,
-
+      namaFileDisposisi: this.props.DisposisiDetail.NAMA_FILE_DISPOSISI,
+      errNomorDisposisi: false,
+      errTglDisposisi: false,
+      errTujuanDisposisi: false,
       errInformasiDisposisi: false,
       errKeteranganDisposisi: false,
+      errLampiranDisposisi: '',
+      lampiranDisposisi: null,
     })
+    if (this.state.inputListSelect[0].idUnit == '') {
+      let arr = []
+      this.props.tujuanDisposisi.map((x, i) => {
+        arr.push({
+          idUnit: x.ID_KODE_UNIT_KERJA,
+          err: false,
+        })
+        this.setState({
+          inputListSelect: arr,
+          inputListSelectAwal: arr,
+        })
+      })
+    }
     console.log('ini edit disposisis')
     console.log('detail surat: ' + this.props.SuratDetail)
 
@@ -130,106 +280,112 @@ class EditFormDisposisiD extends Component {
     console.log('surat masuk: ' + this.props.SuratMasuk)
     console.log('pencatatan: ' + this.props.Pencatatan)
     console.log('id disposisi: ' + this.props.DisposisiDetail.ID_DISPOSISI)
-
-    // console.log('detail disposisi jenis surat: '+ this.props.Disposisi.JENIS_SURAT)
+    console.log('id disposisi: ' + this.props.namaFileDisposisi)
   }
-
+  onFileChange(event) {
+    this.setState({ lampiranDisposisi: event.target.files[0] })
+  }
   async onSubmit(e) {
     e.preventDefault()
-    //   await this.validateInformasiDisposisi(this.state.informasiDisposisi)
-    //   await this.validateKeteranganDIsposisi(this.state.keteranganDisposisi)
-    //   if(
-    //     this.state.errInformasiDisposisi == false &&
-    //     this.state.errInformasiDisposisi == false
-    //   )
-    //   {
-    //     this.handleLoading()
-    //     await api()
-    //     .post('api/updateDisposisi',{
-    //       informasiDisposisi: this.state.informasiDisposisi,
-    //       keteranganDisposisi: this.state.keteranganDisposisi,
-    //     })
-    //     .then((Response)=>{
-    //       this.setState({
-    //         item:{
-    //           informasiDisposisi: '',
-    //           keteranganDisposisi:'',
-    //         }
-    //       })
-    //       this.handleLoading()
-    //       this.handleModal()
-    //       window.location.reload('/#/Disposisi')
-    //     })
-    //     .catch((err)=>{
-    //       console.log(err)
-    //       this.handleLoading()
-    //     })
-    //     console.log('valid form')
-    // }
-    if (
+    if(
       this.state.nomorAgenda != this.props.DisposisiDetail.NOMOR_AGENDA ||
       this.state.informasiDisposisi != this.props.DisposisiDetail.INFORMASI ||
-      this.state.keteranganDisposisi !=
-        this.props.DisposisiDetail.PROSES_SELANJUTNYA ||
-      this.state.tanggalDisposisi !=
-        this.props.DisposisiDetail.TANGGAL_DISPOSISI
-      // this.state.namaFileDisposisi != this.props.DisposisiDetail.NAMA_FILE_DISPOSISI ||
-      // this.state.lampiranDisposisi != null
-    ) {
+      this.state.keteranganDisposisi !=this.props.DisposisiDetail.PROSES_SELANJUTNYA ||
+      this.state.tglDisposisi != this.props.DisposisiDetail.TANGGAL_DISPOSISI ||
+      this.state.namaFileDisposisi !=this.props.DisposisiDetail.NAMA_FILE_DISPOSISI ||
+      this.state.lampiranDisposisi != null
+    ){
+      await this.validateTglDisposisi(this.state.tglDisposisi)
+      await this.validateTujuanDisposisi(this.state.inputListSelect)
       await this.validateInformasiDisposisi(this.state.informasiDisposisi)
       await this.validateKeteranganDIsposisi(this.state.keteranganDisposisi)
+      if (this.state.lampiranDisposisi != null) {
+        await this.validateLampiranDisposisi(this.state.lampiranDisposisi)
+      }
 
-      if (
+      if(
+        this.state.errTglDisposisi == false &&
+        this.state.errTujuanDisposisi == false &&
         this.state.errInformasiDisposisi == false &&
-        this.state.errInformasiDisposisi == false
-      ) {
+        this.state.errKeteranganDisposisi == false
+      ){
         this.handleLoading()
-        // let fd = new FormData()
         let formData = new FormData()
         formData.append('id', this.props.DisposisiDetail.ID_DISPOSISI)
+        formData.append('id_pencatatan', this.props.DisposisiDetail.ID_PENCATATAN)
         formData.append('nomor_agenda', this.state.nomorAgenda)
         formData.append('informasi', this.state.informasiDisposisi)
         formData.append('proses_selanjutnya', this.state.keteranganDisposisi)
-        formData.append('tanggal_disposisi', this.state.tanggalDisposisi)
-        // if(this.state.namaFileDisposisi != null){
-        //   formData.append('nama_file_dipsosisi',this.state.namaFileDisposisi)
-        // }
+        formData.append('tanggal_disposisi', this.state.tglDisposisi)
+        if (this.state.namaFileDisposisi != null) {
+          formData.append('nama_file_disposisi', this.state.namaFileDisposisi)
+        }
         await api()
           .post('api/editDisposisi', formData)
           .then((response) => {
-            // this.setState({
-            //   item:{
-            //     informasiDisposisi: '',
-            //     keteranganDisposisi: '',
-            //   },
-            // })
-            this.handleLoading()
-            this.handleModal()
-            window.location.reload('/#/Disposisi')
+            api()
+              .get('api/allInfoDisposisi')
+              .then((response) => {
+                this.props.setAllDisposisi(response.data.content)
+              })
           })
-          .catch((err) => {
-            console.log(err)
-            this.handleLoading()
+        await api()
+          .delete('api/delAllTujuanDisposisi/' + this.state.idDisposisi)
+          .then((response) => {})
+        await this.state.inputListSelect.map((x, i) => {
+          if (x.idUnit == null) {
+            let form = new FormData()
+            form.append('kodeUnit', x.kodeUnit)
+            form.append('namaUnit', x.namaUnit)
+            api()
+              .post('api/setKodeUnit', form)
+              .then((response) => {
+                this.handleIdTujuanSelect(response.data.content.id, i)
+                let form2 = new FormData()
+                form2.append('idDisposisi', this.state.idDisposisi)
+                form2.append('idUnit', response.data.content.id)
+                api()
+                  .post('api/createTujuanDisposisi', form2)
+                  .then((response) => {
+                    console.log('tujuan:' + x.id + '|' + this.state.idDisposisi)
+                  })
+              })
+          } else {
+            let form3 = new FormData()
+            form3.append('idDisposisi', this.state.idDisposisi)
+            form3.append('idUnit', x.idUnit)
+            api()
+              .post('api/createTujuanDisposisi', form3)
+              .then((response) => {
+                if (this.state.surat == null && this.state.lampiran == null) {
+                  this.handleLoading()
+                  this.handleModal()
+                  window.location.reload('/#/SuratMasuk')
+                }
+              })
+          }
+      })
+      if (
+        this.state.lampiranDisposisi != null &&
+        this.state.errLampiranDisposisi == ''
+      ) {
+        let fd2 = new FormData()
+        fd2.append('myFile', this.state.lampiranDisposisi)
+        fd2.append('namefile', this.state.namaFileDisposisi)
+        await api()
+          .post('api/addSurat', fd2)
+          .then((response) => {
+            if (this.state.lampiranDisposisi == null) {
+              console.log('id disposisi: ' + this.state.idDisposisi)
+              this.handleLoading()
+              this.handleModal()
+              window.location.reload('/#/SuratMasuk')
+            }
           })
       }
-      // if(this.state.lampiranDisposisi != null && this.state.errSurat == ''){
-      //   let fd2 = new FormData()
-      //   fd2.append('myFile', this.state.lampiranDisposisi)
-      //   fd2.append('namefile', this.state.namaFileDisposisi)
-      //   await api()
-      //     .post('api/addSurat',fd2)
-      //     .then((response)=>{
-      //       // if(this.state.lampiran == null){
-      //         this.handleLoading()
-      //         this.handleModal()
-      //         window.location.reload('/#/Disposisi')
-      //       // }
-      //     })
-      //   }
-      console.log('valid form')
-    } else {
-      console.log('error form')
-      // this.handleModal()
+    } 
+  }else {
+      this.handleModal()
     }
   }
   render() {
@@ -252,34 +408,21 @@ class EditFormDisposisiD extends Component {
         </button>
         {this.state.showModal ? (
           <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
-            <div className="relative w-auto h-auto my-6 mx-auto max-w-6xl">
+            <div className="relative w-auto h-95% my-6 mx-auto max-w-6xl">
               {/* content */}
               <div className="border-2 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                 {/* header */}
-                {/* <div className="flex flex-row grid grid-cols-2 mr-8">
-                  <div className="flex flex-row grid grid-cols-3 bg-white pb-10 pt-4 pl-4 pr-4">
-                    <div className="flex flex-row items-start p-2  border-b ml-6 border-solid border-blueGray-200 rounded-t col-span-3">
-                      <div>
-                        <img
-                          className="w-8"
-                          src="assets/img/icon/Surat.png"
-                        />
-                      </div>
-                      <div className="flex">
-                        <h3 className="text-xl font-semibold">
-                          Edit Disposisi
-                        </h3>
-                      </div>
-                      <div className="font-bold col-span-3">
-                        Detail Surat
-                      </div>
-                      <div className="font-bold">No Agenda </div>
-                    </div>
-                    <div>
-
-                    </div>
+                <div className="flex items-start justify-center">
+                    <button
+                      className="p-1 ml-auto float-right  leading-none  outline-none focus:outline-none"
+                      onClick={this.handleModal}
+                    >
+                      <img
+                        className="justify-center items-center"
+                        src="assets/img/icon/x.png"
+                      />
+                    </button>
                   </div>
-                </div> */}
                 <div className="flex flex-row items-start p-2 border-b ml-6 border-solid border-blueGray-200 rounded-t col-span-3">
                   <div>
                     <img className="w-8" src="assets/img/icon/Surat.png" />
@@ -295,10 +438,10 @@ class EditFormDisposisiD extends Component {
                     <div className=" col-span-2">
                       {this.props.DisposisiDetail.NOMOR_AGENDA}
                     </div>
-                    <div className="font-bold">Dari</div>
+                    {/* <div className="font-bold">Dari</div>
                     <div className="font-bold">Nama</div>
                     <div className="">
-                      : : {this.props.DisposisiDetail.NAMA_PENGIRIM}{' '}
+                      : {this.props.DisposisiDetail.NAMA_PENGIRIM}{' '}
                     </div>
                     <div></div>
                     <div className="font-bold">Unit</div>
@@ -314,7 +457,11 @@ class EditFormDisposisiD extends Component {
                     <div className="font-bold">Penandatangan</div>
                     <div className="">
                       :{this.props.DisposisiDetail.PENANDATANGAN}
-                    </div>
+                    </div> */}
+                    <div className="font-bold">Pemohon</div>
+                      <div className=" col-span-2">
+                        {this.props.SuratDetail.NAMA}
+                      </div>
                     <div className="font-bold">Tujuan</div>
                     <div className=" col-span-2">
                       {this.props.DisposisiDetail.TUJUAN_SURAT}
@@ -441,10 +588,10 @@ class EditFormDisposisiD extends Component {
                           <div className="justify-end ">
                             <div
                               type="text"
-                              name="tanggalDisposisi"
+                              name="tglDisposisi"
                               required
-                              id="tanggalDisposisi"
-                              value={this.props.tanggalDisposisi}
+                              id="tglDisposisi"
+                              value={this.state.tglDisposisi}
                               className={
                                 'focus:form-control   focus:border-yellow-500 focus:ring-1 focus:ring-yellow-500 focus:outline-none w-56	mr-4  text-sm text-black placeholder-gray-500 border border-gray-200 rounded-md py-2 pl-2 mb-3'
                               }

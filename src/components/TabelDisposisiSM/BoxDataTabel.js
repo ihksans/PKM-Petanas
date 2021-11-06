@@ -19,24 +19,24 @@ class BoxDataTabel extends Component {
   render() {
     return (
       <>
-        <div className="grid grid-cols-8 border-b-2 border-gray-400 p-2">
-          <div className="flex flex-row ml-2 ">
+        <div className="grid grid-cols-7 border-b-2 border-gray-400 p-2">
+          <div className="flex flex-row mt-5 ml-5 ">
             <div className="">{this.props.No}.</div>
           </div>
-          <div className="flex flex-row">
+          <div className="flex flex-row mt-5 ml-3">
             <div className="">{this.props.Disposisi.NOMOR_AGENDA}</div>
           </div>
-          <div className="flex flex-row mt-1">
+          <div className="flex flex-row mt-5">
             <div className="">{this.props.Disposisi.TANGGAL_DISPOSISI}</div>
           </div>
-          <div className="flex flex-row mt-1">
+          <div className="flex flex-row mt-5 mr-2">
             <div className="truncate">{this.props.Disposisi.NOMOR_SURAT}</div>
             {/* <div className="">12893712</div> */}
           </div>
-          <div className="flex flex-row mt-1">
+          <div className="flex flex-row mt-5 ml-1">
             <div className="truncate">{this.props.Disposisi.INFORMASI}</div>
           </div>
-          <div className="flex flex-row ml-4 mt-1">
+          {/* <div className="flex flex-row ml-4 mt-1"> */}
             {/* <div className="">{this.props.Tujuan}</div> */}
             {/* <div className="">{this.props.TujuanSurat}</div>
             {this.props.tujuanDisposisi.map((item, i) => {
@@ -59,8 +59,8 @@ class BoxDataTabel extends Component {
                 </div>
                 )
               })} */}
-          </div>
-          <div className="flex flex-row mt-1">
+          {/* </div> */}
+          <div className="flex flex-row mt-5 ml-1">
             {/* <div className="">{this.props.Keterangan}</div> */}
             <div className="truncate">
               {this.props.Disposisi.PROSES_SELANJUTNYA}
@@ -73,8 +73,11 @@ class BoxDataTabel extends Component {
               UnitKerja={this.props.UnitKerja}
               SuratMasuk={this.props.SuratMasuk}
               NomorAgenda={this.props.NOMOR_AGENDA}
+              
               IdJenisSurat={this.state.jenisSurat}
               Pencatatan={this.state.pencatatan}
+              SuratDetail={this.props.Surat}
+              DisposisiDetail={this.props.Disposisi}
               tujuanDisposisi={this.state.tujuanDisposisi}
             />
           </div>

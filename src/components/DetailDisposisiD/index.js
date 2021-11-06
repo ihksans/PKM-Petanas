@@ -39,7 +39,7 @@ class DetailDisposisiD extends Component {
   async handleTujuanPencatatan(){
     await api()
       .get(
-        'api/getDetailTujuanPencatatan/' + this.props.Pencatatan.ID_PENCATATAN,
+        'api/getDetailTujuanPencatatan/' + this.props.SuratDetail.ID_PENCATATAN,
       )
       .then((response) => {
         this.setState({
@@ -114,9 +114,9 @@ class DetailDisposisiD extends Component {
                 {/* content */}
                 <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-abu outline-none focus:outline-none">
                   {/* Header */}
-                  <div className="flex flex-row grid grid-cols-2 mr-8">
-                    <div className="flex flex-row grid grid-cols-3 bg-white pb-10 pt-4 pl-4 pr-4">
-                      <div className="flex flex-row items-start p-2 ml-6 rounded-t col-span-3">
+                  <div className="flex flex-row grid grid-cols-2">
+                    <div className="flex flex-row grid grid-cols-3 bg-white p-4 rounded-l-lg">
+                      <div className="flex flex-row items-start p-2 col-span-3">
                         <div>
                           <img
                             className="w-8"
@@ -129,12 +129,13 @@ class DetailDisposisiD extends Component {
                           </h3>
                         </div>
                       </div>
-                      <div className="flex flex-row col-span-3 mb-4 mb-10">
+                      {/* <div className="flex flex-row col-span-3 mb-4 mb-10">
                         <EditFormDisposisiD
                           DisposisiDetail={this.props.DisposisiDetail}
                           IdJenisSurat={this.props.IdJenisSurat}
                           IdUnitKerja={this.props.IdUnitKerja}
                           SuratMasuk={this.props.SuratMasuk}
+                          namaFileDisposisi={this.props.DisposisiDetail.NAMA_FILE_DISPOSISI}
                           tujuanDisposisi={this.state.tujuanDisposisi}
                           tujuanPencatatan={this.state.tujuanPencatatan}
                         />
@@ -146,7 +147,7 @@ class DetailDisposisiD extends Component {
                             />
                           </>
                         )}
-                      </div>
+                      </div> */}
 
                       <div className="font-bold">No. Agenda Disposisi</div>
                       <div className="col-span-2 ml-4">
@@ -238,7 +239,27 @@ class DetailDisposisiD extends Component {
 
                       <div className="font-bold">Tujuan</div>
                       <div className="col-span-2 ml-4">
-                        {this.props.DisposisiDetail.TUJUAN_SURAT}
+                        {/* {this.props.DisposisiDetail.TUJUAN_SURAT} */}
+                        {this.state.tujuanDisposisi.map((item, i) => {
+                        return (
+                          <div
+                            key={i}
+                            className={i == 0 ? ' col-span-2' : ' col-span-3'}
+                          >
+                            <div
+                              className={
+                                i == 0 ? '' : 'flex flex-row grid grid-cols-3'
+                              }
+                            >
+                              <div></div>
+                              <div className={i == 0 ? '' : ' col-span-2'}>
+                                - {item.KODE_UNIT_KERJA} :{' '}
+                                {item.NAMA_UNIT_KERJA}
+                              </div>
+                            </div>
+                          </div>
+                        )
+                      })}
                       </div>
 
                       <div className="font-bold">Nomor Surat</div>
@@ -251,16 +272,16 @@ class DetailDisposisiD extends Component {
                         {this.props.DisposisiDetail.PERIHAL}
                       </div>
                     </div>
-                    <div>
-                      <div className=" flex justify-end   ">
+                    <div className="flex flex-row grid p-4 rounded-r-lg">
+                      <div className="flex flex-row justify-end">
                         <button
-                          className="hover:shadow-md focus:outline-none"
+                          className="p-1 ml-auto hover:shadow-md focus:outline-none"
                           onClick={this.handleModal}
                         >
-                          <img src="assets/img/icon/x.png" />
+                          <img src="assets/img/icon/x.png"/>
                         </button>
                       </div>
-                      <div className="flex justify-center p-2 ">
+                      <div className="flex flex-row justify-center">
                         <div className="w-auto">
                           {this.props.DisposisiDetail.NOMOR_SURAT == null ? (
                             <> File kosong</>

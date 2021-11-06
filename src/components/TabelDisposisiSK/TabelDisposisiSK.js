@@ -10,6 +10,7 @@ class TabelDisposisiSK extends Component {
     super(props)
     this.state = {
       Disposisi: this.props.Disposisi,
+      SuratKeluar:this.props.SuratKeluar,
       search: '',
       perPage: 10,
       maxPage: 0,
@@ -54,7 +55,9 @@ class TabelDisposisiSK extends Component {
             Surat={item}
             IdUnitKerja={this.props.IdUnitKerja}
             Disposisi={item}
-            SuratMasuk={this.props.SuratMasuk}
+            SuratKeluar={this.props.SuratKeluar}
+            tujuanDisposisi={this.props.tujuanDisposisi}
+            Pemohon={this.props.Pemohon}
           />
         </li>
       )

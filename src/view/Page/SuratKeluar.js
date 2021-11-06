@@ -91,7 +91,7 @@ class SuratKeluar extends Component {
         this.props.setAllPemohon(response.data.content)
       })
     await api()
-      .get('api/allInfoDIsposisiSK')
+      .get('api/allInfoDisposisiSK')
       .then((response) => {
         this.setState({
           disposisi: response.data,

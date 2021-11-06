@@ -1,51 +1,62 @@
 import React, { Component } from 'react'
 //Ini buat dependecies/library nya
 //import + "nama variabel" + from + "nama librarynya";
-import TabelDisposisi from '../../components/TabelDisposisi/TabelDisposisi'
-import TabelDisposisiSK from './TabelDisposisiSK'
-import PdfReader from '../../components/PdfReader'
 import { connect } from 'react-redux'
 import {
     setAllDisposisi,
-    setAllSuratMasuk,
+    setAllSuratKeluar,
     setJenisSurat,
     setUnitKerja,
     setDerajatSurat,
     setSifatSurat,
     setAllPencatatan,
+    setAllPemohon,
 } from '../../actions'
 import api from '../../service/api'
+import TabelDisposisi from '../../components/TabelDisposisi/TabelDisposisi'
+import TabelDisposisiSK from './TabelDisposisiSK'
+// import ModalLoading from '../../components/ModalLoading'
+import PdfReader from '../../components/PdfReader'
 // import AddFormDisposisi from '../../components/AddFormDisposisi/index'
 class DisposisiSK extends Component {
   //deklarasi variabel
     constructor(props) {
         super()
         this.state = {
-            disposisi: [],
-            suratMasuk: [],
+            Disposisi: null,
+            suratKeluar: [],
             jenisSurat: [],
             unitKerja: [],
             pencatatan: [],
+            tujuanDisposisi: [],
+            tujuanPencatatan:[],
+            pemohon:[],
+            // modalLoading: false,
         }
     this.getDisposisi = this.getDisposisi.bind(this)
+    // this.handleLoading = this.handleLoading.bind(this)
     }
-
+    handleLoading() {
+        this.setState({
+            modalLoading: !this.state.modalLoading,
+        })
+    }
     async getDisposisi() {
         await api()
-            .get('api/allInfoDIsposisiSK')
+            .get('api/allInfoDisposisiSK')
             .then((response) => {
                 this.setState({
-                    disposisi: response.data.content,
+                    Disposisi: response.data.content,
                 })
                 this.props.setAllDisposisi(response.data.content)
             })
         await api()
-            .get('api/getAllSuratMasuk')
+            .get('api/getSuratKeluarDetail')
             .then((response) => {
                 this.setState({
-                    suratMasuk: response.data.content,
+                    suratKeluar: response.data,
                 })
-                this.props.setAllSuratMasuk(response.data.content)
+                this.props.setAllSuratKeluar(response.data)
             })
         await api()
             .get('api/getAllJenisSurat')
@@ -79,54 +90,77 @@ class DisposisiSK extends Component {
                 this.setState({
                     pencatatan: response.data,
                 })
-                this.props.setAllPencatatan(response.data.content)
+                this.props.setAllPencatatan(response.data)
             })
+        await api()
+            .get('api/getAllPemohon')
+            .then((response) => {
+                this.props.setAllPemohon(response.data.content)
+            })
+        // this.handleLoading()
+
+        // return(
+        // <TabelDisposisiSK
+        //     Disposisi={this.props.AllDisposisi.allDisposisiInfo}
+        //     SuratKeluar={this.props.SuratKeluar.allSuratKeluarInfo}
+        //     IdJenisSurat={this.state.jenisSurat}
+        //     IdUnitKerja={this.state.unitKerja}
+        //     Pencatatan={this.state.pencatatan}
+        //     tujuanDisposisi={this.state.tujuanDisposisi}
+        // // Pencatatan={this.state.Pencatatan.allPencatatanInfo}
+        // />
+        // )
     }
 
     componentDidMount() {
     this.getDisposisi()
     }
     render() {
-    return (
-      //html
-      //js
-        <>
-        <div className="w-full h-90% bg-gray-200 p-4	">
-            <div className="bg-white shadow-md rounded p-6 nav nav-tabs">
-            <div className="flex flex-row nav-item">
-                <div>
-                <img className="w-8" src="assets/img/icon/Surat.png" />
+        return (
+        //html
+        //js
+            <>
+                <div className="bg-white shadow-md rounded p-6 nav nav-tabs">
+                    <div className="flex flex-row nav-item">
+                        <div>
+                        <img className="w-8" src="assets/img/icon/Surat.png" />
+                        </div>
+                        <div className="font-bold ml-2 text-2xl	">Disposisi Surat Keluar</div>
+                    </div>
+                    {/* <AddFormSurat /> */}
+                    <div>{/* <AddFormDisposisi /> */}</div>
+                    <div>
+                    {/* <TabelDisposisi Disposisi={this.state.Disposisi}/> */}
+                        {this.props.AllDisposisi.allDisposisiInfo == null ? (
+                        <TabelDisposisiSK
+                            SuratKeluar={this.state.suratKeluar}
+                            Disposisi={this.state.Disposisi}
+                            IdJenisSurat={this.state.jenisSurat}
+                            IdUnitKerja={this.state.unitKerja}
+                            Pencatatan={this.state.pencatatan}
+                            tujuanDisposisi={this.state.tujuanDisposisi}
+                            Pemohon={this.state.pemohon}
+                        />
+                        ) : (
+                        <TabelDisposisiSK
+                            Disposisi={this.props.AllDisposisi.allDisposisiInfo}
+                            SuratKeluar={this.props.SuratKeluar.allSuratKeluarInfo}
+                            IdJenisSurat={this.state.jenisSurat}
+                            IdUnitKerja={this.state.unitKerja}
+                            Pencatatan={this.state.pencatatan}
+                            Pemohon={this.state.pemohon}
+                            tujuanDisposisi={this.state.tujuanDisposisi}
+                        // Pencatatan={this.state.Pencatatan.allPencatatanInfo}
+                        />
+                        )}
+                    </div>
                 </div>
-                <div className="font-bold ml-2 text-2xl	">Disposisi Surat Keluar</div>
-            </div>
-            {/* <AddFormSurat /> */}
-            <div>{/* <AddFormDisposisi /> */}</div>
-            <div>
-              {/* <TabelDisposisi Disposisi={this.state.Disposisi}/> */}
-
-                {this.props.AllDisposisi.allDisposisiInfo == null ? (
-                <TabelDisposisiSK
-                    SuratMasuk={this.state.suratMasuk}
-                    Disposisi={this.state.disposisi}
-                    IdJenisSurat={this.state.jenisSurat}
-                    IdUnitKerja={this.state.unitKerja}
-                    Pencatatan={this.state.pencatatan}
-                />
-                ) : (
-                <TabelDisposisiSK
-                    Disposisi={this.props.AllDisposisi.allDisposisiInfo}
-                    SuratMasuk={this.props.SuratMasuk.allSuratMasukInfo}
-                    IdJenisSurat={this.state.jenisSurat}
-                    IdUnitKerja={this.state.unitKerja}
-                    Pencatatan={this.state.pencatatan}
-                  // Pencatatan={this.state.Pencatatan.allPencatatanInfo}
-                />
-                )}
-            </div>
-            </div>
-        </div>
-        </>
-    )
+                {/* <ModalLoading
+                    loading={this.state.modalLoading}
+                    title={'Menggambil data sistem'}
+                /> */}
+            </>
+        )
     }
 }
 function mapStateToProps(state) {
@@ -134,10 +168,11 @@ function mapStateToProps(state) {
 }
 export default connect(mapStateToProps, {
     setAllDisposisi,
-    setAllSuratMasuk,
+    setAllSuratKeluar,
     setJenisSurat,
     setUnitKerja,
     setDerajatSurat,
     setSifatSurat,
     setAllPencatatan,
+    setAllPemohon,
 })(DisposisiSK)

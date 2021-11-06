@@ -1241,16 +1241,13 @@ class AddFormDisposisiKeluar extends Component {
                                   {this.props.SuratDetail.PERIHAL}
                                 </div>
                               </div>
-                              <div>
-                                <div className="flex items-start justify-center">
+                              <div className="flex flex-row grid p-4 rounded-r-lg">
+                                <div className="flex flex-row justify-end">
                                   <button
                                     className="p-1 ml-auto hover:shadow-md focus:outline-none"
                                     onClick={this.handleModal}
                                   >
-                                    <img
-                                      className="justify-center items-center"
-                                      src="assets/img/icon/x.png"
-                                    />
+                                    <img src="assets/img/icon/x.png"/>
                                   </button>
                                 </div>
                                 <div className="flex justify-center p-2 ">

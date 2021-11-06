@@ -1,7 +1,7 @@
 // import React, { useState, Component } from 'react'
 // import FormUserEdit from '../FormUserEdit'
 // import ModalKonfirmDelete from '../ModalKonfirmDelete'
-import DetailDisposisiD from '../DetailDisposisiD'
+import DetailDisposisiDSK from '../DetailDisposisiDSK'
 import AddFormDisposisi from '../AddFormDisposisi'
 import React, { Component } from 'react'
 import api from '../../service/api'
@@ -11,7 +11,7 @@ class BoxDataTabel extends Component {
   constructor(props) {
     super()
     this.state = {
-      // suratMasuk:'',
+      // suratKeluar:'',
       jenisSurat: '',
       pencatatan: '',
     }
@@ -19,40 +19,48 @@ class BoxDataTabel extends Component {
   render() {
     return (
       <>
-        <div className="grid grid-cols-8 border-b-2 border-gray-400 p-2">
-          <div className="flex flex-row ml-2 ">
+        <div className="grid grid-cols-7 border-b-2 border-gray-400 p-2">
+          <div className="flex flex-row mt-5 ml-5 ">
             <div className="">{this.props.No}.</div>
           </div>
-          <div className="flex flex-row">
+          <div className="flex flex-row mt-5 ml-3">
             <div className="">{this.props.Disposisi.NOMOR_AGENDA}</div>
+            {/* {console.log("data surat keluar " + JSON.stringify(this.props.SuratKeluar))} */}
+            {console.log("Pemohon" + this.props.Pemohon)}
+            {console.log("data surat keluar " + JSON.stringify(this.props.Pemohon))}
           </div>
-          <div className="flex flex-row mt-1">
+          <div className="flex flex-row mt-5">
             <div className="">{this.props.Disposisi.TANGGAL_DISPOSISI}</div>
           </div>
-          <div className="flex flex-row mt-1">
+          <div className="flex flex-row mt-5 mr-2">
             <div className="truncate">{this.props.Disposisi.NOMOR_SURAT}</div>
             {/* <div className="">12893712</div> */}
           </div>
-          <div className="flex flex-row mt-1">
+          <div className="flex flex-row mt-5 ml-1">
             <div className="truncate">{this.props.Disposisi.INFORMASI}</div>
           </div>
-          <div className="flex flex-row ml-4 mt-1">
-            {/* <div className="">{this.props.Tujuan}</div> */}
-            <div className="">{this.props.TujuanSurat}</div>
-          </div>
-          <div className="flex flex-row mt-1">
+          {/* <div className="flex flex-row ml-4 mt-1">
+          </div> */}
+          <div className="flex flex-row mt-5 ml-1">
             {/* <div className="">{this.props.Keterangan}</div> */}
             <div className="truncate">
               {this.props.Disposisi.PROSES_SELANJUTNYA}
             </div>
           </div>
           <div className="">
-            <DetailDisposisiD
+            <DetailDisposisiDSK
               DisposisiDetail={this.props.Disposisi}
               IdUnitKerja={this.props.IdUnitKerja}
               UnitKerja={this.props.UnitKerja}
-              SuratMasuk={this.props.SuratMasuk}
+              SuratKeluar={this.props.SuratKeluar}
               NomorAgenda={this.props.NOMOR_AGENDA}
+
+              IdJenisSurat={this.state.jenisSurat}
+              Pencatatan={this.state.pencatatan}
+              SuratDetail={this.props.Surat}
+              DisposisiDetail={this.props.Disposisi}
+              tujuanDisposisi={this.state.tujuanDisposisi}
+              Pemohon={this.props.Pemohon}
             />
           </div>
         </div>
@@ -73,7 +81,7 @@ class BoxDataTabel extends Component {
 //     ProsesSelanjutnya,
 //     UnitKerja,
 //     Disposisi,
-//     SuratMasuk,
+//     SuratKeluar,
 //     IdJenisSurat,
 //     IdUnitKerja,
 //     JenisDisposisi,
@@ -85,7 +93,7 @@ class BoxDataTabel extends Component {
 //         <div className="grid grid-cols-8 border-b-2 border-gray-400 p-2">
 //             <div className="flex flex-row ml-2 ">
 //                     <div className="">{No}.
-//                     {console.log('pencatatan: '+SuratMasuk)}</div>
+//                     {console.log('pencatatan: '+SuratKeluar)}</div>
 //                 </div>
 //                 <div className="flex flex-row">
 //                     <div className="">{NomorAgenda}</div>
@@ -114,7 +122,7 @@ class BoxDataTabel extends Component {
 //                 TujuanSurat={TujuanSurat}
 //                 // IdPencatatan={IdPencatatan}
 //                 IdJenisSurat={IdJenisSurat}
-//                 SuratMasuk={SuratMasuk}
+//                 SuratKeluar={SuratKeluar}
 //                 IdUnitKerja={IdUnitKerja}
 //                 UnitKerja={UnitKerja}
 //                 NomorSurat={NomorSurat}

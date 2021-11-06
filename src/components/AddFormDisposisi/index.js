@@ -1091,18 +1091,18 @@ class AddFormDisposisi extends Component {
                                 <div className="font-bold">
                                   No. Agenda Disposisi
                                 </div>
-                                <div className="col-span-2">
+                                <div className="col-span-2 ml-4">
                                   {this.props.SuratDetail.NOMOR_AGENDA}
                                 </div>
 
                                 <div className="font-bold ">
                                   Tanggal Disposisi
                                 </div>
-                                <div className="col-span-2">
+                                <div className="col-span-2 ml-4">
                                   {this.props.disposisi.TANGGAL_DISPOSISI}
                                 </div>
                                 <div className="font-bold">Tujuan </div>
-                                <div className="col-span-2">
+                                <div className="col-span-2 ml-4">
                                   {/* {this.props.SuratDetail.TUJUAN_SURAT} */}
                                   {this.props.tujuanDisposisi.map((item, i) => {
                                     return (
@@ -1137,15 +1137,15 @@ class AddFormDisposisi extends Component {
                                 <div className="font-bold">
                                   Informasi / Isi Disposisi
                                 </div>
-                                <div className="col-span-2 mb-2">
+                                <div className="col-span-2 mb-2 ml-4">
                                   {this.props.disposisi.INFORMASI}
                                 </div>
                                 <div className="font-bold ">Keterangan</div>
-                                <div className="col-span-2">
+                                <div className="col-span-2 ml-4">
                                   {this.props.disposisi.PROSES_SELANJUTNYA}
                                 </div>
                                 <div className="font-bold ">Komentar Surat</div>
-                                <div className="col-span-2">
+                                <div className="col-span-2 ml-4">
                                   {this.props.disposisi.KOMENTAR_DISPOSISI}
                                 </div>
                                 <div></div>
@@ -1157,7 +1157,7 @@ class AddFormDisposisi extends Component {
                                 <div className="font-bold">
                                   Nomor Agenda Surat
                                 </div>
-                                <div className="col-span-2">
+                                <div className="col-span-2 ml-4">
                                   {this.props.disposisi.NOMOR_AGENDA}
                                 </div>
 
@@ -1199,7 +1199,7 @@ class AddFormDisposisi extends Component {
                                 </div>
 
                                 <div className="font-bold">Tujuan</div>
-                                <div className="col-span-2">
+                                <div className="col-span-2 ml-4">
                                   {this.props.tujuanPencatatan.map(
                                     (item, i) => {
                                       return (
@@ -1235,27 +1235,24 @@ class AddFormDisposisi extends Component {
                                 </div>
 
                                 <div className="font-bold">Nomor Surat</div>
-                                <div className="col-span-2">
+                                <div className="col-span-2 ml-4">
                                   {this.props.SuratDetail.NOMOR_SURAT}
                                 </div>
 
                                 <div className="font-bold">
                                   Perihal / Ringkasan Surat
                                 </div>
-                                <div className="col-span-2 mb-4">
+                                <div className="col-span-2 mb-4 ml-4">
                                   {this.props.SuratDetail.PERIHAL}
                                 </div>
                               </div>
-                              <div>
-                                <div className="flex items-start justify-center">
+                              <div className="flex flex-row grid p-4 rounded-r-lg">
+                                <div className="flex flex-row justify-end">
                                   <button
                                     className="p-1 ml-auto hover:shadow-md focus:outline-none"
                                     onClick={this.handleModal}
                                   >
-                                    <img
-                                      className="justify-center items-center"
-                                      src="assets/img/icon/x.png"
-                                    />
+                                    <img src="assets/img/icon/x.png"/>
                                   </button>
                                 </div>
                                 <div className="flex justify-center p-2 ">
