@@ -40,7 +40,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         //disposisi
     // Route::get('allInfoDisposisi/{id}','DisposisiController@allInfoDisposisi');
     Route::get('allInfoDisposisiSM','DisposisiController@allInfoDisposisiSuratMasuk');
-    Route::get('allInfoDIsposisiSK','DisposisiController@allInfoDisposisiSuratKeluar');
+    Route::get('allInfoDisposisiSK','DisposisiController@allInfoDisposisiSuratKeluar');
     Route::get('createDisposisi','DisposisiController@createDisposisis');
     Route::get('getDisposisi/{id}','DisposisiController@getDisposisi');
     Route::post('createDisposisi','DisposisiController@createDisposisis');
