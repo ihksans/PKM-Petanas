@@ -36,6 +36,9 @@ export const UNSET_KODE_HAL = 'UNSET_KODE_HAL'
 
 export const SET_PEMOHON = 'SET_PEMOHON'
 export const UNSET_PEMOHON = 'UNSET_PEMOHON'
+
+export const SET_LOG = 'SET_LOG'
+export const UNSET_LOG = 'UNSET_LOG'
 //list of method actions
 //to save current token by user
 export function addTokenByID(payload) {
@@ -250,6 +253,20 @@ export function setAllPemohon(payload) {
 export function unsetAllPemohon() {
   const action = {
     type: UNSET_PEMOHON,
+  }
+  return action
+}
+
+export function setLog(payload) {
+  const action = {
+    type: SET_LOG,
+    payload,
+  }
+  return action
+}
+export function unsetLog() {
+  const action = {
+    type: UNSET_LOG,
   }
   return action
 }

@@ -14,6 +14,9 @@ const tabContent = [
     title: 'Surat Keluar',
     content: <SuratKeluar />,
   },
+  {
+    content: <DeleteAllP />,
+  },
 ]
 
 const KelolaSurat = () => {
@@ -28,8 +31,9 @@ const KelolaSurat = () => {
                   {tab.content}
                 </Tab.TabPane>
               ))}
+              
             </Tab>
-            <DeleteAllP />
+            
           </div>
         </div>
       </div>

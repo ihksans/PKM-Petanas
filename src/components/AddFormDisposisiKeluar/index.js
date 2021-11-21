@@ -1067,6 +1067,10 @@ class AddFormDisposisiKeluar extends Component {
                                         IdDispo={
                                           this.props.disposisi.ID_DISPOSISI
                                         }
+                                        Nomor={
+                                          this.props.SuratDetail.NOMOR_URUT
+                                        }
+                                        Type={'Surat Keluar'}
                                       />
                                     </>
                                   ) : (

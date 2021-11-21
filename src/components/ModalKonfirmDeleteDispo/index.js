@@ -52,6 +52,7 @@ export default function ModalKonfirmDeleteDispo({
         })
         .catch((error) => {})
     }
+    window.location.reload('/#/SuratMasuk')
   }
   return (
     <>

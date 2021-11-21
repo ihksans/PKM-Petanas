@@ -39,7 +39,7 @@ class TabelSuratKeluar extends Component {
       let formData = new FormData()
       formData.append('key', str)
       await api()
-        .post('/api/searchSuratKeluar/', formData)
+        .post('/api/searchSuratKeluar', formData)
         .then((response) => {
           this.setState({
             SuratKeluar: response.data.content,

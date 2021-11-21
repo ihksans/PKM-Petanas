@@ -84,6 +84,7 @@ class SuratMasuk extends Component {
         this.props.setAllDisposisi(response.data)
       })
     this.handleLoading()
+    this.forceUpdate()
   }
   componentDidMount() {
     this.getSuratMasuk()
@@ -101,32 +102,17 @@ class SuratMasuk extends Component {
               </div>
               <div className="font-bold ml-2 text-2xl	">Agenda Surat Masuk</div>
             </div>
-
             <div>
               <AddFormSurat />
             </div>
-
             <div className="">
               {/* <div className="transform -translate-y-12"> */}
-              {this.props.SuratMasuk.allSuratMasukInfo == null ? (
-                <TabelSuratMasuk
-                  Disposisi={this.state.disposisi}
-                  SuratMasuk={this.state.suratMasuk}
-                  IdJenisSurat={this.state.jenisSurat}
-                  IdUnitKerja={this.state.unitKerja}
-                />
-              ) : (
-                <TabelSuratMasuk
-                  SuratMasuk={this.props.SuratMasuk.allSuratMasukInfo}
-                  Disposisi={this.props.AllDisposisi.allDisposisiInfo}
-                  IdJenisSurat={this.state.jenisSurat}
-                  IdUnitKerja={this.state.unitKerja}
-                />
-              )}
-              {/* <TabelSuratMasuk
+              <TabelSuratMasuk
                 SuratMasuk={this.props.SuratMasuk.allSuratMasukInfo}
+                Disposisi={this.props.AllDisposisi.allDisposisiInfo}
                 IdJenisSurat={this.state.jenisSurat}
-              /> */}
+                IdUnitKerja={this.state.unitKerja}
+              />
             </div>
           </div>
         </div>

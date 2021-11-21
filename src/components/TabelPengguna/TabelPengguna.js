@@ -7,11 +7,12 @@ import BoxData from './BoxDataTabel'
 //import + "nama variabel" + from + "nama librarynya";
 
 const TabelPengguna = ({ Pengguna }) => {
+  let data = Array.from(Pengguna)
   return (
     <>
       <ul>
         <HeaderTabel />
-        {Pengguna.map((item, index) => {
+        {data.map((item, index) => {
           return (
             <li key={index}>
               <BoxData

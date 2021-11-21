@@ -12,25 +12,25 @@ class DataReminder extends Component {
       Pengingat: this.props.Pengingat,
     }
   }
-  render(){
+  render() {
     let rn = moment()
-    let filteredPengingat = this.state.Pengingat.filter(function(obj){
-      return obj.WAKTU_PENGINGAT >= rn.format("YYYY-MM-DD") && obj.STATUS == 1
+    let filteredPengingat = this.state.Pengingat.filter(function (obj) {
+      return obj.WAKTU_PENGINGAT >= rn.format('YYYY-MM-DD') && obj.STATUS == 1
     })
-    console.log(rn.format("YYYY-MM-DD"))
+    console.log(rn.format('YYYY-MM-DD'))
     return (
       <>
-        <ul>
+        <ul class="overflow-auto h-20%">
           {filteredPengingat.map((item, index) => {
             return (
               <li key={index}>
                 <BoxDataReminder
-                    IdPengingat={item.ID_PENGINGAT}
-                    IdPengguna={item.ID_PENGGUNA}
-                    IdPencatatan={item.ID_PENCATATAN}
-                    WaktuPengingat={item.WAKTU_PENGINGAT}
-                    Deskripsi={item.DESKRIPSI}
-                    Status={item.STATUS}
+                  IdPengingat={item.ID_PENGINGAT}
+                  IdPengguna={item.ID_PENGGUNA}
+                  IdPencatatan={item.ID_PENCATATAN}
+                  WaktuPengingat={item.WAKTU_PENGINGAT}
+                  Deskripsi={item.DESKRIPSI}
+                  Status={item.STATUS}
                 />
               </li>
             )

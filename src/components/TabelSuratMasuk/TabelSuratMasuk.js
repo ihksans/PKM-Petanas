@@ -30,6 +30,16 @@ class TabelSuratMasuk extends Component {
     console.log('maxPage' + this.state.maxPage)
     console.log('currentPage' + this.state.currentPage)
   }
+  shouldComponentUpdate(nextProps) {
+    // Rendering the component only if
+    // passed props value is changed
+
+    if (nextProps.value !== this.state.SuratMasuk) {
+      return true
+    } else {
+      return false
+    }
+  }
   async getSuratMasuk(e) {
     let key = this.state.search
     let str = ''
@@ -39,7 +49,7 @@ class TabelSuratMasuk extends Component {
       let formData = new FormData()
       formData.append('key', str)
       await api()
-        .post('/api/searchSuratMasuk/', formData)
+        .post('/api/searchSuratMasuk', formData)
         .then((response) => {
           this.setState({
             SuratMasuk: response.data.content,
