@@ -9,6 +9,7 @@ use Illuminate\Database\QueryException;
 use App\Models\SuratMasuk;
 use App\Models\Pencatatan;
 use App\Models\TujuanDisposisi;
+use App\Models\Log;
 
 class DisposisiController extends Controller
 {
@@ -102,6 +103,12 @@ class DisposisiController extends Controller
                 ];
                 return response()->json($respon);
         }
+        $date = now()->toDateTimeString();
+        $data = [
+            'WAKTU' => $date,
+            'DESKRIPSI' => "Disposisi dengan nomor agenda: ". $request->nomor_agenda. " telah di catat"
+        ];
+        $log = Log::create($data);
         $respon = [
             'Msg' => 'success',
             'content' => $disposisi,
@@ -308,6 +315,12 @@ class DisposisiController extends Controller
                 'request' => $request->id,
                 'msg_request'=> $request->komentar_disposisi
                 ];
+            $date = now()->toDateTimeString();
+            $data = [
+                    'WAKTU' => $date,
+                    'DESKRIPSI' => "Komentar telah ditambahkan pada nomor agenda:". $disposisi->NOMOR_AGENDA
+            ];
+            $log = Log::create($data);
             return response()->json($respon);
         } catch (\Throwable $th) {
             $respon =[

@@ -12,7 +12,7 @@ use App\Models\Pencatatan;
 use App\Exports\SuratKeluarExporter;
 use App\Imports\SuratKeluarImporter;
 use Maatwebsite\Excel\Facades\Excel;
-
+use App\Models\Log;
 class SuratKeluarController extends Controller
 {
     public function index(){
@@ -72,6 +72,12 @@ class SuratKeluarController extends Controller
                     'Msg' => 'success',
                     'content' => $suratKeluar,
                 ];
+                $date = now()->toDateTimeString();
+                $data = [
+                    'WAKTU' => $date,
+                    'DESKRIPSI' => "Surat Keluar dengan nomor: ". $nomor. " telah di catat"
+                ];
+                 $log = Log::create($data);
                 return response()->json($respon);
         }catch(\Exception $ex){
                 $respon = [
@@ -111,29 +117,39 @@ class SuratKeluarController extends Controller
             $delTujuanPencatatan->delete();
         } catch(\Exception $ex){
             $respon = [
-                'Msg' => 'error',
+                'Msg' => 'error t',
                 'content' => $id,
                 ];
                 return response()->json($respon);
         }
         try{
             $suratKeluar = SuratKeluar::where('ID_PENCATATAN', $id);
+            $tempSuratKeluar = $suratKeluar;
             $suratKeluar->delete();
             try{
                 $nomorSurat = NomorSuratKeluar::where('ID_NOMOR_SURAT', $no);
                 $nomorSurat->delete();
                 try{
                     $pencatatan = Pencatatan::where('ID_PENCATATAN', $id);
+                    $tempPencatatan = $pencatatan;
                     $result =  $pencatatan->delete();
                     $respon = [
                         'Msg' => 'succes',
                         'content' => $result,
                         ];
+                        // $date = now();
+                        // $data = [
+                        //     'ID_PENGGUNA' =>  $tempPencatatan->ID_PENGGUNA,
+                        //     'ID_PENCATATAN' =>  $tempPencatatan->ID_PENCATATAN,
+                        //     'WAKTU' => $date,
+                        //     'DESKRIPSI' =>   'Surat keluar dengan nomor:'. $tempSuratKeluar->NOMOR_SURAT. ' telah dihapus'
+                        // ];
+                        // $log = Log::create($data);
                         return response()->json($respon);
                     }
                     catch(\Exception $ex){
                         $respon = [
-                            'Msg' => 'error',
+                            'Msg' => 'error x',
                             'content' => $id,
                             ];
                             return response()->json($respon,200);

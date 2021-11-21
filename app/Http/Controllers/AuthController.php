@@ -38,6 +38,17 @@ class AuthController extends Controller
                 ];
                 return response()->json($respon);
             }
+            $pengguna = Pengguna::where('username', $request->username)->first();
+            if($pengguna->IS_DELETE == true )
+            {
+                $respon = [
+                    'status' => 'error',
+                    'msg' => 'username not found',
+                    'errors' => 'username',
+                    'content' => null,
+                ];
+                return response()->json($respon);
+            }
             if (!\Hash::check($request->password, $user->password)) {
                 // throw new \Exception('Error in Login');
                 $respon = [
