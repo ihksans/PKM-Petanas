@@ -11,7 +11,7 @@ class TabelSuratMasuk extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      SuratMasuk: this.props.SuratMasuk,
+      SuratMasuk: Array.from(this.props.SuratMasuk),
       search: '',
       perPage: 10,
       maxPage: 0,

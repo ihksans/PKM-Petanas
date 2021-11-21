@@ -11,7 +11,7 @@ class TabelSuratKeluar extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      SuratKeluar: this.props.SuratKeluar,
+      SuratKeluar: Array.from(this.props.SuratKeluar),
       search: '',
       perPage: 10,
       maxPage: 0,
