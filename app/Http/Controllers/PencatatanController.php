@@ -9,6 +9,7 @@ use App\Models\JenisSurat;
 use App\Exports\Exporter;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\DB;
+use App\Models\Pengguna;
 
 class PencatatanController extends Controller
 {
@@ -18,7 +19,7 @@ class PencatatanController extends Controller
     }
     public function setPencatatan(Request $request)
     {
-        
+
         $data = [
             'ID_PENGGUNA'=>$request->id_pengguna,
             'ID_JENIS_SURAT'=>$request->id_jenis_surat,
@@ -41,11 +42,12 @@ class PencatatanController extends Controller
                 ];
                 return response()->json($respon);
         }
+
         $respon = [
             'Msg' => 'success',
             'content' => $pencatatan,
             ];
-        
+
         return response()->json($respon);
     }
     public function getPencatatanInfo($id)
@@ -64,7 +66,7 @@ class PencatatanController extends Controller
             ];
         return response()->json($respon);
     }
-    
+
     public function delPencatatan($id)
     {
         $pencatatan = Pencatatan::where('ID_PENCATATAN', $id);
@@ -110,7 +112,7 @@ class PencatatanController extends Controller
             'content' => $pencatatan,
             ];
         return response()->json($respon);
-    
+
     }
 
     public function getAllPencatatanInfo()
@@ -157,7 +159,7 @@ class PencatatanController extends Controller
             ];
             return response()->json($respon);
 
-        }catch(\Exception $ex){ 
+        }catch(\Exception $ex){
             $respon = [
                 'Msg' => 'error',
                 'content' => null,

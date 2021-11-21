@@ -13,6 +13,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Models\Pencatatan;
 use App\Models\TujuanPencatatan;
 use App\Models\Pengingat;
+use App\Models\Log;
 
 class SuratMasukController extends Controller
 {
@@ -50,6 +51,12 @@ class SuratMasukController extends Controller
             'NOMOR_AGENDA'=>$request->no_agenda,
         ];
         $suratMasuk = SuratMasuk::create($data);
+        $date = now()->toDateTimeString();
+        $data = [
+            'WAKTU' => $date,
+            'DESKRIPSI' => "Surat Masuk dengan nomor: ". $request->nomor_surat. " dikirim oleh" . $request->nama_pengirim. " telah di catat"
+        ];
+        $log = Log::create($data);
         if(!$suratMasuk){
             $respon = [
                 'Msg' => 'error',
@@ -84,6 +91,13 @@ class SuratMasukController extends Controller
         //revisi
        try{
         $suratMasuk = SuratMasuk::where('ID_PENCATATAN', $id);
+        $temp = $suratMasuk->NOMOR_SURAT;
+        $date = now()->toDateTimeString();
+        $data = [
+            'WAKTU' => $date,
+            'DESKRIPSI' => "Surat Masuk dengan nomor: ". $temp. " dikirim oleh" . " telah di hapus"
+        ];
+        $log = Log::create($data);
         $suratMasuk->delete();
           try{
             $tujuanSurat = TujuanPencatatan::where('ID_PENCATATAN', $id);
@@ -95,6 +109,7 @@ class SuratMasukController extends Controller
                 }
                     try{
                         $pencatatan= Pencatatan::where('ID_PENCATATAN', $id);
+
                         $result =  $pencatatan->delete();
                         $respon = [
                             'Msg' => 'success',
@@ -371,7 +386,7 @@ class SuratMasukController extends Controller
     public function importDataSuratMasuk(Request $request){
         // $surat = $request->file;
         // $nama_file = $surat->getClientOriginalName();
-        // $localfolder = public_path('import-temp') .'/';        
+        // $localfolder = public_path('import-temp') .'/';
         // if ($surat->move($localfolder, $nama_file)) {
             // $import = Excel::import(new SuratMasukImporter, $request->file);
             // $import = Excel::import(new SuratMasukImporter, public_path('import-temp/'.$nama_file));

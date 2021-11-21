@@ -37,7 +37,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('editUser/{request}','PenggunaController@editUser');
     Route::post('updateUser', 'PenggunaController@updateUser');
     Route::delete('deleteUser/{id}', 'PenggunaController@deleteUser');
-        //disposisi
+    //disposisi
     // Route::get('allInfoDisposisi/{id}','DisposisiController@allInfoDisposisi');
     Route::get('allInfoDisposisiSM','DisposisiController@allInfoDisposisiSuratMasuk');
     Route::get('allInfoDIsposisiSK','DisposisiController@allInfoDisposisiSuratKeluar');
@@ -54,16 +54,16 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::delete('delAllDisposisi','DisposisiController@delAllDisposisi');
 
     //nadia
-        //pengingat
+    //pengingat
     Route::post('createPengingat', 'PengingatController@createPengingat');
     Route::get('allPengingatInfo', 'PengingatController@getAllPengingat');
     Route::get('getPengingat/{id}', 'PengingatController@getPengingat');
     Route::post('updatePengingat', 'PengingatController@updatePengingat');
     Route::delete('deletePengingat/{id}', 'PengingatController@deletePengingat');
-        //exportpencatatan
+    //exportpencatatan
     Route::get('exportDataSuratMasuk', 'SuratMasukController@exportDataSuratMasuk');
     Route::get('exportDataSuratKeluar', 'SuratKeluarController@exportDataSuratKeluar');
-        //importpencatatan
+    //importpencatatan
     Route::post('importDataSuratMasuk', 'SuratMasukController@importDataSuratMasuk');
     Route::post('importDataSuratKeluar', 'SuratKeluarController@importDataSuratKeluar');
 
@@ -141,7 +141,6 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('delTujuanDisposisi/{id}/{to}','TujuanController@delTujuanDisposisi');
     Route::post('upTujuanDisposisi','TujuanController@upTujuanDisposisi');
 
-
     //SuratKeluar
     Route::post('setSuratKeluar', 'SuratKeluarController@setSuratKeluar');
     Route::get('getSuratKeluar/{id}', 'SuratKeluarController@getSuratKeluar');
@@ -192,4 +191,10 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     //WD3
     Route::post('addMsgDisposisi','DisposisiController@addMsgDisposisi');
 
+    //Riwayat aktivitas
+    Route::get('testLog','LogController@index');
+    Route::get('getAllLog','LogController@getAllLog');
+    Route::get('getLog/{id}','LogController@getLog');
+    Route::post('setLog','LogController@setLog');
+    Route::delete('delLog','LogController@delLog');
 });

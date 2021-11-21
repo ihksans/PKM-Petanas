@@ -23,7 +23,7 @@ class PenggunaController extends Controller
         return response()->json($user,200);
     }
     public function allUser(){
-        $user = Pengguna::all();
+        $user = Pengguna::all()->where('IS_DELETE',false);
         if($user==null){
             $respon=[
                 'msg' => 'Tidak ada penguna',
@@ -31,7 +31,14 @@ class PenggunaController extends Controller
             ];
             return response()->json($respon);
         }
-        return response()->json($user,200);
+
+        $temp = [];
+        if($user != null){
+            foreach($user as $u){
+                array_push($temp,$u);
+            };
+        }
+        return response()->json($temp,200);
     }
     public function createUser(Request $request){
         $user = Pengguna::where('USERNAME', $request->USERNAME)->first();
@@ -47,7 +54,6 @@ class PenggunaController extends Controller
             'NAMA' => 'required',
             'PASSWORD' => 'required',
             'ROLE' => 'required',
-            
         ]);
         $data=[
             'USERNAME' => $request->USERNAME,
@@ -57,7 +63,7 @@ class PenggunaController extends Controller
             'JABATAN' => $request->JABATAN,
             'NIP' => $request->NIP
         ];
-        
+
         $user = Pengguna::create($data);
 
         if(!$user){
@@ -148,7 +154,10 @@ class PenggunaController extends Controller
             return response()->json($userAuth,400);
         }
         $userAuth->delete();
-        $user = Pengguna::where('ID_PENGGUNA', $id);
+        $user = Pengguna::where('ID_PENGGUNA', $id)
+        ->update([
+            'IS_DELETE' => true
+        ]);
         $user->delete();
         if(!$user){
             $respon = [
@@ -156,7 +165,7 @@ class PenggunaController extends Controller
                 'error' => 'deletePengguna'
             ];
             return response()->json($respon);
-        
+
         }
         if($id==null){
             $respon = [
@@ -164,7 +173,7 @@ class PenggunaController extends Controller
                 'error' => 'deletePengguna'
             ];
             return response()->json($respon);
-        }      
+        }
         return response()->json($user);
     }
     public function getCountUser(){
@@ -177,15 +186,12 @@ class PenggunaController extends Controller
             ];
             return response()->json($respon);
 
-        }catch(\Exception $ex){ 
+        }catch(\Exception $ex){
             $respon = [
                 'Msg' => 'error',
                 'content' => null,
                 ];
                 return response()->json($respon);
-
         }
-     
-
     }
 }
