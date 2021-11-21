@@ -14,22 +14,28 @@ export default function ModalKonfirmDeleteSM({
   }
   const deletePengguna = async (id) => {
     handleLoading()
+    let formLogData = new FormData()
+    formLogData.append(
+      'deskripsi',
+      'Surat Masuk dengan nomor: ' + NomorSurat + ' telah terhapus',
+    )
+    await api().post('api/setLog', formLogData).then()
     let formData = new FormData()
     formData.append('id', id)
     await api()
       .delete('api/delSuratMasuk/' + id)
       .then((response) => {})
       .catch((error) => {})
-    await api()
-      .delete('api/delPencatatan/' + id)
-      .then((response) => {
-        if (NamaSurat == null && NamaLampiran == null) {
-          handleLoading()
-          setShowModal(false)
-          window.location.reload('/#/SuratMasuk')
-        }
-      })
-      .catch((error) => {})
+    // await api()
+    //   .delete('api/delPencatatan/' + id)
+    //   .then((response) => {
+    //     if (NamaSurat == null && NamaLampiran == null) {
+    //       handleLoading()
+    //       setShowModal(false)
+    //       window.location.reload('/#/SuratMasuk')
+    //     }
+    //   })
+    //   .catch((error) => {})
     if (NamaSurat != null) {
       await api()
         .delete('api/delSurat/' + NamaSurat)
@@ -53,6 +59,7 @@ export default function ModalKonfirmDeleteSM({
         })
         .catch((error) => {})
     }
+    window.location.reload('/#/SuratMasuk')
   }
   return (
     <>

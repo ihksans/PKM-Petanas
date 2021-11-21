@@ -784,7 +784,7 @@ class AddFormSurat extends Component {
       errCustomPemohonNamaUnit: false,
       errCustomPemohonKodeUnit: false,
     })
-    window.location.reload('/#/SuratKeluar')
+    //window.location.reload('/#/SuratKeluar')
   }
 
   onFileChange(event) {
@@ -993,7 +993,7 @@ class AddFormSurat extends Component {
           .then((response) => {
             this.handleLoading()
             this.handleModal()
-            // window.location.reload('/#/SuratMasuk')
+            window.location.reload('/#/SuratMasuk')
           })
       })
   }

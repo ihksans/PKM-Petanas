@@ -6,23 +6,7 @@ import { Link } from 'react-router-dom'
 import DataUser from './DataUser'
 import UserButton from './UserButton'
 import ReminderButton from './ReminderButton'
-// class HeaderComponent extends Component {
-//   constructor(props) {
-//     super()
-//     this.state = {}
-//   }
-//   render() {
-//     return (
-
-//     )
-//   }
-// }
-
-// function mapStateToProps(state) {
-//   return state
-// }
-
-// export default connect(mapStateToProps, null)(HeaderComponent)
+import LogButton from './LogButton'
 
 const HeaderComponent = ({ show, role }) => {
   const on = () => {
@@ -37,7 +21,11 @@ const HeaderComponent = ({ show, role }) => {
         <div className="grid grid-cols-2 gap-4 h-17 border shadow-3xl">
           <div className="flex items-center p-1 ml-1.5 mt-1.5">
             <Link to="#">
-              <button type="submit" className="w-full hover:shadow-md focus:outline-none" onClick={handleSubmit}>
+              <button
+                type="submit"
+                className="w-full hover:shadow-md focus:outline-none"
+                onClick={handleSubmit}
+              >
                 <img
                   className="object-fill h-10"
                   src="assets/img/icon/Menu.png"
@@ -55,9 +43,7 @@ const HeaderComponent = ({ show, role }) => {
             <UserButton />
 
             <ReminderButton />
-            <button type="submit" className="justify-items-center h-9 my-2.5 mx-2 focus:outline-none">
-              <img className="h-full" src="assets/img/icon/Bell.png" />
-            </button>
+            <LogButton />
           </div>
         </div>
       </>

@@ -17,6 +17,7 @@ import AllPencatatan from './all_pencatatan_reducers'
 import SuratKeluar from './surat_keluar_reducers'
 import RKodeHal from './kode_hal_reducers'
 import RPemohon from './pemohon_reducers'
+import RLog from './log_reducers'
 // import AllPencatatan from './all_pencatatan_reducers'
 
 const rootReducer = combineReducers({
@@ -38,6 +39,7 @@ const rootReducer = combineReducers({
   SuratKeluar,
   RKodeHal,
   RPemohon,
+  RLog,
   // AllPencatatan,
 })
 

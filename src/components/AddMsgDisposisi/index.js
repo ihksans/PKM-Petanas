@@ -66,6 +66,15 @@ class AddMsgDisposisi extends Component {
               msgDisposisi: '',
             },
           })
+          let formLogData = new FormData()
+          formLogData.append(
+            'deskripsi',
+            'Komentar telah ditambahkan pada' +
+              this.props.Type +
+              ' dengan nomor agenda: ' +
+              this.props.Nomor,
+          )
+          api().post('api/setLog', formLogData).then()
           this.handleLoading()
           this.handleModal()
           //window.location.reload('/#/SuratMasuk')
