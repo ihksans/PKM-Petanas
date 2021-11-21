@@ -8,6 +8,15 @@ import {
   unsetJenisSurat,
   unsetAllUser,
   unsetUnitKerja,
+  unsetLog,
+  unsetAllPemohon,
+  unsetAllKodeHal,
+  unsetAllSuratKeluar,
+  unsetAllPencatatan,
+  unsetAllDisposisi,
+  unsetAllPengingat,
+  unsetSifatSurat,
+  unsetDerajatSurat,
 } from '../../actions'
 import { logoutAuth } from '../../service/auth'
 import { connect } from 'react-redux'
@@ -120,4 +129,13 @@ export default connect(mapStateToProps, {
   unsetJenisSurat,
   unsetAllUser,
   unsetUnitKerja,
+  unsetLog,
+  unsetAllPemohon,
+  unsetAllKodeHal,
+  unsetAllSuratKeluar,
+  unsetAllPencatatan,
+  unsetAllDisposisi,
+  unsetAllPengingat,
+  unsetSifatSurat,
+  unsetDerajatSurat,
 })(Logout)

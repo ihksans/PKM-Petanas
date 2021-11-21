@@ -9,7 +9,7 @@ class TabelDisposisiSM extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      Disposisi: this.props.Disposisi,
+      Disposisi: Array.from(this.props.Disposisi),
       SuratMasuk:this.props.SuratMasuk,
       search: '',
       perPage: 10,
