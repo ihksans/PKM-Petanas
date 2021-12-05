@@ -10,17 +10,18 @@ class DataReminder extends Component {
     super(props)
     this.state = {
       Pengingat: this.props.Pengingat,
+      jP: this.props.jenisPengingat,
     }
   }
   render() {
     let rn = moment()
-    let filteredPengingat = this.state.Pengingat.filter(function (obj) {
-      return obj.WAKTU_PENGINGAT >= rn.format('YYYY-MM-DD') && obj.STATUS == 1
+    let filteredPengingat = this.state.Pengingat.filter((obj) => {
+      return obj.JENIS_PENGINGAT == this.state.jP
     })
     console.log(rn.format('YYYY-MM-DD'))
     return (
       <>
-        <ul class="overflow-auto h-20%">
+        <ul>
           {filteredPengingat.map((item, index) => {
             return (
               <li key={index}>
@@ -31,6 +32,7 @@ class DataReminder extends Component {
                   WaktuPengingat={item.WAKTU_PENGINGAT}
                   Deskripsi={item.DESKRIPSI}
                   Status={item.STATUS}
+                  NomorSurat={item.NOMOR_SURAT}
                 />
               </li>
             )

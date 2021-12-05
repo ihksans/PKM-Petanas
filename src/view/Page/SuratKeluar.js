@@ -40,7 +40,6 @@ class SuratKeluar extends Component {
   }
   async getSuratKeluar() {
     this.handleLoading()
-
     await api()
       .get('api/getSuratKeluarDetail')
       .then((response) => {
@@ -75,11 +74,11 @@ class SuratKeluar extends Component {
       .then((response) => {
         this.props.setSifatSurat(response.data)
       })
-    await api()
-      .get('api/allPengingatInfo')
-      .then((response) => {
-        this.props.setAllPengingat(response.data)
-      })
+    // await api()
+    //   .get('api/allPengingatInfo')
+    //   .then((response) => {
+    //     this.props.setAllPengingat(response.data)
+    //   })
     await api()
       .get('api/getAllKodeHal')
       .then((response) => {
@@ -99,15 +98,7 @@ class SuratKeluar extends Component {
         this.props.setAllDisposisi(response.data)
       })
     this.handleLoading()
-
-    return (
-      <TabelSuratKeluar
-        SuratKeluar={this.props.SuratKeluar.allSuratKeluarInfo}
-        Disposisi={this.props.AllDisposisi.allDisposisiInfo}
-        IdJenisSurat={this.state.jenisSurat}
-        IdUnitKerja={this.state.unitKerja}
-      />
-    )
+    this.forceUpdate()
   }
   componentDidMount() {
     this.getSuratKeluar()
@@ -131,29 +122,12 @@ class SuratKeluar extends Component {
             </div>
 
             <div className="">
-              {/* <div className="transform -translate-y-12"> */}
-              {this.props.SuratKeluar.allSuratKeluarInfo == null ? (
-                <TabelSuratKeluar
-                  Disposisi={this.state.Disposisi}
-                  SuratKeluar={this.state.suratKeluar}
-                  IdJenisSurat={this.state.jenisSurat}
-                  IdUnitKerja={this.state.unitKerja}
-                />
-              ) : (
-                <TabelSuratKeluar
-                  SuratKeluar={this.props.SuratKeluar.allSuratKeluarInfo}
-                  Disposisi={this.props.AllDisposisi.allDisposisiInfo}
-                  IdJenisSurat={this.state.jenisSurat}
-                  IdUnitKerja={this.state.unitKerja}
-                />
-              )}
-
-              {/* <TabelSuratKeluar
+              <TabelSuratKeluar
                 SuratKeluar={this.props.SuratKeluar.allSuratKeluarInfo}
                 Disposisi={this.props.AllDisposisi.allDisposisiInfo}
                 IdJenisSurat={this.state.jenisSurat}
                 IdUnitKerja={this.state.unitKerja}
-              /> */}
+              />
             </div>
           </div>
         </div>

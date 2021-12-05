@@ -26,7 +26,7 @@ class AddFormDisposisi extends Component {
       tujuanDisposisi: '',
       informasiDisposisi: null,
       keteranganDisposisi: null,
-      namaFileDisposisi: '',
+      namaFileDisposisi: null,
       firstDate: new Date(),
       showForm: false,
       showModal: this.props.showModal,
@@ -51,9 +51,7 @@ class AddFormDisposisi extends Component {
     this.handleShowForm = this.handleShowForm.bind(this)
     this.handleAddClickSelect = this.handleAddClickSelect.bind(this)
     this.handleRemoveClickSelect = this.handleRemoveClickSelect.bind(this)
-
     this.handleNamaFileDisposisi = this.handleNamaFileDisposisi.bind(this)
-
     this.handleErrTglDisposisi = this.handleErrTglDisposisi.bind(this)
     this.handleErrTujuanDisposisi = this.handleErrTujuanDisposisi.bind(this)
     this.handleErrInformasiDisposisi = this.handleErrInformasiDisposisi.bind(
@@ -73,7 +71,6 @@ class AddFormDisposisi extends Component {
       this,
     )
     this.ValidateLampiranDisposisi = this.ValidateLampiranDisposisi.bind(this)
-
     this.onFileChange = this.onFileChange.bind(this)
     this.onSubmit = this.onSubmit.bind(this)
   }
@@ -301,7 +298,7 @@ class AddFormDisposisi extends Component {
     await this.ValidateTujuanDisposisi(this.state.inputListSelect)
     await this.ValidateInformasiDisposisi(this.state.informasiDisposisi)
     await this.ValidateKeteranganDisposisi(this.state.keteranganDisposisi)
-    if (this.state.namaFileDisposisi != null) {
+    if (this.state.fileDisposisi != null) {
       await this.ValidateLampiranDisposisi(this.state.namaFileDisposisi)
     }
     if (
@@ -1274,7 +1271,7 @@ class AddFormDisposisi extends Component {
                                     className="p-1 ml-auto hover:shadow-md focus:outline-none"
                                     onClick={this.handleModal}
                                   >
-                                    <img src="assets/img/icon/x.png"/>
+                                    <img src="assets/img/icon/x.png" />
                                   </button>
                                 </div>
                                 <div className="flex justify-center p-2 ">

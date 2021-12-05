@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Logout from '../../components/Logout'
 //Ini buat dependecies/library nya
 //import + "nama variabel" + from + "nama librarynya";
+import { setAllSuratMasuk, setAllSuratKeluar } from '../../actions'
 import { connect } from 'react-redux'
 import api from '../../service/api'
 import BoxDataBeranda from '../../components/BoxDataBeranda'
@@ -27,7 +28,16 @@ class Dashboard extends Component {
   }
   async getCount() {
     this.handleLoading()
-
+    await api()
+      .get('api/detailSuratMasuk')
+      .then((response) => {
+        this.props.setAllSuratMasuk(response.data.content)
+      })
+    await api()
+      .get('api/getSuratKeluarDetail')
+      .then((response) => {
+        this.props.setAllSuratKeluar(response.data.content)
+      })
     await api()
       .get('api/getCountSK')
       .then((response) => {
@@ -112,4 +122,7 @@ class Dashboard extends Component {
 function mapStateToProps(state) {
   return state
 }
-export default connect(mapStateToProps, {})(Dashboard)
+export default connect(mapStateToProps, {
+  setAllSuratMasuk,
+  setAllSuratKeluar,
+})(Dashboard)

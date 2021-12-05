@@ -497,6 +497,7 @@ class DetailSuratMasuk extends Component {
                       idPencatatan={this.props.SuratDetail.ID_PENCATATAN}
                       noAgenda={this.props.SuratDetail.NOMOR_AGENDA}
                       idDerajatSurat={this.props.SuratDetail.ID_DERAJAT_SURAT}
+                      jenisPengingat={1}
                     />
                   </>
                 ) : (

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 //ini buat ngekoneksi redux
-// import { connect } from "react-redux";
+import { connect } from 'react-redux'
 import {} from '../../actions'
 import HeaderTabel from './HeaderTabel'
 import BoxData from './BoxDataTabel'
@@ -11,7 +11,7 @@ class TabelSuratMasuk extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      SuratMasuk: Array.from(this.props.SuratMasuk),
+      SuratMasuk: Array.from(this.props.SuratMasuk.allSuratMasukInfo),
       search: '',
       perPage: 10,
       maxPage: 0,
@@ -26,9 +26,10 @@ class TabelSuratMasuk extends Component {
       maxPage: Math.round(
         this.state.SuratMasuk.length / this.state.perPage + 1,
       ),
+      SuratMasuk: Array.from(this.props.SuratMasuk.allSuratMasukInfo),
     })
-    console.log('maxPage' + this.state.maxPage)
-    console.log('currentPage' + this.state.currentPage)
+    this.forceUpdate()
+    console.log('surat:' + this.props.SuratMasuk)
   }
   shouldComponentUpdate(nextProps) {
     // Rendering the component only if
@@ -57,7 +58,7 @@ class TabelSuratMasuk extends Component {
         })
     } else {
       this.setState({
-        SuratMasuk: this.props.SuratMasuk,
+        SuratMasuk: this.props.SuratMasuk.allSuratMasukInfo,
       })
     }
   }
@@ -82,10 +83,13 @@ class TabelSuratMasuk extends Component {
   }
   render() {
     const { currentPage, maxPage, perPage, SuratMasuk } = this.state
-    let items = SuratMasuk.slice(
-      (currentPage - 1) * perPage,
-      currentPage * perPage,
-    )
+    let items = []
+    if (SuratMasuk.length >= 1) {
+      items = SuratMasuk.slice(
+        (currentPage - 1) * perPage,
+        currentPage * perPage,
+      )
+    }
     const dataSuratMasuk = items.map((item, index) => {
       return (
         <li key={index}>
@@ -162,4 +166,7 @@ class TabelSuratMasuk extends Component {
     )
   }
 }
-export default TabelSuratMasuk
+function mapStateToProps(state) {
+  return state
+}
+export default connect(mapStateToProps, {})(TabelSuratMasuk)

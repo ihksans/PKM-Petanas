@@ -69,7 +69,7 @@ class AddMsgDisposisi extends Component {
           let formLogData = new FormData()
           formLogData.append(
             'deskripsi',
-            'Komentar telah ditambahkan pada' +
+            'Komentar telah ditambahkan pada ' +
               this.props.Type +
               ' dengan nomor agenda: ' +
               this.props.Nomor,

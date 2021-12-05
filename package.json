@@ -2,7 +2,6 @@
   "name": "petanas-fe",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://127.0.0.1:8000/",
   "dependencies": {
     "@craco/craco": "^6.2.0",
     "@tailwindcss/postcss7-compat": "^2.1.2",

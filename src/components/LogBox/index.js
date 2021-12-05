@@ -20,7 +20,7 @@ class LogBox extends Component {
     console.log(rn.format('YYYY-MM-DD'))
     return (
       <>
-        <ul class="overflow-auto h-20%">
+        <ul class="overflow-auto h-80		">
           {filteredLog.map((item, index) => {
             return (
               <li key={index}>

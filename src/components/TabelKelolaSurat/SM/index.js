@@ -63,11 +63,11 @@ class KelolaSuratMasuk extends Component {
       .then((response) => {
         this.props.setSifatSurat(response.data)
       })
-    await api()
-      .get('api/allPengingatInfo')
-      .then((response) => {
-        this.props.setAllPengingat(response.data)
-      })
+    // await api()
+    //   .get('api/allPengingatInfo')
+    //   .then((response) => {
+    //     this.props.setAllPengingat(response.data)
+    //   })
   }
   handleImport() {
     this.setState({

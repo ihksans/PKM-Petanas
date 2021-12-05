@@ -52,15 +52,21 @@ class EditFormDisposisi extends Component {
 
     this.handleErrTglDisposisi = this.handleErrTglDisposisi.bind(this)
     this.handleErrTujuanDisposisi = this.handleErrTujuanDisposisi.bind(this)
-    this.handleErrInformasiDisposisi = this.handleErrInformasiDisposisi.bind(this)
-    this.handleErrKeteranganDisposisi = this.handleErrKeteranganDisposisi.bind(this)
+    this.handleErrInformasiDisposisi = this.handleErrInformasiDisposisi.bind(
+      this,
+    )
+    this.handleErrKeteranganDisposisi = this.handleErrKeteranganDisposisi.bind(
+      this,
+    )
     this.handleErrLampiranDisposisi = this.handleErrLampiranDisposisi.bind(this)
     this.handleErrTujuanSelect = this.handleErrTujuanSelect.bind(this)
 
     this.validateTglDisposisi = this.validateTglDisposisi.bind(this)
     this.validateTujuanDisposisi = this.validateTujuanDisposisi.bind(this)
     this.validateInformasiDisposisi = this.validateInformasiDisposisi.bind(this)
-    this.validateKeteranganDIsposisi = this.validateKeteranganDIsposisi.bind(this)
+    this.validateKeteranganDIsposisi = this.validateKeteranganDIsposisi.bind(
+      this,
+    )
     this.validateLampiranDisposisi = this.validateLampiranDisposisi.bind(this)
   }
 
@@ -121,8 +127,10 @@ class EditFormDisposisi extends Component {
         this.handleErrLampiranDisposisi('Ukuran file disposisi melebihi 10 Mb')
       } else {
         this.handleErrLampiranDisposisi('')
-        let namasurat = this.state.namaFileDisposisi.split('/').join('_')
-        console.log('nama file disposisi: ' + namasurat)
+        let namasurat = this.props.SuratDetail.NOMOR_SURAT.split('/').join('_')
+        console.log(
+          'nama file disposisi: ' + this.props.disposisi.NAMA_FILE_DISPOSISI,
+        )
         this.setState({
           namaFileDisposisi: namasurat,
         })
@@ -277,9 +285,11 @@ class EditFormDisposisi extends Component {
     if (
       this.state.nomorAgenda != this.props.disposisi.NOMOR_AGENDA ||
       this.state.informasiDisposisi != this.props.disposisi.INFORMASI ||
-      this.state.keteranganDisposisi !=this.props.disposisi.PROSES_SELANJUTNYA ||
+      this.state.keteranganDisposisi !=
+        this.props.disposisi.PROSES_SELANJUTNYA ||
       this.state.tglDisposisi != this.props.disposisi.TANGGAL_DISPOSISI ||
-      this.state.namaFileDisposisi !=this.props.disposisi.NAMA_FILE_DISPOSISI ||
+      this.state.namaFileDisposisi !=
+        this.props.disposisi.NAMA_FILE_DISPOSISI ||
       this.state.lampiranDisposisi != null
     ) {
       await this.validateTglDisposisi(this.state.tglDisposisi)
@@ -304,8 +314,11 @@ class EditFormDisposisi extends Component {
         formData.append('informasi', this.state.informasiDisposisi)
         formData.append('proses_selanjutnya', this.state.keteranganDisposisi)
         formData.append('tanggal_disposisi', this.state.tglDisposisi)
-        if (this.state.namaFileDisposisi != null) {
-          formData.append('nama_file_disposisi', this.state.namaFileDisposisi)
+        if (this.state.lampiranDisposisi != null) {
+          formData.append(
+            'nama_file_disposisi',
+            this.state.namaFileDisposisi + '_disposisi',
+          )
         }
         await api()
           .post('api/editDisposisi', formData)
@@ -358,7 +371,7 @@ class EditFormDisposisi extends Component {
         ) {
           let fd2 = new FormData()
           fd2.append('myFile', this.state.lampiranDisposisi)
-          fd2.append('namefile', this.state.namaFileDisposisi)
+          fd2.append('namefile', this.state.namaFileDisposisi + '_disposisi')
           await api()
             .post('api/addSurat', fd2)
             .then((response) => {

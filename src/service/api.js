@@ -5,30 +5,30 @@ import { cekLog } from '../service/token'
 export default function api() {
   axios.defaults.headers.common['X-XSRF-TOKEN'] = Cookies.get('XSRF-TOKEN')
 
-  // if (cekLog) {
-  //   const token = Cookies.get('cake')
-  //   const api = axios.create({
-  //     baseURL: 'https://be-dev.petanas-polban.com/',
-  //     headers: { Authorization: 'Bearer ' + token },
-  //   })
-  //   return api
-  // } else {
-  //   const api = axios.create({
-  //     baseURL: 'https://be-dev.petanas-polban.com/',
-  //   })
-  //   return api
-  // }
   if (cekLog) {
     const token = Cookies.get('cake')
     const api = axios.create({
-      baseURL: 'http://127.0.0.1:8000',
+      baseURL: 'https://dev-be.petanas-polban.com/',
       headers: { Authorization: 'Bearer ' + token },
     })
     return api
   } else {
     const api = axios.create({
-      baseURL: 'http://127.0.0.1:8000',
+      baseURL: 'https://dev-be.petanas-polban.com',
     })
     return api
   }
+  // if (cekLog) {
+  //   const token = Cookies.get('cake')
+  //   const api = axios.create({
+  //     baseURL: 'http://127.0.0.1:8000',
+  //     headers: { Authorization: 'Bearer ' + token },
+  //   })
+  //   return api
+  // } else {
+  //   const api = axios.create({
+  //     baseURL: 'http://127.0.0.1:8000',
+  //   })
+  //   return api
+  // }
 }

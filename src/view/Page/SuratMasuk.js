@@ -70,11 +70,11 @@ class SuratMasuk extends Component {
       .then((response) => {
         this.props.setSifatSurat(response.data)
       })
-    await api()
-      .get('api/allPengingatInfo')
-      .then((response) => {
-        this.props.setAllPengingat(response.data)
-      })
+    // await api()
+    //   .get('api/allPengingatInfo')
+    //   .then((response) => {
+    //     this.props.setAllPengingat(response.data)
+    //   })
     await api()
       .get('api/allInfoDisposisiSM')
       .then((response) => {
@@ -84,10 +84,10 @@ class SuratMasuk extends Component {
         this.props.setAllDisposisi(response.data)
       })
     this.handleLoading()
-    this.forceUpdate()
   }
   componentDidMount() {
     this.getSuratMasuk()
+    this.forceUpdate()
   }
   render() {
     return (

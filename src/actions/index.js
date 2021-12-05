@@ -1,3 +1,4 @@
+import api from '../service/api'
 //List of type variabel
 export const ADD_AUTHTOKEN = 'ADD_TOKEN'
 export const DEL_AUTHTOKEN = 'DEL_TOKEN'
@@ -39,6 +40,8 @@ export const UNSET_PEMOHON = 'UNSET_PEMOHON'
 
 export const SET_LOG = 'SET_LOG'
 export const UNSET_LOG = 'UNSET_LOG'
+
+export const REFRESH_SURAT_MASUK = 'REFRESH_SURAT_MASUK'
 //list of method actions
 //to save current token by user
 export function addTokenByID(payload) {
@@ -214,6 +217,7 @@ export function unsetAllPencatatan(payload) {
     type: UNSET_ALL_PENCATATAN,
     payload,
   }
+  return action
 }
 export function setAllSuratKeluar(payload) {
   const action = {
@@ -269,4 +273,16 @@ export function unsetLog() {
     type: UNSET_LOG,
   }
   return action
+}
+export function refreshAllSuratMasuk() {
+  api()
+    .get('api/detailSuratMasuk')
+    .then((response) => {
+      var result = response.data.content
+      const action = {
+        type: SET_ALL_SURAT_MASUK,
+        result,
+      }
+      return action
+    })
 }

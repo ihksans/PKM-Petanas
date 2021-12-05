@@ -25,9 +25,9 @@ class KelolaSuratKeluar extends Component {
       suratKeluar: [],
       jenisSurat: [],
       unitKerja: [],
-      disposisi:[],
+      disposisi: [],
       lastNoAgenda: null,
-      sk:[],
+      sk: [],
       import: false,
       modalLoading: false,
     }
@@ -76,11 +76,11 @@ class KelolaSuratKeluar extends Component {
       .then((response) => {
         this.props.setSifatSurat(response.data)
       })
-    await api()
-      .get('api/allPengingatInfo')
-      .then((response) => {
-        this.props.setAllPengingat(response.data)
-      })
+    // await api()
+    //   .get('api/allPengingatInfo')
+    //   .then((response) => {
+    //     this.props.setAllPengingat(response.data)
+    //   })
     await api()
       .get('api/getAllKodeHal')
       .then((response) => {
@@ -93,42 +93,50 @@ class KelolaSuratKeluar extends Component {
       })
     await api()
       .get('api/allInfoDisposisi')
-      .then((response)=>{
+      .then((response) => {
         this.setState({
           disposisi: response.data,
         })
         this.props.setAllDisposisi(response.data)
       })
   }
-  handleImport(){
+  handleImport() {
     this.setState({
       import: !this.state.import,
     })
   }
-  handleExport(){
+  handleExport() {
     api()
-    .get('api/exportDataSuratKeluar', {
-          responseType: "blob",
-          // responseType: "arraybuffer",
-          method: "GET",
-          headers: { "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" }
+      .get('api/exportDataSuratKeluar', {
+        responseType: 'blob',
+        // responseType: "arraybuffer",
+        method: 'GET',
+        headers: {
+          'Content-Type':
+            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        },
       })
-    .then((response) => {
-      const date = new Date();
-      const url = window.URL.createObjectURL(new Blob([response.data]));
-          const link = document.createElement("a");
-          link.href = url;
-          link.setAttribute("download", "Pencatatan Surat Keluar per "+ moment(date).format('DD-MM-YYYY') +".xlsx");
-          document.body.appendChild(link);
-          link.click();
-          this.handleLoading()
-          // console.log(response.data)
-          window.location.reload('/#/KelolaSurat')
-    })
-    .catch((err) => {
-      console.log(err)
-  })
-}
+      .then((response) => {
+        const date = new Date()
+        const url = window.URL.createObjectURL(new Blob([response.data]))
+        const link = document.createElement('a')
+        link.href = url
+        link.setAttribute(
+          'download',
+          'Pencatatan Surat Keluar per ' +
+            moment(date).format('DD-MM-YYYY') +
+            '.xlsx',
+        )
+        document.body.appendChild(link)
+        link.click()
+        this.handleLoading()
+        // console.log(response.data)
+        window.location.reload('/#/KelolaSurat')
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
   componentDidMount() {
     this.getSuratKeluar()
   }
@@ -146,34 +154,37 @@ class KelolaSuratKeluar extends Component {
               <div className="font-bold ml-2 text-2xl	">Kelola Surat Keluar</div>
             </div>
 
-            <div  className="flex flex-row">
-                <button
-                    className="flex flex-row bg-primary font-bold items-center ml-2 mt-1 rounded p-2 shadow-sm w-1/6 hover:bg-orenHover focus:outline-none"
-                    type="button"
-                    onClick={this.handleImport}
-                    >
-                    <div className="ml-1">
-                        <img
-                        className="h-auto align-middle"
-                        src="assets/img/icon/Pencil.png"
-                        />
-                    </div>
-                    <div className="font-bold text-black ml-1 mr-2">Import Data Surat</div>
-                </button>
-                <button
-                    className="flex flex-row bg-primary font-bold items-center ml-2 mt-1 rounded p-2 shadow-sm w-1/6 hover:bg-orenHover focus:outline-none"
-                    type="button"
-                    onClick={this.handleExport}
-                    >
-                    <div className="ml-1">
-                        <img
-                        className="h-auto align-middle"
-                        src="assets/img/icon/Pencil.png"
-                        />
-                    </div>
-                    <div className="font-bold text-black ml-1 mr-2">Export Data Surat</div>
-                </button>
-               
+            <div className="flex flex-row">
+              <button
+                className="flex flex-row bg-primary font-bold items-center ml-2 mt-1 rounded p-2 shadow-sm w-1/6 hover:bg-orenHover focus:outline-none"
+                type="button"
+                onClick={this.handleImport}
+              >
+                <div className="ml-1">
+                  <img
+                    className="h-auto align-middle"
+                    src="assets/img/icon/Pencil.png"
+                  />
+                </div>
+                <div className="font-bold text-black ml-1 mr-2">
+                  Import Data Surat
+                </div>
+              </button>
+              <button
+                className="flex flex-row bg-primary font-bold items-center ml-2 mt-1 rounded p-2 shadow-sm w-1/6 hover:bg-orenHover focus:outline-none"
+                type="button"
+                onClick={this.handleExport}
+              >
+                <div className="ml-1">
+                  <img
+                    className="h-auto align-middle"
+                    src="assets/img/icon/Pencil.png"
+                  />
+                </div>
+                <div className="font-bold text-black ml-1 mr-2">
+                  Export Data Surat
+                </div>
+              </button>
             </div>
 
             <div className="">
@@ -205,13 +216,13 @@ class KelolaSuratKeluar extends Component {
         </div>
         {this.state.import ? (
           <>
-          <ImportModal/>
+            <ImportModal />
           </>
-        ): null}
+        ) : null}
         <ModalLoading
-            loading={this.state.modalLoading}
-            title={'Sedang diproses sistem'}
-          />
+          loading={this.state.modalLoading}
+          title={'Sedang diproses sistem'}
+        />
       </>
     )
   }
@@ -228,5 +239,5 @@ export default connect(mapStateToProps, {
   setAllPengingat,
   setAllKodeHal,
   setAllPemohon,
-  setAllDisposisi
+  setAllDisposisi,
 })(KelolaSuratKeluar)

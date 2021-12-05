@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 //ini buat ngekoneksi redux
-// import { connect } from 'react-redux'
+import { connect } from 'react-redux'
 import {} from '../../actions'
 import HeaderTabel from './HeaderTabel'
 import BoxData from './BoxDataTabel'
@@ -11,7 +11,7 @@ class TabelSuratKeluar extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      SuratKeluar: Array.from(this.props.SuratKeluar),
+      SuratKeluar: Array.from(this.props.SuratKeluar.allSuratKeluarInfo),
       search: '',
       perPage: 10,
       maxPage: 0,
@@ -27,8 +27,7 @@ class TabelSuratKeluar extends Component {
         this.state.SuratKeluar.length / this.state.perPage + 1,
       ),
     })
-    console.log('maxPage' + this.state.maxPage)
-    console.log('currentPage' + this.state.currentPage)
+    this.forceUpdate()
   }
   async getSuratKeluar() {
     let key = this.state.search
@@ -142,4 +141,7 @@ class TabelSuratKeluar extends Component {
     )
   }
 }
-export default TabelSuratKeluar
+function mapStateToProps(state) {
+  return state
+}
+export default connect(mapStateToProps, {})(TabelSuratKeluar)

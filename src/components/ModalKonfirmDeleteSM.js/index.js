@@ -46,7 +46,7 @@ export default function ModalKonfirmDeleteSM({
             window.location.reload('/#/SuratMasuk')
           }
         })
-        .catch((error) => {})
+      window.location.reload('/#/SuratMasuk').catch((error) => {})
     }
 
     if (NamaLampiran != null) {
@@ -57,7 +57,7 @@ export default function ModalKonfirmDeleteSM({
           setShowModal(false)
           window.location.reload('/#/SuratMasuk')
         })
-        .catch((error) => {})
+      window.location.reload('/#/SuratMasuk').catch((error) => {})
     }
     window.location.reload('/#/SuratMasuk')
   }

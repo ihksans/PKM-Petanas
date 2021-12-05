@@ -27,7 +27,7 @@ class DisposisiSM extends Component {
       unitKerja: [],
       pencatatan: [],
       tujuanDisposisi: [],
-      tujuanPencatatan:[],
+      tujuanPencatatan: [],
     }
     this.getDisposisi = this.getDisposisi.bind(this)
     // this.handleTujuanPencatatan = this.handleTujuanPencatatan.bind(this)
@@ -99,34 +99,19 @@ class DisposisiSM extends Component {
             <div>
               <img className="w-8" src="assets/img/icon/Surat.png" />
             </div>
-            <div className="font-bold ml-2 text-2xl	">
-              Disposisi Surat Masuk
-            </div>
+            <div className="font-bold ml-2 text-2xl	">Disposisi Surat Masuk</div>
           </div>
           {/* <AddFormSurat /> */}
           <div>{/* <AddFormDisposisi /> */}</div>
           <div className="">
-            {/* <TabelDisposisi Disposisi={this.state.Disposisi}/> */}
-            {this.props.AllDisposisi.allDisposisiInfo == null ? (
-              <TabelDisposisiSM
-                SuratMasuk={this.state.suratMasuk}
-                Disposisi={this.state.Disposisi}
-                IdJenisSurat={this.state.jenisSurat}
-                IdUnitKerja={this.state.unitKerja}
-                Pencatatan={this.state.pencatatan}
-                tujuanDisposisi={this.state.tujuanDisposisi}
-              />
-            ) : (
-              <TabelDisposisiSM
-                Disposisi={this.props.AllDisposisi.allDisposisiInfo}
-                SuratMasuk={this.props.SuratMasuk.allSuratMasukInfo}
-                IdJenisSurat={this.state.jenisSurat}
-                IdUnitKerja={this.state.unitKerja}
-                Pencatatan={this.state.pencatatan}
-                tujuanDisposisi={this.state.tujuanDisposisi}
-                // Pencatatan={this.state.Pencatatan.allPencatatanInfo}
-              />
-            )}
+            <TabelDisposisiSM
+              Disposisi={this.props.AllDisposisi.allDisposisiInfo}
+              SuratMasuk={this.props.SuratMasuk.allSuratMasukInfo}
+              IdJenisSurat={this.state.jenisSurat}
+              IdUnitKerja={this.state.unitKerja}
+              Pencatatan={this.state.pencatatan}
+              tujuanDisposisi={this.state.tujuanDisposisi}
+            />
           </div>
         </div>
       </>
